@@ -1,0 +1,85 @@
+@import '../../../styles/color-variables';
+
+.login {
+  min-height: 100vh;
+  background-color: $background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__form {
+    background-color: $background-accent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    min-width: 512px;
+    padding: 56px;
+    border-radius: 16px;
+  }
+
+  &__title {
+    color: $text;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    border: 0;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+    color: $subtext;
+    margin-bottom: 4px;
+  }
+
+  &__input {
+    background: $background;
+    color: $text;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 20px;
+    border: 0;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+
+  &__submit-button {
+    background: $primary;
+    color: $text;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    border-radius: 8px;
+    padding: 16px 0;
+    border: 0;
+  }
+
+  &__link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: $primary;
+    text-align: center;
+    text-decoration: none;
+  }
+}
