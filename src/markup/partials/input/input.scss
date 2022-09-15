@@ -1,0 +1,27 @@
+@import '../../../styles/color-variables';
+
+.input {
+  display: flex;
+  flex-direction: column;
+
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+    color: $subtext;
+    margin-bottom: 4px;
+  }
+
+  &__field {
+    background: $background;
+    color: $text;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 20px;
+    border: 0;
+
+    &_light {
+      background: $background-accent;
+    }
+  }
+}

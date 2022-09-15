@@ -1,0 +1,111 @@
+@import '../../../styles/color-variables';
+
+.profile {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  min-height: 100vh;
+
+  &__content {
+    background-color: $background;
+    padding-left: 100px;
+  }
+
+  &__header {
+    padding: 56px 0 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    color: $text;
+  }
+
+  &__avatar {
+    width: 122px;
+    height: 122px;
+    object-fit: cover;
+    border-radius: 50%;
+    outline: 1px solid #888888;
+    outline-offset: 2px;
+  }
+
+  &__button {
+    background-color: $primary;
+    border: 0;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: $text;
+    padding: 16px 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &_avatar {
+      padding: 0;
+      background-color: transparent;
+      color: $primary;
+    }
+
+    &_quit {
+      padding: 0;
+      background-color: transparent;
+      color: $danger;
+    }
+  }
+
+  &__button-icon {
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //background-size: contain;
+    display: block;
+
+    &_avatar {
+      background-image: url("./assets/images/icons/avatar.svg");
+    }
+
+    &_quit {
+      background-image: url("./assets/images/icons/quit.svg");
+    }
+
+    &_data {
+      background-image: url("./assets/images/icons/data.svg");
+    }
+
+    &_password {
+      background-image: url("./assets/images/icons/password.svg");
+    }
+  }
+
+  &__form {
+
+  }
+
+  &__fieldset {
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    border: 0;
+    grid-column-gap: 48px;
+    grid-row-gap: 24px;
+    padding-bottom: 48px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 60px;
+  }
+}

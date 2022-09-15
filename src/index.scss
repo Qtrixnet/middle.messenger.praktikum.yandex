@@ -2,8 +2,10 @@
 @import './markup/pages/register/register';
 @import './markup/pages/error/error';
 @import './markup/pages/chats/chats';
+@import './markup/pages/profile/profile';
 @import './markup/partials/chat-card/chat-card';
 @import './markup/partials/toolbar/toolbar';
+@import './markup/partials/input/input';
 
 *, *:before, *:after {
   margin: 0;
