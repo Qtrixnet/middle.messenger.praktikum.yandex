@@ -1,0 +1,243 @@
+@import '../../../styles/color-variables';
+
+.chats {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  min-height: 100vh;
+}
+
+.chats-container {
+  background-color: $background;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+}
+
+.chats-list {
+  border-right: 1px solid $background-accent;
+
+  &__search-container {
+    padding: 28px 24px 12px;
+  }
+
+  &__search-line {
+    padding-bottom: 13px;
+    border-bottom: 1px solid $background-accent;
+  }
+
+  &__search {
+    padding: 10px;
+    width: 100%;
+    background-color: $background-accent;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__list-item {
+    display: grid;
+    grid-template-columns: 48px 1fr 26px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 24px;
+  }
+
+  &__avatar {
+    min-width: 48px;
+    min-height: 48px;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: $text;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: $subtext;
+    white-space: nowrap;
+    max-width: 190px;
+  }
+
+  &__time {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: $text;
+    text-align: center;
+  }
+
+  &__notify {
+    width: 22px;
+    height: 22px;
+    background-color: $primary;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: $text;
+    margin: 0 auto;
+  }
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    background-color: $background-accent;
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__header-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: $text;
+  }
+
+  &__status {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: $light;
+  }
+
+  &__status-text {
+    font-size: 14px;
+    line-height: 17px;
+    color: $subtext;
+  }
+
+  &__options {
+    width: 24px;
+    height: 24px;
+    background-image: url("./assets/images/icons/options.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+  }
+
+  &__messages {
+    flex-grow: 1;
+    background-color: $background;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__messages-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    list-style: none;
+    padding: 32px;
+  }
+
+  &__messages-list-item {
+    color: $text;
+    background-color: $background-accent;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0;
+
+    &_self {
+      background-color: $primary;
+      align-self: flex-end;
+    }
+  }
+
+  &__messages-list-image {
+    width: 346px;
+    height: 208px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  &__messages-list-text {
+    padding: 16px 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  &__footer {
+    background-color: $background;
+    padding: 20px 32px;
+  }
+
+  &__footer-container {
+    background-color: $background-accent;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+  }
+
+  &__attach {
+    width: 24px;
+    height: 24px;
+    background-image: url("./assets/images/icons/attach.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+  }
+
+  &__input {
+    flex-grow: 1;
+    padding: 16px 0;
+    background-color: transparent;
+    border: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: $light;
+  }
+
+  &__send-button {
+    width: 24px;
+    height: 24px;
+    background-image: url("./assets/images/icons/send.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+  }
+}

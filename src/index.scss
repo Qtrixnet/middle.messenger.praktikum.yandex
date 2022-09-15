@@ -1,6 +1,9 @@
 @import "./markup/pages/login/login.scss";
 @import './markup/pages/register/register';
 @import './markup/pages/error/error';
+@import './markup/pages/chats/chats';
+@import './markup/partials/chat-card/chat-card';
+@import './markup/partials/toolbar/toolbar';
 
 *, *:before, *:after {
   margin: 0;
