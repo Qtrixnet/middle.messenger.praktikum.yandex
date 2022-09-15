@@ -1,0 +1,31 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qtrixnet/middle.messenger.praktikum.yandex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex#readme",
+  "keywords": [],
+  "author": "Kirill Shashichev",
+  "license": "ISC",
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/transformer-sass": "^2.7.0",
+    "autoprefixer": "^10.4.10",
+    "parcel": "^2.7.0",
+    "postcss": "^8.4.16"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  }
+}
