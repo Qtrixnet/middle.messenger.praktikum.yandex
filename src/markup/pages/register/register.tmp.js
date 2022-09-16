@@ -3,34 +3,17 @@ export default `
     <form class="register__form">
       <h2 class="register__title">Регистрация аккаунта</h2>
       <fieldset class="register__fieldset">
-        <label class="register__label">
-          <span class="register__text">Логин:</span>
-          <input class="register__input" type="text" placeholder="ivanivanov"/>
-        </label>
-        <label class="register__label">
-          <span class="register__text">Электронный адрес:</span>
-          <input class="register__input" type="text" placeholder="example@gmail.com"/>
-        </label>
-        <label class="register__label">
-          <span class="register__text">Имя:</span>
-          <input class="register__input" type="text" placeholder="Иван"/>
-        </label>
-        <label class="register__label">
-          <span class="register__text">Номер телефона:</span>
-          <input class="register__input" type="text" placeholder="+7 (909) 967 30 30"/>
-        </label>
-        <label class="register__label">
-          <span class="register__text">Фамилия:</span>
-          <input class="register__input" type="text" placeholder="Иванов"/>
-        </label>
+        {{#each data}}
+            {{> input this}}
+        {{/each}}
         <fieldset class="register__container">
           <label class="register__label">
             <span class="register__text">Пароль:</span>
-            <input class="register__input" type="password" placeholder="1234567"/>
+            <input class="register__input" type="password" placeholder="1234567" name="password"/>
           </label>
           <label class="register__label">
             <span class="register__text">Повторите пароль:</span>
-            <input class="register__input" type="password" placeholder="1234567"/>
+            <input class="register__input" type="password" placeholder="1234567" name="password__second"/>
           </label>
         </fieldset>
       </fieldset>

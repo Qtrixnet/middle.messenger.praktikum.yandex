@@ -3,14 +3,9 @@ export default `
     <form class="login__form">
       <h2 class="login__title">Вход</h2>
       <fieldset class="login__fieldset">
-        <label class="login__label">
-          <span class="login__text">Логин:</span>
-          <input class="login__input" type="text" placeholder="login"/>
-        </label>
-        <label class="login__label">
-          <span class="login__text">Пароль:</span>
-          <input class="login__input" type="password" placeholder="12345678"/>
-        </label>
+        {{#each data}}
+            {{> input this}}
+        {{/each}}
       </fieldset>
       <div class="login__buttons">
         <button class="login__submit-button">Войти</button>

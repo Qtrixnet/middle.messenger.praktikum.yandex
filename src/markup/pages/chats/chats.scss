@@ -63,46 +63,6 @@
     justify-content: center;
     gap: 4px;
   }
-
-  &__title {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 20px;
-    color: $text;
-  }
-
-  &__text {
-    font-size: 14px;
-    line-height: 17px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    color: $subtext;
-    white-space: nowrap;
-    max-width: 190px;
-  }
-
-  &__time {
-    font-weight: 500;
-    font-size: 10px;
-    line-height: 12px;
-    color: $text;
-    text-align: center;
-  }
-
-  &__notify {
-    width: 22px;
-    height: 22px;
-    background-color: $primary;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 15px;
-    color: $text;
-    margin: 0 auto;
-  }
 }
 
 .chat {

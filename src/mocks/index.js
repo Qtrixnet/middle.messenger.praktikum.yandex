@@ -1,11 +1,15 @@
 import errors from './errors';
-import chatCards from './chat-cards';
+import chat from './chat';
 import profile from './profile';
+import login from './login';
+import register from './register';
 
 const data = {
   errors,
-  chatCards,
-  profile
+  chat,
+  profile,
+  login,
+  register
 }
 
 export default data;

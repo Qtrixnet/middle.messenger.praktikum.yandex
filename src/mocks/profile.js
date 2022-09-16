@@ -7,42 +7,48 @@ const profile = {
       type: 'text',
       placeholder: 'Логин',
       value: 'ivanivanov',
-      color: 'light'
+      color: 'light',
+      name: 'login',
     },
     {
       label: 'Имя:',
       type: 'text',
       placeholder: 'Имя',
       value: 'Иван',
-      color: 'light'
+      color: 'light',
+      name: 'first_name',
     },
     {
       label: 'Электронный адрес:',
       type: 'email',
       placeholder: 'Электронный адрес',
       value: 'example@gmail.com',
-      color: 'light'
+      color: 'light',
+      name: 'email',
     },
     {
       label: 'Фамилия:',
       type: 'text',
       placeholder: 'Фамилия',
       value: 'Иванов',
-      color: 'light'
+      color: 'light',
+      name: 'second_name',
     },
     {
       label: 'Телефон:',
       type: 'phone',
       placeholder: 'Телефон',
       value: '+7123456789',
-      color: 'light'
+      color: 'light',
+      name: 'phone',
     },
     {
       label: 'Имя в чате:',
       type: 'text',
       placeholder: 'Имя в чате',
       value: 'Иваныч',
-      color: 'light'
+      color: 'light',
+      name: 'display_name',
     },
   ]
 }

@@ -22,6 +22,7 @@
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.7.0",
     "autoprefixer": "^10.4.10",
+    "express": "^4.18.1",
     "parcel": "^2.7.0",
     "postcss": "^8.4.16"
   },

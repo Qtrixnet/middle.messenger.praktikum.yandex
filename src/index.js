@@ -9,8 +9,44 @@ import './markup/partials/chat-card/chat-card.tmp';
 import './markup/partials/toolbar/toolbar.tmp';
 import './markup/partials/input/input.tmp';
 
-const template = hbs.compile(profile);
-const html = template(data.profile);
+const pages = [
+  {
+    id: 'login',
+    templateString: login,
+    data: data.login
+  },
+  {
+    id: 'register',
+    templateString: register,
+    data: data.register
+  },
+  {
+    id: 'chats',
+    templateString: chats,
+    data: data
+  },
+  {
+    id: 'profile',
+    templateString: profile,
+    data: data.profile
+  },
+  {
+    id: 'not-found-error',
+    templateString: error,
+    data: data.errors.notFoundError
+  },
+  {
+    id: 'server-error',
+    templateString: error,
+    data: data.errors.serverError
+  }
+]
 
-const rootNode = document.getElementById('root');
-rootNode.innerHTML = html;
+const innerTemplate = (id, templateString, data = {}) => {
+  const template = hbs.compile(templateString);
+  const html = template(data);
+  const rootNode = document.getElementById(id);
+  rootNode.innerHTML = html;
+}
+
+pages.forEach(page => innerTemplate(page.id, page.templateString, page.data))

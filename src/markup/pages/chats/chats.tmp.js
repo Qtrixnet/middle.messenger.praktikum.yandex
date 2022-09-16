@@ -9,7 +9,7 @@ export default `
                   </div>
                 </div>
                 <ul class="chats-list__list">
-                    {{#each chatCards}}
+                    {{#each chat.profiles}}
                         {{> chat-card this}}
                     {{/each}}
                 </ul>

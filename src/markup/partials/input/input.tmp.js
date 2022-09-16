@@ -8,6 +8,7 @@ const template = `
           value={{value}} 
           type={{type}} 
           placeholder={{placeholder}}
+          name={{name}}
       />
     </label>
 `
