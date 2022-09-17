@@ -9,7 +9,7 @@ export default `
       </fieldset>
       <div class="login__buttons">
         <button class="login__submit-button">Войти</button>
-        <a href="#" class="login__link">Зарегистрироваться</a>
+        <a href="" class="login__link">Зарегистрироваться</a>
       </div>
     </form>
   </section>

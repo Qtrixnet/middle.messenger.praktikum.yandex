@@ -20,7 +20,7 @@ export default `
                 </fieldset>
                 <div class="profile__buttons">
                     <button class="profile__button">
-                        <span 
+                        <span
                         class="profile__button-icon profile__button-icon_data"></span>
                         Изменить данные
                     </button>
@@ -30,7 +30,7 @@ export default `
                     </button>
                 </div>
                 <button class="profile__button profile__button_quit">
-                    <span 
+                    <span
                     class="profile__button-icon profile__button-icon_quit"></span>
                     Выйти
                 </button>

@@ -2,7 +2,7 @@ import hbs from 'handlebars';
 
 const template = `
     <header class="toolbar">
-        <img class="toolbar__avatar"/>
+        <img class="toolbar__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg" alt="avatar"/>
         <nav class="toolbar__nav">
             <ul class="toolbar__list">
                 <li class="toolbar__list-item">
