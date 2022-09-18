@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -5,15 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Messenger</title>
-    <link href="src/index.scss" rel="stylesheet"/>
-    <script src="src/index.js" type="module"></script>
+    {{#each styles}}
+        <link rel="stylesheet" href="{{this}}">
+    {{/each}}
 </head>
 <body>
-    <div id="login"></div>
-    <div id="register"></div>
-    <div id="chats"></div>
-    <div id="profile"></div>
-    <div id="not-found-error"></div>
-    <div id="server-error"></div>
+    {{{body}}}
 </body>
 </html>
