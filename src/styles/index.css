@@ -1,14 +1,6 @@
 @import './color-variables.css';
 @import '../vendor/normalize.css';
 @import '../vendor/fonts.css';
-@import "../markup/pages/index/index.css";
-@import '../markup/pages/register/register.css';
-@import '../markup/pages/chats/chats.css';
-@import '../markup/pages/error/error.css';
-@import '../markup/pages/profile/profile.css';
-@import '../markup/partials/chat-card/chat-card.css';
-@import '../markup/partials/toolbar/toolbar.css';
-@import '../markup/partials/input/input.css';
 
 *, *:before, *:after {
   margin: 0;
