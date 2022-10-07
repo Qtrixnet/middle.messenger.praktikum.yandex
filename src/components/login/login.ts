@@ -1,7 +1,7 @@
 import Block from '../../core/Block';
 import './login.css';
 
-export class LoginPage extends Block {
+export class Login extends Block {
   render() {
     // language=hbs
     return `

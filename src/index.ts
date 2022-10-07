@@ -1,9 +1,11 @@
 import { Block, renderDOM, registerComponent }  from './core';
-import LoginPage from './components/login';
-import RegisterPage from "./components/register";
+import Login from './components/login';
+import Register from "./components/register";
+import Profile from "./components/profile";
+import Chats from "./components/chats";
 import './styles/index.css';
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new RegisterPage({}));
+  renderDOM(new Chats({}));
 });
