@@ -6,6 +6,7 @@ export class Profile extends Block {
     // language=hbs
     return `
         <section class="profile">
+            {{{Toolbar}}}
             <div class="profile__content">
                 <header class="profile__header">
                     <img class="profile__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"

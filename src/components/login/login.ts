@@ -2,6 +2,10 @@ import Block from '../../core/Block';
 import './login.css';
 
 export class Login extends Block {
+  constructor() {
+    super();
+
+  }
   render() {
     // language=hbs
     return `

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel src/index.html --no-source-maps --no-cache",
+    "dev": "parcel src/index.html --no-cache",
     "build": "parcel build src/markup/pages/index/index.hbs && node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ."
