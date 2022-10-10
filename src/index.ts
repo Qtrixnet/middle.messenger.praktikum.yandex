@@ -11,5 +11,5 @@ registerComponent(Input);
 registerComponent(Toolbar)
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new Login());
+  renderDOM(new Register());
 });
