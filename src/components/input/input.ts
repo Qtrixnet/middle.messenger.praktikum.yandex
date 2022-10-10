@@ -7,11 +7,12 @@ interface InputProps {
   placeholder?: string;
   value?: string;
   error?: string;
+  color?: string;
 }
 
 export class Input extends Block {
-  constructor({onChange = () => {}, type = 'text', error, placeholder, value}: InputProps) {
-    super({type, placeholder, value, error, events: {input: onChange}});
+  constructor({onChange = () => {}, type = 'text', error, placeholder, value, color}: InputProps) {
+    super({type, placeholder, color, value, error, events: {input: onChange}});
   }
 
   render() {

@@ -1,11 +1,20 @@
 import Block from '../../core/Block';
 import './chat-card.css';
 
+interface ChatCardProps {
+  avatar: string;
+  name: string;
+  message: string;
+  time: string;
+  notify: string;
+}
+
 export class ChatCard extends Block {
-  constructor() {
-    super();
+  constructor({avatar, name, message, time, notify}: ChatCardProps) {
+    super({avatar, name, message, time, notify});
 
   }
+
   render() {
     // language=hbs
     return `

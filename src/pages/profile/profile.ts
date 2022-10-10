@@ -21,9 +21,54 @@ export class Profile extends Block {
                 </header>
                 <form class="profile__form">
                     <fieldset class="profile__fieldset">
-                        {{#each profile}}
-                            {{> input/input this}}
-                        {{/each}}
+                        {{{Input 
+                                type="text" 
+                                name="login" 
+                                placeholder="Логин" 
+                                label="Логин:" 
+                                value="ivanivanov" 
+                                color="light"
+                        }}}
+                        {{{Input 
+                                type="text" 
+                                name="first_name" 
+                                placeholder="Имя" 
+                                label="Имя:" 
+                                value="Иван" 
+                                color="light"
+                        }}}
+                        {{{Input 
+                                type="email" 
+                                name="email" 
+                                placeholder="Электронный адрес" 
+                                label="Электронный адрес::" 
+                                value="example@gmail.com" 
+                                color="light"
+                        }}}
+                        {{{Input 
+                                type="text" 
+                                name="second_name" 
+                                placeholder="Фамилия" 
+                                label="Фамилия:" 
+                                value="Иванов" 
+                                color="light"
+                        }}}
+                        {{{Input 
+                                type="phone" 
+                                name="phone" 
+                                placeholder="Телефон" 
+                                label="Телефон:" 
+                                value="+7123456789" 
+                                color="light"
+                        }}}
+                        {{{Input 
+                                type="text" 
+                                name="display_name" 
+                                placeholder="Имя в чате" 
+                                label="Имя в чате:" 
+                                value="Иваныч" 
+                                color="light"
+                        }}}
                     </fieldset>
                     <div class="profile__buttons">
                         <a href="../error/not-found-error.hbs" class="profile__button">

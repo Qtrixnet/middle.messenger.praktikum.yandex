@@ -5,11 +5,13 @@ import Profile from './pages/profile';
 import Toolbar from './components/toolbar';
 import Chats from './pages/chats';
 import Input from './components/input';
+import ChatCard from "./components/chat-card";
 import './styles/index.css';
 
 registerComponent(Input);
-registerComponent(Toolbar)
+registerComponent(Toolbar);
+registerComponent(ChatCard);
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new Register());
+  renderDOM(new Chats());
 });
