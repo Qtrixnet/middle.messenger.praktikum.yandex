@@ -1,1 +1,7 @@
-export { Register as default} from './register';
+import {Register} from './register';
+import {renderDOM} from "../../core";
+console.log('index.ts');
+document.addEventListener("DOMContentLoaded", () => {
+  console.log('index.ts');
+  renderDOM(new Register());
+});

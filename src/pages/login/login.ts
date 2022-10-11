@@ -29,8 +29,8 @@ export class Login extends Block {
                     }}}
                 </fieldset>
                 <div class="login__buttons">
-                    <a href="../chats/chats.hbs" class="login__submit-button">Войти</a>
-                    <a href="../register/register.hbs" class="login__link">Зарегистрироваться</a>
+                    <a href="#" class="login__submit-button">Войти</a>
+                    <a href="../register/register.html" class="login__link">Зарегистрироваться</a>
                 </div>
             </form>
         </section>

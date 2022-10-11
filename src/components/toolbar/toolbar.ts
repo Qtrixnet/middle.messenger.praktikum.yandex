@@ -11,10 +11,10 @@ export class Toolbar extends Block {
             <nav class="toolbar__nav">
                 <ul class="toolbar__list">
                     <li class="toolbar__list-item">
-                        <a href="../../pages/chats/chats.hbs" class="toolbar__button toolbar__button_chats"/>
+                        <a href="../../pages/chats/chats.hbs" class="toolbar__button toolbar__button_chats"></a>
                     </li>
                     <li class="toolbar__list-item">
-                        <a href="../../pages/profile/profile.hbs" class="toolbar__button toolbar__button_profile"/>
+                        <a href="../../pages/profile/profile.hbs" class="toolbar__button toolbar__button_profile"></a>
                     </li>
                 </ul>
             </nav>

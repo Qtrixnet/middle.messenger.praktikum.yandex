@@ -1,6 +1,8 @@
 import Block from '../../core/Block';
 import './register.css';
 
+console.log(123)
+
 export class Register extends Block {
   render() {
     // language=hbs
@@ -57,7 +59,7 @@ export class Register extends Block {
                 </fieldset>
                 <div class="register__buttons">
                     <button class="register__submit-button">Зарегистрироваться</button>
-                    <a href="../index/index.hbs" class="register__link">Вернуться назад</a>
+                    <a href="#" class="register__link">Вернуться назад</a>
                 </div>
             </form>
         </section>
