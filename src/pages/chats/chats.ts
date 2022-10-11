@@ -2,7 +2,28 @@ import Block from '../../core/Block';
 import './chats.css';
 
 export class Chats extends Block {
+  protected getStateFromProps() {
+    this.state = {
+      values: {
+        message: '',
+      },
+      onLogin: () => {
+        const messageData = {
+          message: (this.refs.message.lastElementChild as HTMLInputElement).value,
+        };
+
+        const nextState = {
+          values: {...messageData},
+        };
+
+        this.setState(nextState);
+
+        console.log('action/message', messageData);
+      }
+    }
+  }
   render() {
+    const { values } = this.state;
     // language=hbs
     return `
         <section class="chats">
@@ -83,7 +104,7 @@ export class Chats extends Block {
                     <footer class="chat__footer">
                         <div class="chat__footer-container">
                             <button class="chat__attach"></button>
-                            <input class="chat__input" type="text" placeholder="Написать сообщение..."/>
+                            <input class="chat__input" type="text" placeholder="Написать сообщение..." value="${values.message}"/>
                             <button class="chat__send-button"></button>
                         </div>
                     </footer>

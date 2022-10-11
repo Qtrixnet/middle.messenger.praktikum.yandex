@@ -178,6 +178,12 @@
   background-position: center;
   background-color: transparent;
   border: 0;
+  transition: opacity .2s ease;
+}
+
+.chat__attach:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .chat__input {
@@ -191,6 +197,10 @@
   color: var(--light);
 }
 
+.chat__input:focus {
+  outline: none;
+}
+
 .chat__send-button {
   width: 24px;
   height: 24px;
@@ -199,4 +209,10 @@
   background-position: center;
   background-color: transparent;
   border: 0;
+  transition: opacity .2s ease;
+}
+
+.chat__send-button:hover {
+  cursor: pointer;
+  opacity: .8;
 }

@@ -23,7 +23,7 @@ export class Register extends Block {
         secondPassword: '',
       },
       onRegister: () => {
-        const loginData = {
+        const registerData = {
           login: (this.refs.login.lastElementChild as HTMLInputElement).value,
           email: (this.refs.email.lastElementChild as HTMLInputElement).value,
           firstName: (this.refs.firstName.lastElementChild as HTMLInputElement).value,
@@ -43,22 +43,22 @@ export class Register extends Block {
             password: '',
             secondPassword: '',
           },
-          values: {...loginData},
+          values: {...registerData},
         };
 
-        if (!loginData.login) {
+        if (!registerData.login) {
           nextState.errors.login = 'Login is required';
-        } else if (loginData.login.length < 4) {
+        } else if (registerData.login.length < 4) {
           nextState.errors.login = 'Login should contain more than 3 chars';
         }
 
-        if (!loginData.password) {
+        if (!registerData.password) {
           nextState.errors.password = 'Password is required';
         }
 
         this.setState(nextState);
 
-        console.log('action/login', loginData);
+        console.log('action/register', registerData);
       }
     }
   }
