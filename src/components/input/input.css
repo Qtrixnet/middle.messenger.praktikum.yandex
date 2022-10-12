@@ -1,29 +1,38 @@
+/*.input {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*.input__text {*/
+/*  font-size: 14px;*/
+/*  line-height: 17px;*/
+/*  color: var(--subtext);*/
+/*  margin-bottom: 4px;*/
+/*}*/
+
 .input {
-  display: flex;
-  flex-direction: column;
-}
-
-.input__text {
-  font-size: 14px;
-  line-height: 17px;
-  color: var(--subtext);
-  margin-bottom: 4px;
-}
-
-.input__field {
   color: var(--text);
   border-radius: 8px;
   padding: 16px 24px;
   font-size: 16px;
   line-height: 20px;
   border: 0;
+  transition: outline .2s ease;
+  outline: 1px solid transparent;
 }
 
-.input__field_light {
+.input:focus {
+  outline: 1px solid var(--primary);
+}
+
+.input_light {
   background: var(--background-accent);
 }
 
-.input__field_dark {
+.input_dark {
   background: var(--background);
 }
 
+.input_error {
+  outline: 1px solid var(--danger);
+}

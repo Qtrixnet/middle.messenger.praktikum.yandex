@@ -5,11 +5,13 @@ import ChatCard from "./components/chat-card";
 import './styles/index.css';
 import Button from "./components/button";
 import Login from "./pages/login";
+import ControlledInput from "./components/controlled-input";
 
 registerComponent(Input);
 registerComponent(Toolbar);
 registerComponent(ChatCard);
 registerComponent(Button);
+registerComponent(ControlledInput);
 
 document.addEventListener("DOMContentLoaded", () => {
   renderDOM(new Login());
