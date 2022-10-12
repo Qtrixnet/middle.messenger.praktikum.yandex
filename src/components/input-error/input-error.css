@@ -1,6 +1,6 @@
 .input-error {
   font-size: 14px;
   line-height: 17px;
-  color: var(--subtext);
-  margin-bottom: 4px;
+  color: var(--danger);
+  margin-top: 4px;
 }

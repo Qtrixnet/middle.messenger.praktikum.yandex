@@ -1,7 +1,6 @@
 export enum ValidateType {
   Login = 'login',
   Password = 'password',
-  Email = 'email',
 }
 
 interface ValidateRule {
@@ -24,6 +23,17 @@ export function validateForm(rules: ValidateRule[]): string {
         break;
       } else if (value.length > 20) {
         errorMessage = 'Логин должен содержать не больше 20ти символов';
+        break;
+      }
+    } else if (type === ValidateType.Password) {
+      if(value.length === 0) {
+        errorMessage = 'Пароль не может быть пустым';
+        break;
+      } else if (value.length < 4) {
+        errorMessage = 'Пароль должен содержать больше 3х символов';
+        break;
+      } else if (value.length > 20) {
+        errorMessage = 'Пароль должен содержать не больше 20ти символов';
         break;
       }
     }

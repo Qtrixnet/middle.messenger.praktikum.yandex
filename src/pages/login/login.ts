@@ -7,30 +7,45 @@ export class Login extends Block {
     super();
 
     this.setProps({
-      error: '',
+      loginError: '',
       loginValue: '',
+      passwordError: '',
       passwordValue: '',
-      onFocus: () => console.log('focus'),
-      onBlur: () => console.log('blur'),
-      onInput: () => console.log('input'),
-      onLogin: () => {
-        const loginData = {
-          login: (this.refs.login.lastElementChild as HTMLInputElement).value,
-          password: (this.refs.password.lastElementChild as HTMLInputElement).value
-        };
-
+      onLoginFocus: () => console.log('login focus'),
+      onLoginInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Login, value: loginData.login},
-          {type: ValidateType.Password, value: loginData.password},
+          {type: ValidateType.Login, value: element.value},
+        ])
+        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+      onPasswordFocus: () => console.log('password focus'),
+      onPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+      onLogin: () => {
+        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
+        const passwordElement = this.element?.querySelector('input[name="password"]') as HTMLInputElement;
+
+        const loginErrorMessage = validateForm([
+          {type: ValidateType.Login, value: loginElement.value},
         ])
 
-        if (errorMessage) {
+        const passwordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: passwordElement.value},
+        ])
+
+        if (loginErrorMessage || passwordErrorMessage) {
           this.setProps({
-            error: errorMessage,
-            loginValue: loginData.login,
-            passwordValue: loginData.password,
+            passwordError: passwordErrorMessage,
+            loginError: loginErrorMessage,
+            loginValue: loginElement.value,
+            passwordValue: passwordElement.value,
           })
-          console.log(errorMessage)
         } else {
           console.log('форма готова к отправке')
         }
@@ -39,7 +54,6 @@ export class Login extends Block {
   }
 
   render() {
-
     // language=hbs
     return `
         <section class="login">
@@ -47,35 +61,28 @@ export class Login extends Block {
                 <h2 class="login__title">Вход</h2>
                 <fieldset class="login__fieldset">
                     {{{ControlledInput
-                            onInput=onInput
-                            onFocus=onFocus
-                            onBlur=onBlur
+                            onInput=onLoginInput
+                            onFocus=onLoginFocus
                             type="text"
                             name="login"
-                            placeholder="Логин"
+                            placeholder="Ваш логин"
                             label="Логин:"
-                            value="${this.props.loginValue}"
-                            ref="login"
-                            error="${this.props.error}"
                             color="dark"
+                            ref="loginInputRef"
+                            error=loginError
+                            value=loginValue
                     }}}
-                    {{{Input
+                    {{{ControlledInput
+                            onInput=onPasswordInput
+                            onFocus=onPasswordFocus
                             type="text"
-                            name="login"
-                            placeholder="Логин"
-                            label="Логин:"
-                            value="${this.props.loginValue}"
-                            ref="login"
-                            error="${this.props.error}"
-                    }}}
-                    {{{Input
-                            type="password"
                             name="password"
-                            placeholder="Пароль"
+                            placeholder="Ваш пароль"
                             label="Пароль:"
-                            value="${this.props.passwordValue}"
-                            ref="password"
-                            error="${this.props.error}"
+                            color="dark"
+                            ref="passwordInputRef"
+                            error=passwordError
+                            value=passwordValue
                     }}}
                 </fieldset>
                 {{#if error}}

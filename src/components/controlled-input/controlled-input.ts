@@ -1,55 +1,53 @@
 import Block from '../../core/Block';
 import './controlled-input.css';
+import {validateForm} from "../../helpers/validateForm";
 
 interface ControlledInputProps {
   onInput: () => void;
   onFocus: () => void;
-  onBlur: () => void;
   type: 'text' | 'password' | 'email';
-  placeholder: string;
-  value: string;
-  color?: string;
   name: string;
-  error: string;
+  placeholder: string;
   label: string;
+  color?: string;
+  error: string;
 }
 
 export class ControlledInput extends Block {
-  constructor({
-                onInput,
-                onFocus,
-                onBlur,
-                ...props
-              }: ControlledInputProps) {
+  constructor(props: ControlledInputProps) {
     super({
       ...props,
-      events: {
-        input: onInput,
-        focus: onFocus,
-        blur: onBlur,
+      onBlur: (e: FocusEvent) => {
+        const element = e.target as HTMLInputElement;
+
+        const errorMessage = validateForm([
+          {type: this.props.name, value: element.value},
+        ])
+
+        this.refs.errorRef.setProps({
+          text: errorMessage
+        });
       }
     })
   }
 
   render() {
-    console.log(this.props)
     // language=hbs
     return `
         <label class="controlled-input">
             <span class="controlled-input__label">{{label}}</span>
-            {{{InputError text=error}}}
             {{{Input
-                    onInput=${this.props.onInput}
-                    onFocus=${this.props.onFocus}
-                    onBlur=${this.props.onBlur}
+                    onInput=onInput
+                    onFocus=onFocus
+                    onBlur=onBlur
                     type=type
-                    placeholder=placeholder
-                    value=value
-                    color=color
                     name=name
+                    placeholder=placeholder
+                    color=color
+                    value=value
                     error=error
-                    ref=login
             }}}
+            {{{InputError ref="errorRef" text=error}}}
         </label>
     `;
   }

@@ -6,10 +6,10 @@ interface InputProps {
   onFocus: () => void;
   onBlur: () => void;
   type: 'text' | 'password' | 'email';
-  placeholder: string;
-  value: string;
-  color?: string;
   name: string;
+  placeholder: string;
+  color: string;
+  value: string;
   error: string;
 }
 
@@ -43,28 +43,3 @@ export class Input extends Block {
     `;
   }
 }
-
-// constructor({
-//   onChange = () => {
-//   }, type = 'text', placeholder, error, value, color = 'dark', name
-// }: InputProps) {
-//   super({type, placeholder, color, value, error, name, events: {input: onChange}});
-// }
-
-
-// render() {
-//   // language=hbs
-//   return `
-//         <label class="input">
-//             <span class="input__text">{{placeholder}}</span>
-//             <input
-//                 autocomplete="off"
-//                 class="input__field input__field_{{color}} {{#if error}}input__field_error{{/if}}"
-//                 value="{{value}}"
-//                 type="{{type}}"
-//                 placeholder="{{placeholder}}"
-//                 name="{{name}}"
-//             />
-//         </label>
-//     `;
-// }
