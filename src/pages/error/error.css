@@ -33,15 +33,3 @@
   line-height: 59px;
   color: var(--text);
 }
-
-.error__button {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--text);
-  background: var(--primary);
-  border-radius: 8px;
-  padding: 16px 64px;
-  text-align: center;
-  text-decoration: none;
-}
