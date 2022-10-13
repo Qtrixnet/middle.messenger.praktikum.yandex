@@ -8,7 +8,7 @@ export class Chats extends Block {
 
     this.setProps({
       messageError: '',
-      messageValue: '123213213',
+      messageValue: 'Lorem ipsum',
 
       onMessageFocus: () => console.log('message focus'),
       onMessageInput: (e: InputEvent) => {
@@ -16,8 +16,20 @@ export class Chats extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Message, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setProps({
+          messageValue: element.value,
+          messageError: errorMessage,
+        })
+      },
+      onBlur: (e: FocusEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: this.props.name, value: element.value},
+        ])
+        console.log(errorMessage)
+        this.setProps({
+          messageError: errorMessage
+        })
       },
 
       onSubmit: (e: SubmitEvent) => {
@@ -28,7 +40,6 @@ export class Chats extends Block {
   }
 
   render() {
-    console.log(this.props.onMessageFocus)
     // language=hbs
     return `
         <section class="chats">
@@ -107,11 +118,20 @@ export class Chats extends Block {
                         </ul>
                     </div>
                     <footer class="chat__footer">
-                        {{{
+                        <span class="chat__footer-error">${this.props.messageError}</span>
+                        <form class="chat__footer-form" onsubmit="${this.props.onSubmit}">
+                            <button class="chat__footer-attach" type="button"></button>
+                            {{{
                             Message
-                            onInput=onMessageInput
-                            onFocus=onMessageFocus
-                        }}}
+                                    onInput=onMessageInput
+                                    onFocus=onMessageFocus
+                                    obBlur=onMessageBlur
+                                    value=messageValue
+                                    error=messageError
+                                    ref=messageRef
+                            }}}
+                            <button class="chat__footer-send"></button>
+                        </form>
                     </footer>
                 </section>
             </main>

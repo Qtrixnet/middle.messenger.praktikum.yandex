@@ -22,91 +22,33 @@ export function validateForm(rules: ValidateRule[]): string {
     const {type, value} = rules[i];
 
     if(type === ValidateType.Login) {
-      if(value.length === 0) {
-        errorMessage = 'Логин не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Логин должен содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Логин должен содержать не больше 20ти символов';
+      const regExp = /^[a-z\d_-]{3,20}$/;
+      if(!regExp.test(value)) {
+        errorMessage = 'от 3 до 20 символов, латиница, может содержать цифры, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание).';
         break;
       }
-    } else if (type === ValidateType.Password) {
-      if(value.length === 0) {
-        errorMessage = 'Пароль не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Пароль должен содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Пароль должен содержать не больше 20ти символов';
+    } else if (type === ValidateType.Password || type === ValidateType.SecondPassword) {
+      const regExp = /((?=.*\d)(?=.*[A-Z]).{8,40})/;
+      if(!regExp.test(value)) {
+        errorMessage = 'от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.';
         break;
       }
     } else if (type === ValidateType.Email) {
-      if(value.length === 0) {
-        errorMessage = 'Email не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Email должен содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Email должен содержать не больше 20ти символов';
+      const regExp = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
+      if(!regExp.test(value)) {
+        errorMessage = 'латиница, может включать цифры и спецсимволы вроде дефиса, обязательно должна быть «собака» (@) и точка после неё, но перед точкой обязательно должны быть буквы.';
         break;
       }
-    } else if (type === ValidateType.FirstName) {
-      if(value.length === 0) {
-        errorMessage = 'Имя не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Имя должно содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Имя должно содержать не больше 20ти символов';
+    } else if (type === ValidateType.FirstName || type === ValidateType.SecondName || type === ValidateType.DisplayName) {
+      const regExp = /^[a-zа-я-]{2,}$/
+      if(!regExp.test(value)) {
+        errorMessage = 'латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис).';
         break;
       }
     } else if (type === ValidateType.Phone) {
-      if(value.length === 0) {
-        errorMessage = 'Телефон не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Телефон должен содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Телефон должен содержать не больше 20ти символов';
-        break;
-      }
-    } else if (type === ValidateType.SecondName) {
-      if(value.length === 0) {
-        errorMessage = 'Фамилия не может быть пустой';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Фамилия должна содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Фамилия должна содержать не больше 20ти символов';
-        break;
-      }
-    } else if (type === ValidateType.SecondPassword) {
-      if(value.length === 0) {
-        errorMessage = 'Пароль не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Пароль должен содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Пароль должен содержать не больше 20ти символов';
-        break;
-      }
-    } else if (type === ValidateType.DisplayName) {
-      if(value.length === 0) {
-        errorMessage = 'Имя в чате не может быть пустым';
-        break;
-      } else if (value.length < 4) {
-        errorMessage = 'Имя в чате должно содержать больше 3х символов';
-        break;
-      } else if (value.length > 20) {
-        errorMessage = 'Имя в чате должно содержать не больше 20ти символов';
+      const regExp = /^\+?(\d{1,3})?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/
+      if(!regExp.test(value)) {
+        errorMessage = 'от 10 до 15 символов, состоит из цифр, может начинается с плюса.';
         break;
       }
     } else if (type === ValidateType.Message) {
