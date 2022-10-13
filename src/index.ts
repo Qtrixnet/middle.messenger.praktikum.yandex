@@ -6,7 +6,8 @@ import './styles/index.css';
 import Button from "./components/button";
 import ControlledInput from "./components/controlled-input";
 import InputError from "./components/input-error";
-import Profile from "./pages/profile";
+import Chats from "./pages/chats";
+import {Message} from "./components/message/message";
 
 
 registerComponent(Input);
@@ -15,7 +16,8 @@ registerComponent(ChatCard);
 registerComponent(Button);
 registerComponent(ControlledInput);
 registerComponent(InputError);
+registerComponent(Message);
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new Profile());
+  renderDOM(new Chats());
 });

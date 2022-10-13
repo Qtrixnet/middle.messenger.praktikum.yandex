@@ -1,29 +1,34 @@
 import Block from '../../core/Block';
 import './chats.css';
+import {validateForm, ValidateType} from "../../helpers/validateForm";
 
 export class Chats extends Block {
-  protected getStateFromProps() {
-    this.state = {
-      values: {
-        message: '',
+  constructor() {
+    super();
+
+    this.setProps({
+      messageError: '',
+      messageValue: '123213213',
+
+      onMessageFocus: () => console.log('message focus'),
+      onMessageInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Message, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
       },
-      onLogin: () => {
-        const messageData = {
-          message: (this.refs.message.lastElementChild as HTMLInputElement).value,
-        };
 
-        const nextState = {
-          values: {...messageData},
-        };
-
-        this.setState(nextState);
-
-        console.log('action/message', messageData);
+      onSubmit: (e: SubmitEvent) => {
+        e.preventDefault();
+        console.log(123);
       }
-    }
+    })
   }
+
   render() {
-    const { values } = this.state;
+    console.log(this.props.onMessageFocus)
     // language=hbs
     return `
         <section class="chats">
@@ -102,11 +107,11 @@ export class Chats extends Block {
                         </ul>
                     </div>
                     <footer class="chat__footer">
-                        <div class="chat__footer-container">
-                            <button class="chat__attach"></button>
-                            <input name="message" class="chat__input" type="text" placeholder="Написать сообщение..." value="${values.message}"/>
-                            <button class="chat__send-button"></button>
-                        </div>
+                        {{{
+                            Message
+                            onInput=onMessageInput
+                            onFocus=onMessageFocus
+                        }}}
                     </footer>
                 </section>
             </main>

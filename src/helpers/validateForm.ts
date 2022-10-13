@@ -6,7 +6,8 @@ export enum ValidateType {
   Phone = 'phone',
   SecondName = 'second_name',
   SecondPassword = 'password__second',
-  DisplayName = 'display_name'
+  DisplayName = 'display_name',
+  Message = 'message'
 }
 
 interface ValidateRule {
@@ -106,6 +107,11 @@ export function validateForm(rules: ValidateRule[]): string {
         break;
       } else if (value.length > 20) {
         errorMessage = 'Имя в чате должно содержать не больше 20ти символов';
+        break;
+      }
+    } else if (type === ValidateType.Message) {
+      if(value.length <= 0) {
+        errorMessage = 'Сообщение в чате не может быть пустым';
         break;
       }
     }
