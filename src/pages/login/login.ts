@@ -49,7 +49,11 @@ export class Login extends Block {
             passwordValue: passwordElement.value,
           })
         } else {
-          console.log('форма готова к отправке')
+          const data = {
+            loginValue: loginElement.value,
+            passwordValue: passwordElement.value,
+          }
+          console.log(data)
         }
       }
     })
@@ -77,7 +81,7 @@ export class Login extends Block {
                     {{{ControlledInput
                             onInput=onPasswordInput
                             onFocus=onPasswordFocus
-                            type="text"
+                            type="password"
                             name="password"
                             placeholder="Ваш пароль"
                             label="Пароль:"

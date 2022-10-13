@@ -129,7 +129,7 @@ export class Register extends Block {
           {type: ValidateType.SecondPassword, value: passwordSecondElement.value},
         ])
 
-        if (loginErrorMessage || passwordErrorMessage) {
+        if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || passwordErrorMessage || secondPasswordErrorMessage) {
           this.setProps({
             loginError: loginErrorMessage,
             loginValue: loginElement.value,
@@ -147,7 +147,16 @@ export class Register extends Block {
             secondPasswordValue: passwordSecondElement.value,
           })
         } else {
-          console.log('форма готова к отправке')
+          const data = {
+            loginValue: loginElement.value,
+            emailValue: emailElement.value,
+            firstNameValue: firstNameElement.value,
+            phoneValue: phoneElement.value,
+            secondNameValue: secondNameElement.value,
+            passwordValue: passwordElement.value,
+            secondPasswordValue: secondNameElement.value
+          }
+          console.log(data)
         }
       }
     })

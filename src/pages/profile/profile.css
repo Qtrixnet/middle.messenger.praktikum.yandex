@@ -96,7 +96,7 @@
   border: 0;
   grid-column-gap: 48px;
   grid-row-gap: 24px;
-  padding-bottom: 48px;
+  padding: 0 0 48px;
 }
 
 .profile__buttons {

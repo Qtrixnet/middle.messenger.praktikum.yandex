@@ -104,7 +104,7 @@ export class Chats extends Block {
                     <footer class="chat__footer">
                         <div class="chat__footer-container">
                             <button class="chat__attach"></button>
-                            <input class="chat__input" type="text" placeholder="Написать сообщение..." value="${values.message}"/>
+                            <input name="message" class="chat__input" type="text" placeholder="Написать сообщение..." value="${values.message}"/>
                             <button class="chat__send-button"></button>
                         </div>
                     </footer>

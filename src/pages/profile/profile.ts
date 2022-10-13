@@ -1,7 +1,148 @@
 import Block from '../../core/Block';
 import './profile.css';
+import {validateForm, ValidateType} from "../../helpers/validateForm";
 
 export class Profile extends Block {
+  constructor() {
+    super();
+
+    this.setProps({
+      loginError: '',
+      loginValue: 'ivanivanov',
+      emailError: '',
+      emailValue: 'example@gmail.com',
+      firstNameError: '',
+      firstNameValue: 'Иван',
+      phoneError: '',
+      phoneValue: '+7123456789',
+      secondNameError: '',
+      secondNameValue: 'Иванов',
+      displayNameError: '',
+      displayNameValue: 'Иваныч',
+
+      onLoginFocus: () => console.log('login focus'),
+      onLoginInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Login, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onEmailFocus: () => console.log('email focus'),
+      onEmailInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Email, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onFirstNameFocus: () => console.log('first_name focus'),
+      onFirstNameInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.FirstName, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onPhoneFocus: () => console.log('phone focus'),
+      onPhoneInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Phone, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onSecondNameFocus: () => console.log('second_name focus'),
+      onSecondNameInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.SecondName, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onDisplayNameFocus: () => console.log('display_name focus'),
+      onDisplayNameInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.DisplayName, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.displayNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onProfileDataChange: () => {
+        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
+        const emailElement = this.element?.querySelector('input[name="email"]') as HTMLInputElement;
+        const firstNameElement = this.element?.querySelector('input[name="first_name"]') as HTMLInputElement;
+        const phoneElement = this.element?.querySelector('input[name="phone"]') as HTMLInputElement;
+        const secondNameElement = this.element?.querySelector('input[name="second_name"]') as HTMLInputElement;
+        const displayNameElement = this.element?.querySelector('input[name="display_name"]') as HTMLInputElement;
+
+        const loginErrorMessage = validateForm([
+          {type: ValidateType.Login, value: loginElement.value},
+        ])
+
+        const emailErrorMessage = validateForm([
+          {type: ValidateType.Email, value: emailElement.value},
+        ])
+
+        const firstNameErrorMessage = validateForm([
+          {type: ValidateType.FirstName, value: firstNameElement.value},
+        ])
+
+        const phoneErrorMessage = validateForm([
+          {type: ValidateType.Phone, value: phoneElement.value},
+        ])
+
+        const secondNameErrorMessage = validateForm([
+          {type: ValidateType.SecondName, value: secondNameElement.value},
+        ])
+
+        const displayNameErrorMessage = validateForm([
+          {type: ValidateType.Password, value: displayNameElement.value},
+        ])
+
+        if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || displayNameErrorMessage) {
+          this.setProps({
+            loginError: loginErrorMessage,
+            loginValue: loginElement.value,
+            emailError: emailErrorMessage,
+            emailValue: emailElement.value,
+            firstNameError: firstNameErrorMessage,
+            firstNameValue: firstNameElement.value,
+            phoneError: phoneErrorMessage,
+            phoneValue: phoneElement.value,
+            secondNameError: secondNameErrorMessage,
+            secondNameValue: secondNameElement.value,
+            displayNameError: displayNameErrorMessage,
+            displayNameValue: displayNameElement.value,
+          })
+        } else {
+          const data = {
+            loginValue: loginElement.value,
+            emailValue: emailElement.value,
+            firstNameValue: firstNameElement.value,
+            phoneValue: phoneElement.value,
+            secondNameValue: secondNameElement.value,
+            displayNameValue: displayNameElement.value,
+          }
+          console.log(data)
+        }
+      }
+    })
+
+  }
+
   render() {
     // language=hbs
     return `
@@ -21,64 +162,82 @@ export class Profile extends Block {
                 </header>
                 <form class="profile__form">
                     <fieldset class="profile__fieldset">
-                        {{{Input 
-                                type="text" 
-                                name="login" 
-                                placeholder="Логин" 
-                                label="Логин:" 
-                                value="ivanivanov" 
+                        {{{ControlledInput
+                                onInput=onLoginInput
+                                onFocus=onLoginFocus
+                                type="text"
+                                name="login"
+                                placeholder="Ваш логин"
+                                label="Логин:"
                                 color="light"
+                                ref="loginInputRef"
+                                error=loginError
+                                value=loginValue
                         }}}
-                        {{{Input 
-                                type="text" 
-                                name="first_name" 
-                                placeholder="Имя" 
-                                label="Имя:" 
-                                value="Иван" 
+                        {{{ControlledInput
+                                onInput=onFirstNameInput
+                                onFocus=onFirstNameFocus
+                                type="text"
+                                name="first_name"
+                                placeholder="Ваше имя"
+                                label="Имя:"
                                 color="light"
+                                ref="firstNameInputRef"
+                                error=firstNameError
+                                value=firstNameValue
                         }}}
-                        {{{Input 
-                                type="email" 
-                                name="email" 
-                                placeholder="Электронный адрес" 
-                                label="Электронный адрес::" 
-                                value="example@gmail.com" 
+                        {{{ControlledInput
+                                onInput=onEmailInput
+                                onFocus=onEmailFocus
+                                type="email"
+                                name="email"
+                                placeholder="Ваш электронный адрес"
+                                label="Электронный адрес:"
                                 color="light"
+                                ref="emailInputRef"
+                                error=emailError
+                                value=emailValue
                         }}}
-                        {{{Input 
-                                type="text" 
-                                name="second_name" 
-                                placeholder="Фамилия" 
-                                label="Фамилия:" 
-                                value="Иванов" 
+                        {{{ControlledInput
+                                onInput=onSecondNameInput
+                                onFocus=onSecondNameFocus
+                                type="text"
+                                name="second_name"
+                                placeholder="Ваша фамилия"
+                                label="Фамилия:"
                                 color="light"
+                                ref="secondNameInputRef"
+                                error=secondNameError
+                                value=secondNameValue
                         }}}
-                        {{{Input 
-                                type="phone" 
-                                name="phone" 
-                                placeholder="Телефон" 
-                                label="Телефон:" 
-                                value="+7123456789" 
+                        {{{ControlledInput
+                                onInput=onPhoneInput
+                                onFocus=onPhoneFocus
+                                type="phone"
+                                name="phone"
+                                placeholder="Ваш номер телефона"
+                                label="Номер телефона:"
                                 color="light"
+                                ref="phoneInputRef"
+                                error=phoneError
+                                value=phoneValue
                         }}}
-                        {{{Input 
-                                type="text" 
-                                name="display_name" 
-                                placeholder="Имя в чате" 
-                                label="Имя в чате:" 
-                                value="Иваныч" 
+                        {{{ControlledInput
+                                onInput=onDisplayNameInput
+                                onFocus=onDisplayNameFocus
+                                type="text"
+                                name="display_name"
+                                placeholder="Ваше имя в чате"
+                                label="Имя в чате:"
                                 color="light"
+                                ref="displayNameInputRef"
+                                error=displayNameError
+                                value=displayNameValue
                         }}}
                     </fieldset>
                     <div class="profile__buttons">
-                        <a href="../error/not-found-error.hbs" class="profile__button">
-                            <span class="profile__button-icon profile__button-icon_data"></span>
-                            Изменить данные
-                        </a>
-                        <a href="../error/server-error.hbs" class="profile__button">
-                            <span class="profile__button-icon profile__button-icon_password"></span>
-                            Изменить пароль
-                        </a>
+                        {{{Button text="Изменить данные" onClick=onProfileDataChange}}}
+                        {{{Button text="Изменить пароль"}}}
                     </div>
                     <button class="profile__button profile__button_quit">
                         <span class="profile__button-icon profile__button-icon_quit"></span>
