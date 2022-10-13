@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "parcel src/**/*.html --no-cache",
-    "build": "parcel build src/markup/pages/index/index.hbs && node ./server.js",
+    "build": "parcel build src/**/*.html && node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ."
   },
