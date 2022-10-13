@@ -45,7 +45,6 @@ export class ControlledInput extends Block {
                     placeholder=placeholder
                     color=color
                     value=value
-                    error=error
             }}}
             {{{InputError ref="errorRef" text=error}}}
         </label>

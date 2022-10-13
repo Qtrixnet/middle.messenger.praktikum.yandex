@@ -10,7 +10,6 @@ interface InputProps {
   placeholder: string;
   color: string;
   value: string;
-  error: string;
 }
 
 export class Input extends Block {
@@ -34,7 +33,7 @@ export class Input extends Block {
     // language=hbs
     return `
         <input
-                class="input input_{{color}} {{#if error}}input_error{{/if}}"
+                class="input input_{{color}}"
                 value="{{value}}"
                 type="{{type}}"
                 placeholder="{{placeholder}}"

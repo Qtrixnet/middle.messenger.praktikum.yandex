@@ -1,138 +1,249 @@
 import Block from '../../core/Block';
 import './register.css';
+import {validateForm, ValidateType} from "../../helpers/validateForm";
 
 export class Register extends Block {
-  protected getStateFromProps() {
-    this.state = {
-      values: {
-        login: '',
-        email: '',
-        firstName: '',
-        phone: '',
-        secondName: '',
-        password: '',
-        secondPassword: '',
+  constructor() {
+    super();
+
+    this.setProps({
+      loginError: '',
+      loginValue: '',
+      emailError: '',
+      emailValue: '',
+      firstNameError: '',
+      firstNameValue: '',
+      phoneError: '',
+      phoneValue: '',
+      secondNameError: '',
+      secondNameValue: '',
+      passwordError: '',
+      passwordValue: '',
+      secondPasswordError: '',
+      secondPasswordValue: '',
+
+      onLoginFocus: () => console.log('login focus'),
+      onLoginInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Login, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
       },
-      errors: {
-        login: '',
-        email: '',
-        firstName: '',
-        phone: '',
-        secondName: '',
-        password: '',
-        secondPassword: '',
+
+      onEmailFocus: () => console.log('email focus'),
+      onEmailInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Email, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
       },
+
+      onFirstNameFocus: () => console.log('first_name focus'),
+      onFirstNameInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.FirstName, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onPhoneFocus: () => console.log('phone focus'),
+      onPhoneInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Phone, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onSecondNameFocus: () => console.log('second_name focus'),
+      onSecondNameInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.SecondName, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onPasswordFocus: () => console.log('password focus'),
+      onPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onSecondPasswordFocus: () => console.log('password__second focus'),
+      onSecondPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.SecondPassword, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.secondPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
       onRegister: () => {
-        const registerData = {
-          login: (this.refs.login.lastElementChild as HTMLInputElement).value,
-          email: (this.refs.email.lastElementChild as HTMLInputElement).value,
-          firstName: (this.refs.firstName.lastElementChild as HTMLInputElement).value,
-          phone: (this.refs.phone.lastElementChild as HTMLInputElement).value,
-          secondName: (this.refs.secondName.lastElementChild as HTMLInputElement).value,
-          password: (this.refs.password.lastElementChild as HTMLInputElement).value,
-          secondPassword: (this.refs.secondPassword.lastElementChild as HTMLInputElement).value,
+        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
+        const emailElement = this.element?.querySelector('input[name="email"]') as HTMLInputElement;
+        const firstNameElement = this.element?.querySelector('input[name="first_name"]') as HTMLInputElement;
+        const phoneElement = this.element?.querySelector('input[name="phone"]') as HTMLInputElement;
+        const secondNameElement = this.element?.querySelector('input[name="second_name"]') as HTMLInputElement;
+        const passwordElement = this.element?.querySelector('input[name="password"]') as HTMLInputElement;
+        const passwordSecondElement = this.element?.querySelector('input[name="password__second"]') as HTMLInputElement;
+
+        const loginErrorMessage = validateForm([
+          {type: ValidateType.Login, value: loginElement.value},
+        ])
+
+        const emailErrorMessage = validateForm([
+          {type: ValidateType.Email, value: emailElement.value},
+        ])
+
+        const firstNameErrorMessage = validateForm([
+          {type: ValidateType.FirstName, value: firstNameElement.value},
+        ])
+
+        const phoneErrorMessage = validateForm([
+          {type: ValidateType.Phone, value: phoneElement.value},
+        ])
+
+        const secondNameErrorMessage = validateForm([
+          {type: ValidateType.SecondName, value: secondNameElement.value},
+        ])
+
+        const passwordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: passwordElement.value},
+        ])
+
+        const secondPasswordErrorMessage = validateForm([
+          {type: ValidateType.SecondPassword, value: passwordSecondElement.value},
+        ])
+
+        if (loginErrorMessage || passwordErrorMessage) {
+          this.setProps({
+            loginError: loginErrorMessage,
+            loginValue: loginElement.value,
+            emailError: emailErrorMessage,
+            emailValue: emailElement.value,
+            firstNameError: firstNameErrorMessage,
+            firstNameValue: firstNameElement.value,
+            phoneError: phoneErrorMessage,
+            phoneValue: phoneElement.value,
+            secondNameError: secondNameErrorMessage,
+            secondNameValue: secondNameElement.value,
+            passwordError: passwordErrorMessage,
+            passwordValue: passwordElement.value,
+            secondPasswordError: secondPasswordErrorMessage,
+            secondPasswordValue: passwordSecondElement.value,
+          })
+        } else {
+          console.log('форма готова к отправке')
         }
-
-        const nextState = {
-          errors: {
-            login: '',
-            email: '',
-            firstName: '',
-            phone: '',
-            secondName: '',
-            password: '',
-            secondPassword: '',
-          },
-          values: {...registerData},
-        };
-
-        if (!registerData.login) {
-          nextState.errors.login = 'Login is required';
-        } else if (registerData.login.length < 4) {
-          nextState.errors.login = 'Login should contain more than 3 chars';
-        }
-
-        if (!registerData.password) {
-          nextState.errors.password = 'Password is required';
-        }
-
-        this.setState(nextState);
-
-        console.log('action/register', registerData);
       }
-    }
+    })
   }
+
   render() {
-    const { errors, values } = this.state;
     // language=hbs
     return `
         <section class="register">
             <form class="register__form">
                 <h2 class="register__title">Регистрация аккаунта</h2>
                 <fieldset class="register__fieldset">
-                    {{{Input 
-                            type="text" 
-                            name="login" 
-                            placeholder="Логин" 
-                            label="Логин:" 
-                            value="${values.login}"
-                            error="${errors.login}"
-                            ref="login"
+                    {{{ControlledInput
+                            onInput=onLoginInput
+                            onFocus=onLoginFocus
+                            type="text"
+                            name="login"
+                            placeholder="Ваш логин"
+                            label="Логин:"
+                            color="dark"
+                            ref="loginInputRef"
+                            error=loginError
+                            value=loginValue
                     }}}
-                    {{{Input 
-                            type="email" 
-                            name="email" 
-                            placeholder="Электронный адрес" 
+                    {{{ControlledInput
+                            onInput=onEmailInput
+                            onFocus=onEmailFocus
+                            type="email"
+                            name="email"
+                            placeholder="Ваш электронный адрес"
                             label="Электронный адрес:"
-                            value="${values.email}"
-                            error="${errors.email}"
-                            ref="email"
+                            color="dark"
+                            ref="emailInputRef"
+                            error=emailError
+                            value=emailValue
                     }}}
-                    {{{Input 
-                            type="text" 
-                            name="first_name" 
-                            placeholder="Имя" 
+                    {{{ControlledInput
+                            onInput=onFirstNameInput
+                            onFocus=onFirstNameFocus
+                            type="text"
+                            name="first_name"
+                            placeholder="Ваше имя"
                             label="Имя:"
-                            value="${values.firstName}"
-                            error="${errors.firstName}"
-                            ref="firstName"
+                            color="dark"
+                            ref="firstNameInputRef"
+                            error=firstNameError
+                            value=firstNameValue
                     }}}
-                    {{{Input 
-                            type="phone" 
-                            name="phone" 
-                            placeholder="Номер телефона" 
+                    {{{ControlledInput
+                            onInput=onPhoneInput
+                            onFocus=onPhoneFocus
+                            type="phone"
+                            name="phone"
+                            placeholder="Ваш номер телефона"
                             label="Номер телефона:"
-                            value="${values.phone}"
-                            error="${errors.phone}"
-                            ref="phone"
+                            color="dark"
+                            ref="phoneInputRef"
+                            error=phoneError
+                            value=phoneValue
                     }}}
-                    {{{Input 
-                            type="text" 
-                            name="second_name" 
-                            placeholder="Фамилия" 
+                    {{{ControlledInput
+                            onInput=onSecondNameInput
+                            onFocus=onSecondNameFocus
+                            type="text"
+                            name="second_name"
+                            placeholder="Ваша фамилия"
                             label="Фамилия:"
-                            value="${values.secondName}"
-                            error="${errors.secondName}"
-                            ref="secondName"
+                            color="dark"
+                            ref="secondNameInputRef"
+                            error=secondNameError
+                            value=secondNameValue
                     }}}
                     <fieldset class="register__container">
-                        {{{Input
+                        {{{ControlledInput
+                                onInput=onPasswordInput
+                                onFocus=onPasswordFocus
                                 type="password"
                                 name="password"
-                                placeholder="Пароль"
+                                placeholder="Ваш пароль"
                                 label="Пароль:"
-                                value="${values.password}"
-                                error="${errors.password}"
-                                ref="password"
+                                color="dark"
+                                ref="passwordInputRef"
+                                error=passwordError
+                                value=passwordValue
                         }}}
-                        {{{Input
+                        {{{ControlledInput
+                                onInput=onSecondPasswordInput
+                                onFocus=onSecondPasswordFocus
                                 type="password"
                                 name="password__second"
                                 placeholder="Повторите пароль"
                                 label="Повторите пароль:"
-                                value="${values.secondPassword}"
-                                error="${errors.secondPassword}"
-                                ref="secondPassword"
+                                color="dark"
+                                ref="secondPasswordInputRef"
+                                error=secondPasswordError
+                                value=secondPasswordValue
                         }}}
                     </fieldset>
                 </fieldset>

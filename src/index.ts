@@ -4,9 +4,9 @@ import Input from './components/input';
 import ChatCard from "./components/chat-card";
 import './styles/index.css';
 import Button from "./components/button";
-import Login from "./pages/login";
 import ControlledInput from "./components/controlled-input";
 import InputError from "./components/input-error";
+import {Register} from "./pages/register/register";
 
 registerComponent(Input);
 registerComponent(Toolbar);
@@ -16,5 +16,5 @@ registerComponent(ControlledInput);
 registerComponent(InputError);
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new Login());
+  renderDOM(new Register());
 });
