@@ -4,17 +4,15 @@ import Input from './components/input';
 import Button from "./components/button";
 import ControlledInput from "./components/controlled-input";
 import InputError from "./components/input-error";
-import {Chats} from "./pages/chats/chats";
 import Toolbar from "./components/toolbar";
-import ChatCard from "./components/chat-card";
+import Login from "./pages/login";
 
 registerComponent(Input);
 registerComponent(Button);
 registerComponent(ControlledInput);
 registerComponent(InputError);
-registerComponent(Toolbar)
-registerComponent(ChatCard)
+registerComponent(Toolbar);
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new Chats());
+  renderDOM(new Login());
 });
