@@ -1,0 +1,23 @@
+.button {
+  background: var(--primary);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 8px;
+  padding: 16px 120px;
+  border: 0;
+  text-align: center;
+  text-decoration: none;
+  transition: background .2s ease, box-shadow .2s ease, color .2s ease;
+}
+
+.button:hover {
+  cursor: pointer;
+  background: var(--light);
+  color: var(--primary);
+}
+
+.button:active {
+  box-shadow: 0 0 0 4px rgba(30, 120, 255, 0.5);
+}

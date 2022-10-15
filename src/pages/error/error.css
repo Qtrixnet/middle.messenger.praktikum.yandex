@@ -1,0 +1,35 @@
+.error {
+  background-color: var(--background);
+  min-height: 100vh;
+  position: relative;
+}
+
+.error__illustration {
+  width: 52vw;
+  height: 46vw;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.error__container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 456px;
+  position: absolute;
+  bottom: 86px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.error__title {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 59px;
+  color: var(--text);
+}
