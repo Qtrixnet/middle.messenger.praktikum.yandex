@@ -1,6 +1,7 @@
 import Block from '../../core/Block';
 import './login.css';
 import {validateForm, ValidateType} from "../../helpers/validateForm";
+import getElement from "../../utils/getElement";
 
 export class Login extends Block {
   constructor() {
@@ -30,8 +31,8 @@ export class Login extends Block {
         this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
       },
       onLogin: () => {
-        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
-        const passwordElement = this.element?.querySelector('input[name="password"]') as HTMLInputElement;
+        const loginElement = getElement(this.element, 'login');
+        const passwordElement = getElement(this.element, 'password');
 
         const loginErrorMessage = validateForm([
           {type: ValidateType.Login, value: loginElement.value},

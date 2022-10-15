@@ -10,9 +10,8 @@ interface ChatCardProps {
 }
 
 export class ChatCard extends Block {
-  constructor({avatar, name, message, time, notify}: ChatCardProps) {
-    super({avatar, name, message, time, notify});
-
+  constructor(props: ChatCardProps) {
+    super(props);
   }
 
   render() {
@@ -25,7 +24,7 @@ export class ChatCard extends Block {
                 <p class="chat-card__text">{{message}}</p>
             </div>
             <div class="chat-card__container">
-                <span class="chat-card__time">{{time}}</span>
+                <time class="chat-card__time">{{time}}</time>
                 <div class="chat-card__notify">{{notify}}</div>
             </div>
         </li>

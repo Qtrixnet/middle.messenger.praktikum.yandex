@@ -21,12 +21,12 @@ export default class Block<P = any> {
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
-  protected children: {[id: string]: Block} = {};
+  protected children: { [id: string]: Block } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
-  protected refs: {[key: string]: Block} = {};
+  protected refs: { [key: string]: Block } = {};
 
   public constructor(props?: P) {
     const eventBus = new EventBus<Events>();
@@ -47,18 +47,18 @@ export default class Block<P = any> {
     eventBus.emit(Block.EVENTS.INIT, this.props);
   }
 
-  _registerEvents(eventBus: EventBus<Events>) {
+  private _registerEvents(eventBus: EventBus<Events>) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     this._element = this._createDocumentElement('div');
   }
 
-  protected getStateFromProps(props: any): void {
+  protected getStateFromProps(props: P): void {
     this.state = {};
   }
 
@@ -67,14 +67,14 @@ export default class Block<P = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
   }
 
-  _componentDidMount(props: P) {
+  private _componentDidMount(props: P) {
     this.componentDidMount(props);
   }
 
   componentDidMount(props: P) {
   }
 
-  _componentDidUpdate(oldProps: P, newProps: P) {
+  private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -106,7 +106,7 @@ export default class Block<P = any> {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const fragment = this._compile();
 
     this._removeEvents();
@@ -123,10 +123,9 @@ export default class Block<P = any> {
   };
 
   getContent(): HTMLElement {
-    // Хак, чтобы вызвать CDM только после добавления в DOM
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
+        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
           this.eventBus().emit(Block.EVENTS.FLOW_CDM);
         }
       }, 100)
@@ -135,22 +134,16 @@ export default class Block<P = any> {
     return this.element!;
   }
 
-  _makePropsProxy(props: any): any {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
-    const self = this;
-
+  private _makePropsProxy(props: any): any {
     return new Proxy(props as unknown as object, {
       get(target: Record<string, unknown>, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target: Record<string, unknown>, prop: string, value: unknown) {
+      set: (target: Record<string, unknown>, prop: string, value: unknown) => {
         target[prop] = value;
 
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в след итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
         return true;
       },
       deleteProperty() {
@@ -159,11 +152,11 @@ export default class Block<P = any> {
     }) as unknown as P;
   }
 
-  _createDocumentElement(tagName: string) {
+  private _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 
-  _removeEvents() {
+  private _removeEvents() {
     const events: Record<string, () => void> = (this.props as any).events;
 
     if (!events || !this._element) {
@@ -191,19 +184,10 @@ export default class Block<P = any> {
   _compile(): DocumentFragment {
     const fragment = document.createElement('template');
 
-    /**
-     * Рендерим шаблон
-     */
     const template = Handlebars.compile(this.render());
-    fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs });
+    fragment.innerHTML = template({...this.state, ...this.props, children: this.children, refs: this.refs});
 
-    /**
-     * Заменяем заглушки на компоненты
-     */
     Object.entries(this.children).forEach(([id, component]) => {
-      /**
-       * Ищем заглушку по id
-       */
       const stub = fragment.content.querySelector(`[data-id="${id}"]`);
 
       if (!stub) {
@@ -212,15 +196,9 @@ export default class Block<P = any> {
 
       const stubChilds = stub.childNodes.length ? stub.childNodes : [];
 
-      /**
-       * Заменяем заглушку на component._element
-       */
       const content = component.getContent();
       stub.replaceWith(content);
 
-      /**
-       * Ищем элемент layout-а, куда вставлять детей
-       */
       const layoutContent = content.querySelector('[data-layout="1"]');
 
       if (layoutContent && stubChilds.length) {
@@ -228,9 +206,6 @@ export default class Block<P = any> {
       }
     });
 
-    /**
-     * Возвращаем фрагмент
-     */
     return fragment.content;
   }
 

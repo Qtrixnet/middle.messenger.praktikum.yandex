@@ -1,6 +1,7 @@
 import Block from '../../core/Block';
 import './profile.css';
 import {validateForm, ValidateType} from "../../helpers/validateForm";
+import getElement from "../../utils/getElement";
 
 export class Profile extends Block {
   constructor() {
@@ -81,12 +82,12 @@ export class Profile extends Block {
       },
 
       onProfileDataChange: () => {
-        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
-        const emailElement = this.element?.querySelector('input[name="email"]') as HTMLInputElement;
-        const firstNameElement = this.element?.querySelector('input[name="first_name"]') as HTMLInputElement;
-        const phoneElement = this.element?.querySelector('input[name="phone"]') as HTMLInputElement;
-        const secondNameElement = this.element?.querySelector('input[name="second_name"]') as HTMLInputElement;
-        const displayNameElement = this.element?.querySelector('input[name="display_name"]') as HTMLInputElement;
+        const loginElement = getElement(this.element, 'login');
+        const emailElement = getElement(this.element, 'email');
+        const firstNameElement = getElement(this.element, 'first_name');
+        const phoneElement = getElement(this.element, 'phone');
+        const secondNameElement = getElement(this.element, 'second_name');
+        const displayNameElement = getElement(this.element, 'display_name');
 
         const loginErrorMessage = validateForm([
           {type: ValidateType.Login, value: loginElement.value},

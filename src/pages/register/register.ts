@@ -1,6 +1,7 @@
 import Block from '../../core/Block';
 import './register.css';
 import {validateForm, ValidateType} from "../../helpers/validateForm";
+import getElement from "../../utils/getElement";
 
 export class Register extends Block {
   constructor() {
@@ -93,13 +94,13 @@ export class Register extends Block {
       },
 
       onRegister: () => {
-        const loginElement = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
-        const emailElement = this.element?.querySelector('input[name="email"]') as HTMLInputElement;
-        const firstNameElement = this.element?.querySelector('input[name="first_name"]') as HTMLInputElement;
-        const phoneElement = this.element?.querySelector('input[name="phone"]') as HTMLInputElement;
-        const secondNameElement = this.element?.querySelector('input[name="second_name"]') as HTMLInputElement;
-        const passwordElement = this.element?.querySelector('input[name="password"]') as HTMLInputElement;
-        const passwordSecondElement = this.element?.querySelector('input[name="password__second"]') as HTMLInputElement;
+        const loginElement = getElement(this.element, 'login');
+        const emailElement = getElement(this.element, 'email');
+        const firstNameElement = getElement(this.element, 'first_name');
+        const phoneElement = getElement(this.element, 'phone');
+        const secondNameElement = getElement(this.element, 'second_name');
+        const passwordElement = getElement(this.element, 'password');
+        const passwordSecondElement = getElement(this.element, 'password__second');
 
         const loginErrorMessage = validateForm([
           {type: ValidateType.Login, value: loginElement.value},

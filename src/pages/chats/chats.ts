@@ -8,7 +8,7 @@ export class Chats extends Block {
 
     this.setProps({
       messageError: '',
-      messageValue: 'Lorem ipsum',
+      messageValue: '',
 
       onMessageFocus: () => console.log('message focus'),
       onMessageInput: (e: InputEvent) => {
@@ -26,7 +26,6 @@ export class Chats extends Block {
         const errorMessage = validateForm([
           {type: this.props.name, value: element.value},
         ])
-        console.log(errorMessage)
         this.setProps({
           messageError: errorMessage
         })
@@ -34,7 +33,6 @@ export class Chats extends Block {
 
       onSubmit: (e: SubmitEvent) => {
         e.preventDefault();
-        console.log(123);
       }
     })
   }
