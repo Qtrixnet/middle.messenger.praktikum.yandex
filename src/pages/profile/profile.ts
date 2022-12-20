@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import './profile.css';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import {validateForm, ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
 
 export class Profile extends Block {

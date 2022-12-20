@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import './chats.css';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import {validateForm, ValidateType} from "../../helpers/validate-form";
 
 export class Chats extends Block {
   constructor() {
