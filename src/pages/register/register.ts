@@ -1,7 +1,7 @@
 import Block from '../../core/Block';
 import './register.css';
-import {validateForm, ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
+import validateForm, {ValidateType} from "../../helpers/validate-form";
 
 export class Register extends Block {
   constructor() {
@@ -259,7 +259,7 @@ export class Register extends Block {
                 </fieldset>
                 <div class="register__buttons">
                     {{{Button text="Зарегистрироваться" onClick=onRegister}}}
-                    <a href="#" class="register__link">Вернуться назад</a>
+                    {{{Link text="Вернуться назад" to="/"}}}
                 </div>
             </form>
         </section>

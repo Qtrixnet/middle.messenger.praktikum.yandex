@@ -15,7 +15,7 @@ interface ValidateRule {
   value: string;
 }
 
-export function validateForm(rules: ValidateRule[]): string {
+const validateForm = (rules: ValidateRule[]): string => {
   let errorMessage = '';
 
   rules.forEach((rule) => {
@@ -61,3 +61,5 @@ export function validateForm(rules: ValidateRule[]): string {
 
   return errorMessage;
 }
+
+export default validateForm;

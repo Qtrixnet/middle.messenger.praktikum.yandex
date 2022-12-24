@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import './login.css';
-import {validateForm, ValidateType} from "../../helpers/validate-form";
+import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
 
 export class Login extends Block {
@@ -100,7 +100,7 @@ export class Login extends Block {
                 {{/if}}
                 <div class="login__buttons">
                     {{{Button text="Войти" onClick=onLogin}}}
-                    <a href="../register/register.html" class="login__link">Зарегистрироваться</a>
+                    {{{Link text="Зарегистрироваться" to="/sign-up"}}}
                 </div>
             </form>
         </section>

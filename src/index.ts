@@ -4,6 +4,13 @@ import Router from "./core/Router";
 import {Profile} from "./pages/profile/profile";
 import {Register} from "./pages/register/register";
 import {Chats} from "./pages/chats/chats";
+import {registerComponent} from "./core";
+import Input from "./components/input";
+import Button from "./components/button";
+import ControlledInput from "./components/controlled-input";
+import InputError from "./components/input-error";
+import Toolbar from "./components/toolbar";
+import Link from "./components/link";
 
 enum Routes {
   Index = '/',
@@ -11,6 +18,13 @@ enum Routes {
   Profile = '/settings',
   Chats = '/messenger',
 }
+
+registerComponent(Input);
+registerComponent(Button);
+registerComponent(Link);
+registerComponent(ControlledInput);
+registerComponent(InputError);
+registerComponent(Toolbar);
 
 document.addEventListener("DOMContentLoaded", () => {
   Router

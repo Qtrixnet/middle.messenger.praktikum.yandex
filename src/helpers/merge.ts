@@ -1,6 +1,6 @@
 import {Indexed} from "../types/types";
 
-export function merge(lhs: Indexed, rhs: Indexed): Indexed {
+const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
   for (let p in rhs) {
     if (!rhs.hasOwnProperty(p)) {
       continue;
@@ -19,3 +19,5 @@ export function merge(lhs: Indexed, rhs: Indexed): Indexed {
 
   return lhs;
 }
+
+export default merge;

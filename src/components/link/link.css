@@ -1,0 +1,14 @@
+.link {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--primary);
+  text-align: center;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.link:hover {
+  color: var(--light);
+  cursor: pointer;
+}
