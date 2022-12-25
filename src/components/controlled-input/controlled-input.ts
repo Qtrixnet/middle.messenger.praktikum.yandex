@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import './controlled-input.css';
-import {validateForm} from "../../helpers/validate-form";
+import validateForm from "../../helpers/validate-form";
 
 interface ControlledInputProps {
   onInput: () => void;

@@ -2,6 +2,8 @@ import Block from '../../core/Block';
 import './login.css';
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
+import {AuthController} from "../../controllers/AuthController";
+import {SigninData} from "../../api/AuthAPI";
 
 export class Login extends Block {
   constructor() {
@@ -12,7 +14,6 @@ export class Login extends Block {
       loginValue: '',
       passwordError: '',
       passwordValue: '',
-      onLoginFocus: () => console.log('login focus'),
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -21,7 +22,6 @@ export class Login extends Block {
         // @ts-ignore
         this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
       },
-      onPasswordFocus: () => console.log('password focus'),
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -51,10 +51,10 @@ export class Login extends Block {
           })
         } else {
           const data = {
-            loginValue: loginElement.value,
-            passwordValue: passwordElement.value,
+            login: loginElement.value,
+            password: passwordElement.value,
           }
-          console.log(data)
+          AuthController.signin(data as SigninData)
         }
       }
     })
