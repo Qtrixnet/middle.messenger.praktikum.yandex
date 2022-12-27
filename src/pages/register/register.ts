@@ -2,6 +2,7 @@ import Block from '../../core/Block';
 import './register.css';
 import getElement from "../../utils/getElement";
 import validateForm, {ValidateType} from "../../helpers/validate-form";
+import AuthController from "../../controllers/AuthController";
 
 export class Register extends Block {
   constructor() {
@@ -149,15 +150,15 @@ export class Register extends Block {
           })
         } else {
           const data = {
-            loginValue: loginElement.value,
-            emailValue: emailElement.value,
-            firstNameValue: firstNameElement.value,
-            phoneValue: phoneElement.value,
-            secondNameValue: secondNameElement.value,
-            passwordValue: passwordElement.value,
-            secondPasswordValue: secondNameElement.value
+            first_name: firstNameElement.value,
+            second_name: secondNameElement.value,
+            login: loginElement.value,
+            email: emailElement.value,
+            phone: phoneElement.value,
+            password: passwordElement.value,
           }
-          console.log(data)
+
+          AuthController.signup(data);
         }
       }
     })
@@ -180,8 +181,9 @@ export class Register extends Block {
                             color="dark"
                             ref="loginInputRef"
                             error=loginError
-                            value=loginValue
+                            value="qtrixnet"
                     }}}
+<!--                            value=loginValue-->
                     {{{ControlledInput
                             onInput=onEmailInput
                             onFocus=onEmailFocus
@@ -192,8 +194,9 @@ export class Register extends Block {
                             color="dark"
                             ref="emailInputRef"
                             error=emailError
-                            value=emailValue
+                            value="qtrixnet@yandex.ru"
                     }}}
+<!--                            value=emailValue-->
                     {{{ControlledInput
                             onInput=onFirstNameInput
                             onFocus=onFirstNameFocus
@@ -204,8 +207,9 @@ export class Register extends Block {
                             color="dark"
                             ref="firstNameInputRef"
                             error=firstNameError
-                            value=firstNameValue
+                            value="kirill"
                     }}}
+<!--                            value=firstNameValue-->
                     {{{ControlledInput
                             onInput=onPhoneInput
                             onFocus=onPhoneFocus
@@ -216,8 +220,9 @@ export class Register extends Block {
                             color="dark"
                             ref="phoneInputRef"
                             error=phoneError
-                            value=phoneValue
+                            value="87006517000"
                     }}}
+<!--                            value=phoneValue-->
                     {{{ControlledInput
                             onInput=onSecondNameInput
                             onFocus=onSecondNameFocus
@@ -228,8 +233,9 @@ export class Register extends Block {
                             color="dark"
                             ref="secondNameInputRef"
                             error=secondNameError
-                            value=secondNameValue
+                            value="kirill"
                     }}}
+<!--                            value=secondNameValue-->
                     <fieldset class="register__container">
                         {{{ControlledInput
                                 onInput=onPasswordInput
@@ -241,8 +247,9 @@ export class Register extends Block {
                                 color="dark"
                                 ref="passwordInputRef"
                                 error=passwordError
-                                value=passwordValue
+                                value="12345678Q"
                         }}}
+<!--                                value=passwordValue-->
                         {{{ControlledInput
                                 onInput=onSecondPasswordInput
                                 onFocus=onSecondPasswordFocus
@@ -253,8 +260,9 @@ export class Register extends Block {
                                 color="dark"
                                 ref="secondPasswordInputRef"
                                 error=secondPasswordError
-                                value=secondPasswordValue
+                                value="12345678Q"
                         }}}
+<!--                                value=secondPasswordValue-->
                     </fieldset>
                 </fieldset>
                 <div class="register__buttons">

@@ -2,8 +2,7 @@ import Block from '../../core/Block';
 import './login.css';
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
-import {AuthController} from "../../controllers/AuthController";
-import {SigninData} from "../../api/AuthAPI";
+import AuthController from "../../controllers/AuthController";
 
 export class Login extends Block {
   constructor() {
@@ -54,7 +53,9 @@ export class Login extends Block {
             login: loginElement.value,
             password: passwordElement.value,
           }
-          AuthController.signin(data as SigninData)
+
+          AuthController.signin(data);
+          // AuthController.logout()
         }
       }
     })
@@ -77,8 +78,9 @@ export class Login extends Block {
                             color="dark"
                             ref="loginInputRef"
                             error=loginError
-                            value=loginValue
+                            value="qtrixnet"
                     }}}
+<!--                            value=loginValue-->
                     {{{ControlledInput
                             onInput=onPasswordInput
                             onFocus=onPasswordFocus
@@ -89,8 +91,9 @@ export class Login extends Block {
                             color="dark"
                             ref="passwordInputRef"
                             error=passwordError
-                            value=passwordValue
+                            value="12345678Q"
                     }}}
+<!--                            value=passwordValue-->
                 </fieldset>
                 {{#if error}}
                     <div class="login__error">
