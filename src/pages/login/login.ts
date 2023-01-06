@@ -55,7 +55,6 @@ export class Login extends Block {
           }
 
           AuthController.signin(data);
-          // AuthController.logout()
         }
       }
     })
