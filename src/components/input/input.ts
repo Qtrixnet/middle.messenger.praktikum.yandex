@@ -2,6 +2,7 @@ import Block from '../../core/Block';
 import './input.css';
 
 interface InputProps {
+  isDisabled: boolean;
   onInput: () => void;
   onFocus: () => void;
   onBlur: () => void;
@@ -33,6 +34,7 @@ export class Input extends Block {
     // language=hbs
     return `
         <input
+                ${this.props.isDisabled ? 'disabled' : 'enabled'}
                 class="input input_{{color}}"
                 value="{{value}}"
                 type="{{type}}"

@@ -11,13 +11,7 @@ import ControlledInput from "./components/controlled-input";
 import InputError from "./components/input-error";
 import Toolbar from "./components/toolbar";
 import Link from "./components/link";
-
-enum Routes {
-  Index = '/',
-  Register = '/sign-up',
-  Profile = '/settings',
-  Chats = '/messenger',
-}
+import {Routes} from "./types/types";
 
 registerComponent(Input);
 registerComponent(Button);

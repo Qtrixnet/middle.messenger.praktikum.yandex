@@ -59,11 +59,11 @@
   color: var(--primary);
 }
 
-.profile__button_quit {
-  padding: 0;
-  background-color: transparent;
-  color: var(--danger);
-}
+/*.profile__button_quit {*/
+/*  padding: 0;*/
+/*  background-color: transparent;*/
+/*  color: var(--danger);*/
+/*}*/
 
 .profile__button-icon {
   width: 20px;
@@ -78,9 +78,9 @@
   background-image: url("../../assets/images/icons/avatar.svg");
 }
 
-.profile__button-icon_quit {
-  background-image: url("../../assets/images/icons/quit.svg");
-}
+/*.profile__button-icon_quit {*/
+/*  background-image: url("../../assets/images/icons/quit.svg");*/
+/*}*/
 
 .profile__button-icon_data {
   background-image: url("../../assets/images/icons/data.svg");

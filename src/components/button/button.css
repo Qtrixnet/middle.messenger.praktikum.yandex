@@ -10,6 +10,10 @@
   text-align: center;
   text-decoration: none;
   transition: background .2s ease, box-shadow .2s ease, color .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .button:hover {
@@ -20,4 +24,37 @@
 
 .button:active {
   box-shadow: 0 0 0 4px rgba(30, 120, 255, 0.5);
+}
+
+.button_simple {
+  background-color: transparent;
+  padding: 0;
+}
+
+.button_simple:hover {
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.button_danger {
+  color: var(--danger);
+}
+
+.button_danger:hover {
+  color: var(--danger);
+  opacity: 0.8;
+}
+
+.button__icon {
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
+
+.button__icon_quit {
+  background-image: url("../../assets/images/icons/quit.svg");
 }

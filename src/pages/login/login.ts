@@ -69,7 +69,6 @@ export class Login extends Block {
                 <fieldset class="login__fieldset">
                     {{{ControlledInput
                             onInput=onLoginInput
-                            onFocus=onLoginFocus
                             type="text"
                             name="login"
                             placeholder="Ваш логин"
@@ -79,10 +78,8 @@ export class Login extends Block {
                             error=loginError
                             value="qtrixnet"
                     }}}
-<!--                            value=loginValue-->
                     {{{ControlledInput
                             onInput=onPasswordInput
-                            onFocus=onPasswordFocus
                             type="password"
                             name="password"
                             placeholder="Ваш пароль"
@@ -92,7 +89,6 @@ export class Login extends Block {
                             error=passwordError
                             value="12345678Q"
                     }}}
-<!--                            value=passwordValue-->
                 </fieldset>
                 {{#if error}}
                     <div class="login__error">

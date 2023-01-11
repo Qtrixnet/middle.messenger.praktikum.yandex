@@ -1,7 +1,10 @@
 import Block from '../../core/Block';
 import './profile.css';
-import {validateForm, ValidateType} from "../../helpers/validate-form";
+import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
+import AuthController from "../../controllers/AuthController";
+import store from "../../core/Store";
+import UserController from "../../controllers/UserController";
 
 export class Profile extends Block {
   constructor() {
@@ -9,19 +12,45 @@ export class Profile extends Block {
 
     this.setProps({
       loginError: '',
-      loginValue: 'ivanivanov',
+      loginValue: '',
       emailError: '',
-      emailValue: 'example@gmail.com',
+      emailValue: '',
       firstNameError: '',
-      firstNameValue: 'Иван',
+      firstNameValue: '',
       phoneError: '',
-      phoneValue: '+7123456789',
+      phoneValue: '',
       secondNameError: '',
-      secondNameValue: 'Иванов',
+      secondNameValue: '',
       displayNameError: '',
-      displayNameValue: 'Иваныч',
+      displayNameValue: '',
+      isFormDisabled: true,
+      previousData: {},
 
-      onLoginFocus: () => console.log('login focus'),
+      onProfileDataEnabled: () => {
+        this.setProps({
+          isFormDisabled: false,
+          previousData: {
+            loginValue: this.props.loginValue,
+            emailValue: this.props.emailValue,
+            firstNameValue: this.props.firstNameValue,
+            phoneValue: this.props.phoneValue,
+            secondNameValue: this.props.secondNameValue,
+            displayNameValue: this.props.displayNameValue,
+          }
+        })
+      },
+      onProfileDataDisabled: () => {
+        this.setProps({
+          isFormDisabled: true,
+          loginValue: this.props.previousData.loginValue,
+          emailValue: this.props.previousData.emailValue,
+          firstNameValue: this.props.previousData.firstNameValue,
+          phoneValue: this.props.previousData.phoneValue,
+          secondNameValue: this.props.previousData.secondNameValue,
+          displayNameValue: this.props.previousData.displayNameValue,
+        })
+      },
+
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -31,7 +60,6 @@ export class Profile extends Block {
         this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onEmailFocus: () => console.log('email focus'),
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -41,7 +69,6 @@ export class Profile extends Block {
         this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onFirstNameFocus: () => console.log('first_name focus'),
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -51,7 +78,6 @@ export class Profile extends Block {
         this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onPhoneFocus: () => console.log('phone focus'),
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -61,7 +87,6 @@ export class Profile extends Block {
         this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onSecondNameFocus: () => console.log('second_name focus'),
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -71,7 +96,6 @@ export class Profile extends Block {
         this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onDisplayNameFocus: () => console.log('display_name focus'),
       onDisplayNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -79,6 +103,10 @@ export class Profile extends Block {
         ])
         // @ts-ignore
         this.refs.displayNameInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onLogout: () => {
+        AuthController.logout();
       },
 
       onProfileDataChange: () => {
@@ -130,18 +158,34 @@ export class Profile extends Block {
           })
         } else {
           const data = {
-            loginValue: loginElement.value,
-            emailValue: emailElement.value,
-            firstNameValue: firstNameElement.value,
-            phoneValue: phoneElement.value,
-            secondNameValue: secondNameElement.value,
-            displayNameValue: displayNameElement.value,
+            login: loginElement.value,
+            email: emailElement.value,
+            first_name: firstNameElement.value,
+            phone: phoneElement.value,
+            second_name: secondNameElement.value,
+            display_name: displayNameElement.value,
           }
-          console.log(data)
+
+          UserController.updateUser(data);
+
+          this.setProps({isFormDisabled: false})
         }
       }
     })
 
+  }
+
+  async componentDidMount() {
+    await AuthController.fetchUser();
+    const {user} = store.getState();
+    this.setProps({
+      loginValue: user.login,
+      emailValue: user.email,
+      firstNameValue: user.first_name,
+      phoneValue: user.phone,
+      secondNameValue: user.second_name,
+      displayNameValue: user.display_name,
+    })
   }
 
   render() {
@@ -154,7 +198,7 @@ export class Profile extends Block {
                     <img class="profile__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
                          alt="avatar">
                     <div class="profile__data">
-                        <h1 class="profile__title">Иван Иванов</h1>
+                        <h1 class="profile__title">${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
                         <button class="profile__button profile__button_avatar">
                             <span class="profile__button-icon profile__button-icon_avatar"></span>
                             Поменять аватар
@@ -165,7 +209,6 @@ export class Profile extends Block {
                     <fieldset class="profile__fieldset">
                         {{{ControlledInput
                                 onInput=onLoginInput
-                                onFocus=onLoginFocus
                                 type="text"
                                 name="login"
                                 placeholder="Ваш логин"
@@ -174,10 +217,10 @@ export class Profile extends Block {
                                 ref="loginInputRef"
                                 error=loginError
                                 value=loginValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onFirstNameInput
-                                onFocus=onFirstNameFocus
                                 type="text"
                                 name="first_name"
                                 placeholder="Ваше имя"
@@ -186,10 +229,10 @@ export class Profile extends Block {
                                 ref="firstNameInputRef"
                                 error=firstNameError
                                 value=firstNameValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onEmailInput
-                                onFocus=onEmailFocus
                                 type="email"
                                 name="email"
                                 placeholder="Ваш электронный адрес"
@@ -198,10 +241,10 @@ export class Profile extends Block {
                                 ref="emailInputRef"
                                 error=emailError
                                 value=emailValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onSecondNameInput
-                                onFocus=onSecondNameFocus
                                 type="text"
                                 name="second_name"
                                 placeholder="Ваша фамилия"
@@ -210,10 +253,10 @@ export class Profile extends Block {
                                 ref="secondNameInputRef"
                                 error=secondNameError
                                 value=secondNameValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onPhoneInput
-                                onFocus=onPhoneFocus
                                 type="phone"
                                 name="phone"
                                 placeholder="Ваш номер телефона"
@@ -222,10 +265,10 @@ export class Profile extends Block {
                                 ref="phoneInputRef"
                                 error=phoneError
                                 value=phoneValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onDisplayNameInput
-                                onFocus=onDisplayNameFocus
                                 type="text"
                                 name="display_name"
                                 placeholder="Ваше имя в чате"
@@ -234,16 +277,25 @@ export class Profile extends Block {
                                 ref="displayNameInputRef"
                                 error=displayNameError
                                 value=displayNameValue
+                                isDisabled=isFormDisabled
                         }}}
                     </fieldset>
                     <div class="profile__buttons">
-                        {{{Button text="Изменить данные" onClick=onProfileDataChange}}}
-                        {{{Button text="Изменить пароль"}}}
+                        ${this.props.isFormDisabled ? `
+                          {{{Button text="Изменить данные" onClick=onProfileDataEnabled}}}
+                          {{{Button text="Изменить пароль"}}}            
+                        ` : `
+                          {{{Button text="Сохранить" onClick=onProfileDataChange}}}
+                          {{{Button text="Отменить" onClick=onProfileDataDisabled}}}
+                        `}
                     </div>
-                    <button class="profile__button profile__button_quit">
-                        <span class="profile__button-icon profile__button-icon_quit"></span>
-                        Выйти
-                    </button>
+                    {{{Button
+                            text="Выйти"
+                            isSimple=true
+                            isDanger=true
+                            onClick=onLogout
+                            type="quit"
+                    }}}
                 </form>
             </div>
         </section>

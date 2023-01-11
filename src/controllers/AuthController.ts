@@ -1,6 +1,7 @@
-import API, {AuthAPI, SigninData, SignupData} from '../api/AuthAPI';
+import API, {AuthAPI} from '../api/AuthAPI';
 import store from '../core/Store';
 import router from '../core/Router';
+import {Routes, SigninData, SignupData} from "../types/types";
 
 export class AuthController {
   private readonly api: AuthAPI;
@@ -15,7 +16,7 @@ export class AuthController {
 
       await this.fetchUser();
 
-      router.go('/settings');
+      router.go(Routes.Profile);
     } catch (e: any) {
       console.error(e);
     }
@@ -27,7 +28,7 @@ export class AuthController {
 
       await this.fetchUser();
 
-      router.go('/settings');
+      router.go(Routes.Profile);
     } catch (e: any) {
       console.error(e.message);
     }
@@ -45,7 +46,7 @@ export class AuthController {
 
       await this.api.logout();
 
-      router.go('/');
+      router.go(Routes.Index);
     } catch (e: any) {
       console.error(e.message);
     }

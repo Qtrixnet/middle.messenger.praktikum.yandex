@@ -181,9 +181,8 @@ export class Register extends Block {
                             color="dark"
                             ref="loginInputRef"
                             error=loginError
-                            value="qtrixnet"
+                            value=loginValue
                     }}}
-<!--                            value=loginValue-->
                     {{{ControlledInput
                             onInput=onEmailInput
                             onFocus=onEmailFocus
@@ -194,9 +193,8 @@ export class Register extends Block {
                             color="dark"
                             ref="emailInputRef"
                             error=emailError
-                            value="qtrixnet@yandex.ru"
+                            value=emailValue
                     }}}
-<!--                            value=emailValue-->
                     {{{ControlledInput
                             onInput=onFirstNameInput
                             onFocus=onFirstNameFocus
@@ -207,9 +205,8 @@ export class Register extends Block {
                             color="dark"
                             ref="firstNameInputRef"
                             error=firstNameError
-                            value="kirill"
+                            value=firstNameValue
                     }}}
-<!--                            value=firstNameValue-->
                     {{{ControlledInput
                             onInput=onPhoneInput
                             onFocus=onPhoneFocus
@@ -220,9 +217,8 @@ export class Register extends Block {
                             color="dark"
                             ref="phoneInputRef"
                             error=phoneError
-                            value="87006517000"
+                            value=phoneValue
                     }}}
-<!--                            value=phoneValue-->
                     {{{ControlledInput
                             onInput=onSecondNameInput
                             onFocus=onSecondNameFocus
@@ -233,9 +229,8 @@ export class Register extends Block {
                             color="dark"
                             ref="secondNameInputRef"
                             error=secondNameError
-                            value="kirill"
+                            value=secondNameValue
                     }}}
-<!--                            value=secondNameValue-->
                     <fieldset class="register__container">
                         {{{ControlledInput
                                 onInput=onPasswordInput
@@ -247,9 +242,8 @@ export class Register extends Block {
                                 color="dark"
                                 ref="passwordInputRef"
                                 error=passwordError
-                                value="12345678Q"
+                                value=passwordValue
                         }}}
-<!--                                value=passwordValue-->
                         {{{ControlledInput
                                 onInput=onSecondPasswordInput
                                 onFocus=onSecondPasswordFocus
@@ -260,9 +254,8 @@ export class Register extends Block {
                                 color="dark"
                                 ref="secondPasswordInputRef"
                                 error=secondPasswordError
-                                value="12345678Q"
+                                value=secondPasswordValue
                         }}}
-<!--                                value=secondPasswordValue-->
                     </fieldset>
                 </fieldset>
                 <div class="register__buttons">

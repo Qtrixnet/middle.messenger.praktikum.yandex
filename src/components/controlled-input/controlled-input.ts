@@ -3,6 +3,7 @@ import './controlled-input.css';
 import validateForm from "../../helpers/validate-form";
 
 interface ControlledInputProps {
+  isDisabled?: boolean;
   onInput: () => void;
   onFocus: () => void;
   type: 'text' | 'password' | 'email';
@@ -37,6 +38,7 @@ export class ControlledInput extends Block {
         <label class="controlled-input">
             <span class="controlled-input__label">{{label}}</span>
             {{{Input
+                    isDisabled=isDisabled
                     onInput=onInput
                     onFocus=onFocus
                     onBlur=onBlur
