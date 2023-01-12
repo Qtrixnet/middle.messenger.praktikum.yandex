@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './register.css';
+import styles from './register.module.pcss';
 import getElement from "../../utils/getElement";
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import AuthController from "../../controllers/AuthController";
@@ -167,10 +167,10 @@ export class Register extends Block {
   render() {
     // language=hbs
     return `
-        <section class="register">
-            <form class="register__form">
-                <h2 class="register__title">Регистрация аккаунта</h2>
-                <fieldset class="register__fieldset">
+        <section class=${styles.register}>
+            <form class=${styles.form}>
+                <h2 class=${styles.title}>Регистрация аккаунта</h2>
+                <fieldset class=${styles.fieldset}>
                     {{{ControlledInput
                             onInput=onLoginInput
                             onFocus=onLoginFocus
@@ -231,7 +231,7 @@ export class Register extends Block {
                             error=secondNameError
                             value=secondNameValue
                     }}}
-                    <fieldset class="register__container">
+                    <fieldset class=${styles.container}>
                         {{{ControlledInput
                                 onInput=onPasswordInput
                                 onFocus=onPasswordFocus
@@ -258,7 +258,7 @@ export class Register extends Block {
                         }}}
                     </fieldset>
                 </fieldset>
-                <div class="register__buttons">
+                <div class=${styles.buttons}>
                     {{{Button text="Зарегистрироваться" onClick=onRegister}}}
                     {{{Link text="Вернуться назад" to="/"}}}
                 </div>

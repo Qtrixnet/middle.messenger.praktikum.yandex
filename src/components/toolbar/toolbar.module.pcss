@@ -8,7 +8,7 @@
   border-right: 1px solid var(--background-accent);
 }
 
-.toolbar__avatar {
+.avatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -16,22 +16,15 @@
   object-fit: cover;
 }
 
-.toolbar__nav {
 
-}
-
-.toolbar__list {
+.list {
   display: flex;
   flex-direction: column;
   gap: 38px;
   list-style: none;
 }
 
-.toolbar__list-item {
-
-}
-
-.toolbar__button {
+.button {
   display: block;
   width: 24px;
   height: 24px;
@@ -40,12 +33,12 @@
   background-size: contain;
   background-color: transparent;
   border: 0;
-}
 
-.toolbar__button_chats {
-  background-image: url("../../assets/images/icons/chats.svg");
-}
+  &_chats {
+    background-image: url("../../assets/images/icons/chats.svg");
+  }
 
-.toolbar__button_profile {
-  background-image: url("../../assets/images/icons/profile.svg");
+  &_profile {
+    background-image: url("../../assets/images/icons/profile.svg");
+  }
 }

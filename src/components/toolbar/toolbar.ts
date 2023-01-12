@@ -1,20 +1,20 @@
 import Block from '../../core/Block';
-import './toolbar.css';
+import styles from './toolbar.module.pcss';
 
 export class Toolbar extends Block {
   render() {
     // language=hbs
     return `
-        <header class="toolbar">
-            <img class="toolbar__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
+        <header class=${styles.toolbar}>
+            <img class=${styles.avatar} src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
                  alt="avatar"/>
-            <nav class="toolbar__nav">
-                <ul class="toolbar__list">
-                    <li class="toolbar__list-item">
-                        <a href="../../pages/chats/chats.hbs" class="toolbar__button toolbar__button_chats"></a>
+            <nav>
+                <ul class=${styles.list}>
+                    <li>
+                        <a href="#" class="${styles.button} ${styles.button_chats}"></a>
                     </li>
-                    <li class="toolbar__list-item">
-                        <a href="../../pages/profile/profile.hbs" class="toolbar__button toolbar__button_profile"></a>
+                    <li>
+                        <a href="#" class="${styles.button} ${styles.button_profile}"></a>
                     </li>
                 </ul>
             </nav>

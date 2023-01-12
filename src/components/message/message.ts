@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './message.css';
+import styles from './message.module.pcss';
 
 interface MessageProps {
   onInput: () => void;
@@ -30,7 +30,7 @@ export class Message extends Block {
     return `
         <input
                 name="message"
-                class="message"
+                class=${styles.message}
                 type="text"
                 placeholder="Написать сообщение..."
                 value="{{value}}"

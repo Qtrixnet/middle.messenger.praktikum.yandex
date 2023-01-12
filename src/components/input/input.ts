@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './input.css';
+import styles from './input.module.pcss';
 
 interface InputProps {
   isDisabled: boolean;
@@ -35,7 +35,7 @@ export class Input extends Block {
     return `
         <input
                 ${this.props.isDisabled ? 'disabled' : 'enabled'}
-                class="input input_{{color}}"
+                class="${styles.input} ${styles.input}_${this.props.color}"
                 value="{{value}}"
                 type="{{type}}"
                 placeholder="{{placeholder}}"

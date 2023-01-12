@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './button.css';
+import styles from './button.module.pcss';
 
 interface ButtonProps {
   text: string;
@@ -18,11 +18,13 @@ export class Button extends Block {
     // language=hbs
     return `
         <button class="
-            button 
-            ${this.props.isSimple ? 'button_simple' : ''}
-            ${this.props.isDanger ? 'button_danger' : ''}
-        " type="button">
-            ${Boolean(this.props.type) ? `<span class="button__icon button__icon_${this.props.type}"></span>` : ''}
+            ${styles.button}
+            ${this.props.isSimple ? styles.button_simple : ''}
+            ${this.props.isDanger ? styles.button_danger : ''}
+        "
+         type="button"
+        >
+            ${Boolean(this.props.type) ? `<span class="${styles.buttonIcon} ${styles.buttonIcon}_${this.props.type}"></span>` : ''}
             {{text}}
         </button>
     `;

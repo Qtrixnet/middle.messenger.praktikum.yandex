@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './profile.css';
+import styles from './profile.module.pcss';
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
 import AuthController from "../../controllers/AuthController";
@@ -191,22 +191,22 @@ export class Profile extends Block {
   render() {
     // language=hbs
     return `
-        <section class="profile">
+        <section class=${styles.profile}>
             {{{Toolbar}}}
-            <div class="profile__content">
-                <header class="profile__header">
-                    <img class="profile__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
+            <div class=${styles.content}>
+                <header class=${styles.header}>
+                    <img class=${styles.avatar} src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
                          alt="avatar">
-                    <div class="profile__data">
-                        <h1 class="profile__title">${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
+                    <div class=${styles.data}>
+                        <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
                         <button class="profile__button profile__button_avatar">
                             <span class="profile__button-icon profile__button-icon_avatar"></span>
                             Поменять аватар
                         </button>
                     </div>
                 </header>
-                <form class="profile__form">
-                    <fieldset class="profile__fieldset">
+                <form class=${styles.form}>
+                    <fieldset class=${styles.fieldset}>
                         {{{ControlledInput
                                 onInput=onLoginInput
                                 type="text"
@@ -280,7 +280,7 @@ export class Profile extends Block {
                                 isDisabled=isFormDisabled
                         }}}
                     </fieldset>
-                    <div class="profile__buttons">
+                    <div class=${styles.buttons}>
                         ${this.props.isFormDisabled ? `
                           {{{Button text="Изменить данные" onClick=onProfileDataEnabled}}}
                           {{{Button text="Изменить пароль"}}}            

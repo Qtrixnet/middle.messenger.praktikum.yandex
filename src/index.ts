@@ -1,4 +1,4 @@
-import './styles/index.css';
+import './styles/index.pcss';
 import Login from "./pages/login";
 import Router from "./core/Router";
 import {Profile} from "./pages/profile/profile";

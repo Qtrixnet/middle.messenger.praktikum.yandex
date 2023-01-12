@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './link.css';
+import styles from './link.module.pcss';
 import Router from "../../core/Router";
 
 interface LinkProps {
@@ -19,7 +19,7 @@ export class Link extends Block {
   protected render(): string {
     // language=hbs
     return `
-        <span class="link">{{text}}</span>
+        <span class=${styles.link}>{{text}}</span>
     `;
   }
 }

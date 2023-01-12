@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './error.css';
+import styles from './error.module.pcss';
 import serverError from '../../assets/images/server-error.png';
 
 export class Error extends Block {
@@ -14,10 +14,10 @@ export class Error extends Block {
   render() {
     // language=hbs
     return `
-        <section class="error">
-            <div class="error__illustration" style="background-image: url('${this.props.image}')"></div>
-            <div class="error__container">
-                <h1 class="error__title">${this.props.message}</h1>
+        <section class=${styles.error}>
+            <div class=${styles.illustration} style="background-image: url('${this.props.image}')"></div>
+            <div class=${styles.container}>
+                <h1 class=${styles.title}>${this.props.message}</h1>
                 {{{Button text="Вернуться назад"}}}
             </div>
         </section>

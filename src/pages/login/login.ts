@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './login.css';
+import styles from './login.module.pcss';
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
 import AuthController from "../../controllers/AuthController";
@@ -63,10 +63,10 @@ export class Login extends Block {
   render() {
     // language=hbs
     return `
-        <section class="login">
-            <form class="login__form">
-                <h2 class="login__title">Вход</h2>
-                <fieldset class="login__fieldset">
+        <section class=${styles.login}>
+            <form class=${styles.form}>
+                <h2 class=${styles.title}>Вход</h2>
+                <fieldset class=${styles.fieldset}>
                     {{{ControlledInput
                             onInput=onLoginInput
                             type="text"
@@ -91,12 +91,12 @@ export class Login extends Block {
                     }}}
                 </fieldset>
                 {{#if error}}
-                    <div class="login__error">
-                        <span class="login__error-icon"></span>
-                        <span class="login__error-text">{{error}}</span>
+                    <div class=${styles.error}>
+                        <span class=${styles.error_icon}></span>
+                        <span class=${styles.error_text}>{{error}}</span>
                     </div>
                 {{/if}}
-                <div class="login__buttons">
+                <div class=${styles.buttons}>
                     {{{Button text="Войти" onClick=onLogin}}}
                     {{{Link text="Зарегистрироваться" to="/sign-up"}}}
                 </div>

@@ -1,5 +1,5 @@
 import Block from '../../core/Block';
-import './controlled-input.css';
+import styles from './controlled-input.module.pcss';
 import validateForm from "../../helpers/validate-form";
 
 interface ControlledInputProps {
@@ -35,8 +35,8 @@ export class ControlledInput extends Block {
   render() {
     // language=hbs
     return `
-        <label class="controlled-input">
-            <span class="controlled-input__label">{{label}}</span>
+        <label class=${styles.input}>
+            <span class=${styles.label}>{{label}}</span>
             {{{Input
                     isDisabled=isDisabled
                     onInput=onInput
