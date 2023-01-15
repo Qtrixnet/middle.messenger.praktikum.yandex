@@ -5,7 +5,7 @@
   font-size: 16px;
   line-height: 20px;
   border-radius: 8px;
-  padding: 16px 120px;
+  padding: 16px 40px;
   border: 0;
   text-align: center;
   text-decoration: none;
@@ -28,11 +28,16 @@
   &_simple {
     background-color: transparent;
     padding: 0;
+    color: var(--primary);
 
     &:hover {
       cursor: pointer;
       background-color: transparent;
-      color: var(--primary);
+      color: var(--light);
+    }
+
+    &:active {
+      box-shadow: none;
     }
   }
 
@@ -56,5 +61,9 @@
 
   &_quit {
     background-image: url("../../assets/images/icons/quit.svg");
+  }
+
+  &_avatar {
+    background-image: url("../../assets/images/icons/avatar.svg");
   }
 }

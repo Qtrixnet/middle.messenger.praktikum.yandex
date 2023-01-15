@@ -23,8 +23,72 @@ export class Profile extends Block {
       secondNameValue: '',
       displayNameError: '',
       displayNameValue: '',
+      oldPasswordError: '',
+      oldPasswordValue: '',
+      newPasswordError: '',
+      newPasswordValue: '',
       isFormDisabled: true,
+      isPasswordChanging: false,
       previousData: {},
+
+      onPasswordChangeEnabled: () => {
+        this.setProps({
+          isPasswordChanging: true,
+        })
+      },
+
+      onPasswordChangeDisabled: () => {
+        this.setProps({
+          isPasswordChanging: false,
+        })
+      },
+
+      onOldPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.oldPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      onNewPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        // @ts-ignore
+        this.refs.newPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+      },
+
+      OnNewPasswordSubmit: async () => {
+        const oldPasswordElement = getElement(this.element, 'password');
+        const newPasswordElement = getElement(this.element, 'password__second');
+
+        const oldPasswordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: oldPasswordElement.value},
+        ])
+
+        const newPasswordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: newPasswordElement.value},
+        ])
+
+        if (oldPasswordErrorMessage || newPasswordErrorMessage) {
+          this.setProps({
+            oldPasswordError: oldPasswordErrorMessage,
+            oldPasswordValue: oldPasswordElement.value,
+            newPasswordError: newPasswordErrorMessage,
+            newPasswordValue: newPasswordElement.value,
+          })
+        } else {
+          const data = {
+            oldPassword: oldPasswordElement.value,
+            newPassword: newPasswordElement.value,
+          }
+
+          await UserController.updatePassword(data);
+        }
+      },
 
       onProfileDataEnabled: () => {
         this.setProps({
@@ -199,14 +263,22 @@ export class Profile extends Block {
                          alt="avatar">
                     <div class=${styles.data}>
                         <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
-                        <button class="profile__button profile__button_avatar">
-                            <span class="profile__button-icon profile__button-icon_avatar"></span>
-                            Поменять аватар
-                        </button>
+                        {{{Button
+                                text="Поменять аватар"
+                                isSimple=true
+                                onClick=onLogout
+                                type="avatar"
+                        }}}
                     </div>
                 </header>
                 <form class=${styles.form}>
-                    <fieldset class=${styles.fieldset}>
+                    ${this.props.isPasswordChanging ? `{{{ChangePassword
+                      handleCancel=onPasswordChangeDisabled
+                      onSubmit=OnNewPasswordSubmit
+                      oldPasswordValue=oldPasswordValue
+                      onOldPasswordInput=onOldPasswordInput
+                    }}}` : `
+                      <fieldset class=${styles.fieldset}>
                         {{{ControlledInput
                                 onInput=onLoginInput
                                 type="text"
@@ -283,12 +355,13 @@ export class Profile extends Block {
                     <div class=${styles.buttons}>
                         ${this.props.isFormDisabled ? `
                           {{{Button text="Изменить данные" onClick=onProfileDataEnabled}}}
-                          {{{Button text="Изменить пароль"}}}            
+                          {{{Button text="Изменить пароль" onClick=onPasswordChangeEnabled}}}            
                         ` : `
                           {{{Button text="Сохранить" onClick=onProfileDataChange}}}
                           {{{Button text="Отменить" onClick=onProfileDataDisabled}}}
                         `}
                     </div>
+                    `}
                     {{{Button
                             text="Выйти"
                             isSimple=true

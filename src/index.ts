@@ -12,6 +12,7 @@ import InputError from "./components/input-error";
 import Toolbar from "./components/toolbar";
 import Link from "./components/link";
 import {Routes} from "./types/types";
+import ChangePassword from "./components/change-password";
 
 registerComponent(Input);
 registerComponent(Button);
@@ -19,6 +20,7 @@ registerComponent(Link);
 registerComponent(ControlledInput);
 registerComponent(InputError);
 registerComponent(Toolbar);
+registerComponent(ChangePassword);
 
 document.addEventListener("DOMContentLoaded", () => {
   Router

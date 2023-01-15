@@ -24,7 +24,6 @@ export class Register extends Block {
       secondPasswordError: '',
       secondPasswordValue: '',
 
-      onLoginFocus: () => console.log('login focus'),
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -34,7 +33,6 @@ export class Register extends Block {
         this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onEmailFocus: () => console.log('email focus'),
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -44,7 +42,6 @@ export class Register extends Block {
         this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onFirstNameFocus: () => console.log('first_name focus'),
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -54,7 +51,6 @@ export class Register extends Block {
         this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onPhoneFocus: () => console.log('phone focus'),
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -64,7 +60,6 @@ export class Register extends Block {
         this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onSecondNameFocus: () => console.log('second_name focus'),
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -74,7 +69,6 @@ export class Register extends Block {
         this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onPasswordFocus: () => console.log('password focus'),
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -84,7 +78,6 @@ export class Register extends Block {
         this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
       },
 
-      onSecondPasswordFocus: () => console.log('password__second focus'),
       onSecondPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
