@@ -4,7 +4,7 @@ import Route from "./Route";
 class Router {
   private static __instance: Router;
   private routes: Route[] = [];
-  private currentRoute: Route | null = null;
+  public currentRoute: Route | null = null;
   private history = window.history;
 
   constructor(private readonly rootQuery: string) {
@@ -66,6 +66,14 @@ class Router {
 
   private getRoute(pathname: string) {
     return this.routes.find(route => route.match(pathname));
+  }
+
+  public getCurrentRoute() {
+    if(this.currentRoute) {
+      return this.currentRoute.getPath();
+    } else {
+      return '';
+    }
   }
 }
 

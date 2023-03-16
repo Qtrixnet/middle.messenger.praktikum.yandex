@@ -1,5 +1,6 @@
 import Block from '../../core/Block';
 import styles from './toolbar.module.pcss';
+import {Routes} from "../../types/types";
 
 export class Toolbar extends Block {
   render() {
@@ -11,10 +12,10 @@ export class Toolbar extends Block {
             <nav>
                 <ul class=${styles.list}>
                     <li>
-                        <a href="#" class="${styles.button} ${styles.button_chats}"></a>
+                        {{{Link to="${Routes.Chats}" icon="${Routes.Chats}"}}}
                     </li>
                     <li>
-                        <a href="#" class="${styles.button} ${styles.button_profile}"></a>
+                        {{{Link to="${Routes.Profile}" icon="${Routes.Profile}"}}}
                     </li>
                 </ul>
             </nav>

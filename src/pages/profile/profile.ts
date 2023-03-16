@@ -5,12 +5,14 @@ import getElement from "../../utils/getElement";
 import AuthController from "../../controllers/AuthController";
 import store from "../../core/Store";
 import UserController from "../../controllers/UserController";
+import baseAvatar from "../../assets/images/avatar.png";
 
 export class Profile extends Block {
   constructor() {
     super();
 
     this.setProps({
+      avatar: '',
       loginError: '',
       loginValue: '',
       emailError: '',
@@ -29,7 +31,20 @@ export class Profile extends Block {
       newPasswordValue: '',
       isFormDisabled: true,
       isPasswordChanging: false,
+      isAvatarChanging: false,
       previousData: {},
+
+      avatarPopupOpen: () => {
+        this.setProps({
+          isAvatarChanging: true,
+        })
+      },
+
+      avatarPopupClose: () => {
+        this.setProps({
+          isAvatarChanging: false,
+        })
+      },
 
       onPasswordChangeEnabled: () => {
         this.setProps({
@@ -242,7 +257,9 @@ export class Profile extends Block {
   async componentDidMount() {
     await AuthController.fetchUser();
     const {user} = store.getState();
+
     this.setProps({
+      avatar: user.avatar,
       loginValue: user.login,
       emailValue: user.email,
       firstNameValue: user.first_name,
@@ -259,14 +276,14 @@ export class Profile extends Block {
             {{{Toolbar}}}
             <div class=${styles.content}>
                 <header class=${styles.header}>
-                    <img class=${styles.avatar} src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
+                    <img class=${styles.avatar} src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
                          alt="avatar">
                     <div class=${styles.data}>
                         <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
                         {{{Button
                                 text="Поменять аватар"
                                 isSimple=true
-                                onClick=onLogout
+                                onClick=avatarPopupOpen
                                 type="avatar"
                         }}}
                     </div>
@@ -371,6 +388,11 @@ export class Profile extends Block {
                     }}}
                 </form>
             </div>
+            ${this.props.isAvatarChanging ? `
+              {{{AvatarPopup
+                handleClose=avatarPopupClose
+              }}}
+            ` : ''}
         </section>
     `;
   }

@@ -1,10 +1,10 @@
 import './styles/index.pcss';
-import Login from "./pages/login";
+import {registerComponent} from "./core";
 import Router from "./core/Router";
+import Login from "./pages/login";
 import {Profile} from "./pages/profile/profile";
 import {Register} from "./pages/register/register";
 import {Chats} from "./pages/chats/chats";
-import {registerComponent} from "./core";
 import Input from "./components/input";
 import Button from "./components/button";
 import ControlledInput from "./components/controlled-input";
@@ -13,6 +13,11 @@ import Toolbar from "./components/toolbar";
 import Link from "./components/link";
 import {Routes} from "./types/types";
 import ChangePassword from "./components/change-password";
+import AvatarPopup from "./components/avatar-popup";
+import CloseButton from "./components/close-button";
+import AvatarInput from "./components/avatar-input";
+import MessageIcon from "./components/message-icon";
+import ProfileIcon from "./components/profile-icon";
 
 registerComponent(Input);
 registerComponent(Button);
@@ -21,6 +26,11 @@ registerComponent(ControlledInput);
 registerComponent(InputError);
 registerComponent(Toolbar);
 registerComponent(ChangePassword);
+registerComponent(AvatarPopup);
+registerComponent(CloseButton);
+registerComponent(AvatarInput);
+registerComponent(MessageIcon);
+registerComponent(ProfileIcon);
 
 document.addEventListener("DOMContentLoaded", () => {
   Router

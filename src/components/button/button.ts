@@ -7,11 +7,12 @@ interface ButtonProps {
   type?: string;
   isSimple?: boolean;
   isDanger?: boolean;
+  isDisabled?: boolean;
 }
 
 export class Button extends Block {
-  constructor({text, type, onClick, isSimple = false, isDanger = false}: ButtonProps) {
-    super({text, type, isSimple, isDanger, events: {click: onClick}});
+  constructor({text, type, onClick, isSimple = false, isDanger = false, isDisabled = false}: ButtonProps) {
+    super({text, type, isSimple, isDanger, isDisabled, events: {click: onClick}});
   }
 
   protected render(): string {
@@ -22,6 +23,7 @@ export class Button extends Block {
             ${this.props.isSimple ? styles.button_simple : ''}
             ${this.props.isDanger ? styles.button_danger : ''}
         "
+         ${this.props.isDisabled ? 'disabled' : ''}
          type="button"
         >
             ${Boolean(this.props.type) ? `<span class="${styles.buttonIcon} ${styles.buttonIcon}_${this.props.type}"></span>` : ''}
