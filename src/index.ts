@@ -18,6 +18,7 @@ import CloseButton from "./components/close-button";
 import AvatarInput from "./components/avatar-input";
 import MessageIcon from "./components/message-icon";
 import ProfileIcon from "./components/profile-icon";
+import EmptyChats from "./components/empty-chats";
 
 registerComponent(Input);
 registerComponent(Button);
@@ -31,6 +32,7 @@ registerComponent(CloseButton);
 registerComponent(AvatarInput);
 registerComponent(MessageIcon);
 registerComponent(ProfileIcon);
+registerComponent(EmptyChats);
 
 document.addEventListener("DOMContentLoaded", () => {
   Router

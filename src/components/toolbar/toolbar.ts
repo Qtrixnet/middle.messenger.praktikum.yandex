@@ -2,25 +2,18 @@ import Block from '../../core/Block';
 import styles from './toolbar.module.pcss';
 import {Routes} from "../../types/types";
 import store from "../../core/Store";
-import AuthController from "../../controllers/AuthController";
 import baseAvatar from "../../assets/images/avatar.png";
 
 export class Toolbar extends Block {
   constructor() {
     super();
-
-    this.setProps({
-      avatar: ''
-    })
   }
 
-  async componentDidMount() {
-    await AuthController.fetchUser();
+  componentDidMount() {
     const {user} = store.getState();
-
-    this.setProps({
-      avatar: user.avatar,
-    })
+    if (user) {
+      this.setProps({avatar: user.avatar});
+    }
   }
 
   render() {
