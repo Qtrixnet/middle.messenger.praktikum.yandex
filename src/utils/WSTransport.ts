@@ -5,6 +5,7 @@ export enum WSTransportEvents {
     Error = "error",
     Message = "message",
     Close = "close",
+    Open = "open",
 }
 
 export default class WSTransport extends EventBus {
@@ -56,18 +57,18 @@ export default class WSTransport extends EventBus {
     }
 
     private subscribe(socket: WebSocket) {
-        socket.addEventListener("open", () => {
+        socket.addEventListener(WSTransportEvents.Open, () => {
             this.emit(WSTransportEvents.Connected);
         });
-        socket.addEventListener("close", () => {
+        socket.addEventListener(WSTransportEvents.Close, () => {
             this.emit(WSTransportEvents.Close);
         });
 
-        socket.addEventListener("error", (e) => {
+        socket.addEventListener(WSTransportEvents.Error, (e) => {
             this.emit(WSTransportEvents.Error, e);
         });
 
-        socket.addEventListener("message", (message) => {
+        socket.addEventListener(WSTransportEvents.Message, (message) => {
             try {
                 const data = JSON.parse(message.data);
 

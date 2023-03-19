@@ -38,5 +38,3 @@ export class Link extends Block {
     `;
   }
 }
-            // ${this.props.icon ? styles[`link__icon_${this.props.icon}`] : ''}
-            // ${this.props.icon ? styles.link__icon : ''}

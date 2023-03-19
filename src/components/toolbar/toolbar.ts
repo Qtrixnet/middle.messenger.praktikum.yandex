@@ -1,14 +1,35 @@
 import Block from '../../core/Block';
 import styles from './toolbar.module.pcss';
 import {Routes} from "../../types/types";
+import store from "../../core/Store";
+import AuthController from "../../controllers/AuthController";
+import baseAvatar from "../../assets/images/avatar.png";
 
 export class Toolbar extends Block {
+  constructor() {
+    super();
+
+    this.setProps({
+      avatar: ''
+    })
+  }
+
+  async componentDidMount() {
+    await AuthController.fetchUser();
+    const {user} = store.getState();
+
+    this.setProps({
+      avatar: user.avatar,
+    })
+  }
+
   render() {
     // language=hbs
     return `
         <header class=${styles.toolbar}>
-            <img class=${styles.avatar} src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                 alt="avatar"/>
+            <img class=${styles.avatar}
+                 src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
+                 alt="avatar">
             <nav>
                 <ul class=${styles.list}>
                     <li>
