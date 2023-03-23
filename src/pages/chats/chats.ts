@@ -2,6 +2,8 @@ import Block from '../../core/Block';
 import styles from './chats.module.pcss';
 import validateForm, {ValidateType} from "../../helpers/validate-form";
 import ChatsController from "../../controllers/ChatsController";
+import AuthController from "../../controllers/AuthController";
+import store from "../../core/Store";
 
 export class Chats extends Block {
   constructor() {
@@ -11,6 +13,7 @@ export class Chats extends Block {
       messageError: '',
       messageValue: '',
       chats: [],
+      isPopupOpen: false,
 
       onMessageInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
@@ -22,6 +25,7 @@ export class Chats extends Block {
           messageError: errorMessage,
         })
       },
+
       onBlur: (e: FocusEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
@@ -34,12 +38,32 @@ export class Chats extends Block {
 
       onSubmit: (e: SubmitEvent) => {
         e.preventDefault();
+      },
+
+      onChatCreate: () => {
+        store.set('isChatPopupOpen', true);
+        this.setProps({
+          isPopupOpen: true
+        })
+      },
+
+      onPopupClose: () => {
+        store.set('isChatPopupOpen', false);
+        this.setProps({
+          isPopupOpen: false
+        })
       }
     })
   }
 
   componentDidMount() {
-    ChatsController.fetchChats();
+    AuthController.fetchUser();
+    ChatsController.fetchChats().finally(() => {
+      this.setProps({
+        chats: store.getState().chats,
+        isPopupOpen: store.getState().isChatPopupOpen
+      })
+    })
   }
 
   render() {
@@ -56,35 +80,17 @@ export class Chats extends Block {
                             </div>
                         </div>
                         <ul class=${styles.chats_list}>
-                            {{{ChatCard
-                                    avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                    name="Иван Иванов"
-                                    message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                    time="1: 38"
-                                    notify="8"
-                            }}}
-                            {{{ChatCard
-                                    avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                    name="Илон Маск"
-                                    message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                    time="1: 38"
-                                    notify="9"
-                            }}}
-                            {{{ChatCard
-                                    avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                    name="Станислав"
-                                    message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                    time="1: 38"
-                                    notify="24"
-                            }}}
-                            {{{ChatCard
-                                    avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                    name="Мария"
-                                    message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                    time="1: 38"
-                                    notify="18"
-                            }}}
+                            {{#each chats}}
+                                {{{ChatCard
+                                        avatar=this.avatar
+                                        name=this.title
+                                        message=this.last_message
+                                        time="1: 38"
+                                        notify=this.unread_count
+                                }}}
+                            {{/each}}
                         </ul>
+                        {{{Button text="Создать чат" onClick=onChatCreate className="${styles.create_button}"}}}
                     </section>
                     <section class=${styles.chat}>
                         <header class=${styles.header}>
@@ -138,6 +144,9 @@ export class Chats extends Block {
                             </form>
                         </footer>
                     </section>
+                    {{#if isPopupOpen}}
+                        {{{CreateChatPopup handleClose=onPopupClose}}}
+                    {{/if}}
                 </main>
             {{else}}
                 {{{EmptyChats}}}

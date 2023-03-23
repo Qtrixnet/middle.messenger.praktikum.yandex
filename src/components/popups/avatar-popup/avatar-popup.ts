@@ -1,6 +1,6 @@
-import Block from '../../core/Block';
+import Block from '../../../core/Block';
 import styles from './avatar-popup.module.pcss';
-import UserController from "../../controllers/UserController";
+import UserController from "../../../controllers/UserController";
 
 interface AvatarPopupProps {
   handleClose: () => void
@@ -15,11 +15,15 @@ export class AvatarPopup extends Block {
       onSubmit: (e: Event) => {
         e.preventDefault();
         const formData = new FormData();
-        const input: any = document.querySelector('#avatar');
-        console.log(input, input?.files)
-        formData.append("avatar", input?.files[0]);
-        UserController.updateAvatar(formData);
-        handleClose();
+        const input = document.querySelector('#avatar') as HTMLInputElement;
+
+        // @ts-ignore
+        if (input && input.files.length > 0) {
+          // @ts-ignore
+          formData.append("avatar", input.files[0]);
+          UserController.updateAvatar(formData);
+          handleClose();
+        }
       },
 
       onAvatarUpload: () => {

@@ -31,18 +31,18 @@ export class Profile extends Block {
       newPasswordValue: '',
       isFormDisabled: true,
       isPasswordChanging: false,
-      isAvatarChanging: false,
+      isPopupOpen: false,
       previousData: {},
 
       avatarPopupOpen: () => {
         this.setProps({
-          isAvatarChanging: true,
+          isPopupOpen: true,
         })
       },
 
       avatarPopupClose: () => {
         this.setProps({
-          isAvatarChanging: false,
+          isPopupOpen: false,
         })
       },
 
@@ -276,7 +276,8 @@ export class Profile extends Block {
             {{{Toolbar}}}
             <div class=${styles.content}>
                 <header class=${styles.header}>
-                    <img class=${styles.avatar} src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
+                    <img class=${styles.avatar}
+                         src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
                          alt="avatar">
                     <div class=${styles.data}>
                         <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
@@ -388,11 +389,11 @@ export class Profile extends Block {
                     }}}
                 </form>
             </div>
-            ${this.props.isAvatarChanging ? `
-              {{{AvatarPopup
-                handleClose=avatarPopupClose
-              }}}
-            ` : ''}
+            {{#if isPopupOpen}}
+                {{{AvatarPopup
+                        handleClose=avatarPopupClose
+                }}}
+            {{/if}}
         </section>
     `;
   }

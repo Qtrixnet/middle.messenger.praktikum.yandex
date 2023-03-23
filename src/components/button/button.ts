@@ -8,11 +8,20 @@ interface ButtonProps {
   isSimple?: boolean;
   isDanger?: boolean;
   isDisabled?: boolean;
+  className?: string;
 }
 
 export class Button extends Block {
-  constructor({text, type, onClick, isSimple = false, isDanger = false, isDisabled = false}: ButtonProps) {
-    super({text, type, isSimple, isDanger, isDisabled, events: {click: onClick}});
+  constructor({
+                text,
+                type = '',
+                onClick,
+                isSimple = false,
+                isDanger = false,
+                isDisabled = false,
+                className = '',
+  }: ButtonProps) {
+    super({text, type, isSimple, isDanger, isDisabled, className, events: {click: onClick}});
   }
 
   protected render(): string {
@@ -22,6 +31,7 @@ export class Button extends Block {
             ${styles.button}
             ${this.props.isSimple ? styles.button_simple : ''}
             ${this.props.isDanger ? styles.button_danger : ''}
+            ${this.props.className ? this.props.className : ''}
         "
          ${this.props.isDisabled ? 'disabled' : ''}
          type="button"
