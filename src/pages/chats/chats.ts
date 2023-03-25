@@ -13,7 +13,10 @@ export class Chats extends Block {
       messageError: '',
       messageValue: '',
       chats: [],
-      isPopupOpen: false,
+      selectedChat: {},
+      isCreateChatPopupOpen: false,
+      isUserAddPopupOpen: false,
+      isUserDeletePopupOpen: false,
 
       onMessageInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
@@ -40,17 +43,19 @@ export class Chats extends Block {
         e.preventDefault();
       },
 
-      onChatCreate: () => {
-        store.set('isChatPopupOpen', true);
-        this.setProps({
-          isPopupOpen: true
-        })
-      },
+      onChatCreatePopupOpen: () => this.setProps({isCreateChatPopupOpen: true}),
+      onChatCreatePopupClose: () => this.setProps({isCreateChatPopupOpen: false}),
 
-      onPopupClose: () => {
-        store.set('isChatPopupOpen', false);
+      onUserAddPopupOpen: () => this.setProps({isUserAddPopupOpen: true}),
+      onUserAddPopupClose: () => this.setProps({isUserAddPopupOpen: false}),
+
+      onUserDeletePopupOpen: () => this.setProps({isUserDeletePopupOpen: true}),
+      onUserDeletePopupClose: () => this.setProps({isUserDeletePopupOpen: false}),
+
+      onChatSelect: (id: number) => {
+        ChatsController.selectChat(id);
         this.setProps({
-          isPopupOpen: false
+          selectedChat: store.getState().chats.find((chat: { id: number; }) => chat.id === id) || {},
         })
       }
     })
@@ -59,9 +64,11 @@ export class Chats extends Block {
   componentDidMount() {
     AuthController.fetchUser();
     ChatsController.fetchChats().finally(() => {
+      console.log(store.getState().user)
       this.setProps({
         chats: store.getState().chats,
-        isPopupOpen: store.getState().isChatPopupOpen
+        isCreateChatPopupOpen: store.getState().isCreateChatPopupOpen,
+        selectedChat: store.getState().chats[0],
       })
     })
   }
@@ -82,70 +89,32 @@ export class Chats extends Block {
                         <ul class=${styles.chats_list}>
                             {{#each chats}}
                                 {{{ChatCard
-                                        avatar=this.avatar
-                                        name=this.title
-                                        message=this.last_message
-                                        time="1: 38"
-                                        notify=this.unread_count
+                                        id=id
+                                        avatar=avatar
+                                        name=title
+                                        message=last_message
+                                        time="1 : 38"
+                                        notify=unread_count
+                                        onClick=../onChatSelect
                                 }}}
                             {{/each}}
                         </ul>
-                        {{{Button text="Создать чат" onClick=onChatCreate className="${styles.create_button}"}}}
+                        {{{Button text="Создать чат" onClick=onChatCreatePopupOpen className="${styles.create_button}"}}}
                     </section>
-                    <section class=${styles.chat}>
-                        <header class=${styles.header}>
-                            <div class=${styles.header_container}>
-                                <h1 class=${styles.title}>Иван Иванов</h1>
-                                <span class=${styles.status}></span>
-                                <p class=${styles.status_text}>Был в сети 6 минут назад</p>
-                            </div>
-                            <button class=${styles.options}></button>
-                        </header>
-                        <div class=${styles.messages}>
-                            <ul class=${styles.messages_list}>
-                                <li class=${styles.messages_item}>
-                                    <p class=${styles.list_text}>Друзья, у меня для вас особенный выпуск
-                                        новостей!</p>
-                                </li>
-                                <li class=${styles.messages_item}>
-                                    <p class=${styles.list_text}>У меня для вас особенный выпуск новостей!</p>
-                                </li>
-                                <li class=${styles.messages_item}>
-                                    <img class=${styles.list_image}
-                                         src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg"
-                                         alt="">
-                                </li>
-                                <li class="${styles.messages_item} ${styles.messages_item_self}">
-                                    <p class=${styles.list_text}>Pellentesque habitant
-                                        morbi
-                                        tristique!</p>
-                                </li>
-                                <li class="${styles.messages_item} ${styles.messages_item_self}">
-                                    <p class=${styles.list_text}>Duis ac diam nec massa
-                                        aliquam
-                                        consequat. Curabitur ante neque</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <footer class=${styles.footer}>
-                            <span class=${styles.footer_error}>${this.props.messageError}</span>
-                            <form class=${styles.footer_form} onsubmit="${this.props.onSubmit}">
-                                <button class=${styles.footer_attach} type="button"></button>
-                                {{{
-                                Message
-                                        onInput=onMessageInput
-                                        onFocus=onMessageFocus
-                                        obBlur=onMessageBlur
-                                        value=messageValue
-                                        error=messageError
-                                        ref=messageRef
-                                }}}
-                                <button class=${styles.footer_send}></button>
-                            </form>
-                        </footer>
-                    </section>
-                    {{#if isPopupOpen}}
-                        {{{CreateChatPopup handleClose=onPopupClose}}}
+                    {{{Chat
+                            title=selectedChat.title
+                            id=selectedChat.id
+                            handleAddUser=onUserAddPopupOpen
+                            handleDeleteUser=onUserDeletePopupOpen
+                    }}}
+                    {{#if isCreateChatPopupOpen}}
+                        {{{CreateChatPopup handleClose=onChatCreatePopupClose}}}
+                    {{/if}}
+                    {{#if isUserAddPopupOpen}}
+                        {{{AddUserPopup handleClose=onUserAddPopupClose}}}
+                    {{/if}}
+                    {{#if isUserDeletePopupOpen}}
+                        {{{DeleteUserPopup handleClose=onUserDeletePopupClose}}}
                     {{/if}}
                 </main>
             {{else}}

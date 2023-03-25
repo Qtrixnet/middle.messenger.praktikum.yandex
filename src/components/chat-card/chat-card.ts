@@ -3,16 +3,18 @@ import styles from './chat-card.module.pcss';
 import baseAvatar from '../../assets/images/avatar.png';
 
 interface ChatCardProps {
+  id: number;
   avatar: string;
   name: string;
   message: string;
   time: string;
   notify: string;
+  onClick: (id: number) => void;
 }
 
 export class ChatCard extends Block {
-  constructor(props: ChatCardProps) {
-    super(props);
+  constructor({id, avatar, name, message, time, notify, onClick}: ChatCardProps) {
+    super({id,avatar, name, message, time, notify, events: {click: () => onClick(id)}});
   }
 
   render() {

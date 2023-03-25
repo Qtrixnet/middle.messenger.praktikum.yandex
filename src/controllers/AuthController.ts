@@ -2,6 +2,7 @@ import API, {AuthAPI} from '../api/AuthAPI';
 import store from '../core/Store';
 import router from '../core/Router';
 import {Routes, SigninData, SignupData} from "../types/types";
+import MessagesController from "./MessagesController";
 
 export class AuthController {
   private readonly api: AuthAPI;
@@ -42,7 +43,7 @@ export class AuthController {
 
   async logout() {
     try {
-      // MessagesController.closeAll();
+      MessagesController.closeAll();
 
       await this.api.logout();
 

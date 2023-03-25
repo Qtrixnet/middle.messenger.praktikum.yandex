@@ -21,8 +21,14 @@ import ProfileIcon from "./components/profile-icon";
 import EmptyChats from "./components/empty-chats";
 import CreateChatPopup from "./components/popups/create-chat-popup";
 import ChatCard from "./components/chat-card";
+import Chat from "./components/chat";
+import OptionsButton from "./components/options-button";
+import Options from "./components/options";
+import Option from "./components/option";
+import AddUserPopup from "./components/popups/add-user-popup";
+import DeleteUserPopup from "./components/popups/delete-user-popup";
 
-const components = [Input, Button, Link, ControlledInput, InputError, Toolbar, ChangePassword, CloseButton, AvatarInput, MessageIcon, ProfileIcon, EmptyChats, AvatarPopup, CreateChatPopup, ChatCard]
+const components = [Input, Button, Link, ControlledInput, InputError, Toolbar, ChangePassword, CloseButton, AvatarInput, MessageIcon, ProfileIcon, EmptyChats, AvatarPopup, CreateChatPopup, ChatCard, Chat, OptionsButton, Options, Option, AddUserPopup, DeleteUserPopup];
 
 // @ts-ignore
 components.forEach(component => registerComponent(component))

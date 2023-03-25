@@ -1,0 +1,39 @@
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    padding: 48px 24px;
+    background: var(--background-accent);
+    border-radius: 16px;
+    z-index: 2;
+    width: 512px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    color: var(--light);
+}

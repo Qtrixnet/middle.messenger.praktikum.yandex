@@ -1,0 +1,32 @@
+.text {
+    color: var(--light);
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity .2s ease;
+
+    &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}
+
+.icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.icon_add {
+    background-image: url("../../assets/images/icons/add.svg");
+}
+
+.icon_delete {
+    background-image: url("../../assets/images/icons/delete.svg");
+}

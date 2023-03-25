@@ -1,0 +1,117 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: var(--background-accent);
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text);
+}
+
+.status {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--light);
+}
+
+.status_text {
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--subtext);
+}
+
+.messages {
+    flex-grow: 1;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+}
+
+.messages_list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    list-style: none;
+    padding: 32px;
+}
+
+.messages_item {
+    color: var(--text);
+    background-color: var(--background-accent);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0;
+
+    &_self{
+        background-color: var(--primary);
+        align-self: flex-end;
+    }
+}
+
+.list_image {
+    width: 346px;
+    height: 208px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.list_text {
+    padding: 16px 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.footer {
+    background-color: var(--background);
+    padding: 20px 32px;
+}
+
+.footer_form {
+    background-color: var(--background-accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+}
+
+.footer_attach {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets/images/icons/attach.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+    transition: opacity .2s ease;
+}
+
+.footer_send {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets/images/icons/send.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+    transition: opacity .2s ease;
+}

@@ -1,24 +1,26 @@
 import Block from '../../../core/Block';
-import styles from './create-chat-popup.module.pcss';
+import styles from './delete-user-popup.module.pcss';
 import getElement from "../../../utils/getElement";
 import ChatsController from "../../../controllers/ChatsController";
+import store from "../../../core/Store";
 
-interface CreateChatPopupProps {
+interface DeleteUserPopupProps {
   handleClose: () => void
 }
 
-export class CreateChatPopup extends Block {
-  constructor({handleClose}: CreateChatPopupProps) {
+export class DeleteUserPopup extends Block {
+  constructor({handleClose}: DeleteUserPopupProps) {
     super({handleClose});
 
     this.setProps({
       onSubmit: (e: Event) => {
         e.preventDefault();
-        const inputElement = getElement(this.element, 'chat');
+        const inputElement = getElement(this.element, 'user');
 
-        ChatsController.create(inputElement.value).then(() => {
+        const id = store.getState().selectedChat;
+
+        ChatsController.deleteUserFromChat(id, Number(inputElement.value)).then(() => {
           handleClose();
-          ChatsController.fetchChats();
         })
       },
     })
@@ -31,17 +33,17 @@ export class CreateChatPopup extends Block {
             <div class=${styles.overlay}></div>
             <form class=${styles.content}>
                 {{{CloseButton onClick=handleClose}}}
-                <h2 class=${styles.title}>Создать чат</h2>
+                <h2 class=${styles.title}>Удалить пользователя из чата</h2>
                 {{{ControlledInput
                         type="text"
-                        name="chat"
-                        placeholder="Название чата"
-                        label="чат:"
+                        name="user"
+                        placeholder="id пользователя"
+                        label="Пользователь:"
                         color="dark"
-                        ref="chatInputRef"
+                        ref="userInputRef"
                 }}}
                 {{{Button
-                        text="Создать"
+                        text="Удалить"
                         onClick=onSubmit
                 }}}
             </form>
