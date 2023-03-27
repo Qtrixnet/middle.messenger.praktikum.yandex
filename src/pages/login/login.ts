@@ -76,7 +76,7 @@ export class Login extends Block {
                             color="dark"
                             ref="loginInputRef"
                             error=loginError
-                            value="qtrixnet"
+                            value=loginValue
                     }}}
                     {{{ControlledInput
                             onInput=onPasswordInput
@@ -87,7 +87,7 @@ export class Login extends Block {
                             color="dark"
                             ref="passwordInputRef"
                             error=passwordError
-                            value="12345678Q"
+                            value=passwordValue
                     }}}
                 </fieldset>
                 {{#if error}}
