@@ -11,7 +11,6 @@ export class AvatarPopup extends Block {
     super({handleClose});
 
     this.setProps({
-      isAvatarUpload: false,
       onSubmit: (e: Event) => {
         e.preventDefault();
         const formData = new FormData();
@@ -25,12 +24,6 @@ export class AvatarPopup extends Block {
           handleClose();
         }
       },
-
-      onAvatarUpload: () => {
-        this.setProps({
-          isAvatarUpload: true
-        })
-      }
     })
   }
 
@@ -42,9 +35,8 @@ export class AvatarPopup extends Block {
             <form class=${styles.content}>
                 {{{CloseButton onClick=handleClose}}}
                 <h2 class=${styles.title}>Загрузите файл</h2>
-                {{{AvatarInput onChange=onAvatarUpload}}}
+                {{{AvatarInput}}}
                 {{{Button
-                        isDisabled=${!this.props.isAvatarUpload}
                         text="Сохранить"
                         onClick=onSubmit
                 }}}

@@ -259,7 +259,7 @@ export class Profile extends Block {
     const {user} = store.getState();
 
     this.setProps({
-      avatar: user.avatar,
+      avatar: user.avatar || '',
       loginValue: user.login,
       emailValue: user.email,
       firstNameValue: user.first_name,
