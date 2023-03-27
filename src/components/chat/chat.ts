@@ -1,5 +1,6 @@
 import {Block} from "../../core";
 import styles from "./chat.module.pcss";
+import store from "../../core/Store";
 
 interface ChatProps {
   title: string,
@@ -14,6 +15,8 @@ export class Chat extends Block {
 
     this.setProps({
       isOptionsOpen: false,
+      messages: [],
+      userId: null,
 
       onOptionsToggle: () => {
         this.setProps({
@@ -22,7 +25,6 @@ export class Chat extends Block {
       },
 
       onOptionsOpen: () => {
-        console.log(123)
         this.setProps({
           isOptionsOpen: true
         })
@@ -34,7 +36,31 @@ export class Chat extends Block {
         })
       },
     })
+  }
 
+  adaptMessages(messages: any[]) {
+    if (!messages) {
+      return []
+    }
+
+    const userId = store.getState().user.id
+    return messages.map((message) => {
+      return {
+        isMine: message.user_id === userId,
+        ...message
+      }
+    })
+  }
+
+  componentDidMount() {
+    super.componentDidMount();
+
+    if (store.getState().messages) {
+      this.setProps({
+        messages: this.adaptMessages(store.getState().messages[this.props.id]),
+        userId: store.getState().user.id
+      })
+    }
   }
 
   render() {
@@ -56,41 +82,21 @@ export class Chat extends Block {
             </header>
             <div class=${styles.messages}>
                 <ul class=${styles.messages_list}>
-                    <li class=${styles.messages_item}>
-                        <p class=${styles.list_text}>Друзья, у меня для вас особенный выпуск новостей!</p>
-                    </li>
-                    <li class=${styles.messages_item}>
-                        <p class=${styles.list_text}>У меня для вас особенный выпуск новостей!</p>
-                    </li>
-                    <li class=${styles.messages_item}>
-                        <img class=${styles.list_image}
-                             src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg"
-                             alt="">
-                    </li>
-                    <li class="${styles.messages_item} ${styles.messages_item_self}">
-                        <p class=${styles.list_text}>Pellentesque habitant morbi tristique!</p>
-                    </li>
-                    <li class="${styles.messages_item} ${styles.messages_item_self}">
-                        <p class=${styles.list_text}>Duis ac diam nec massa aliquam consequat. Curabitur ante neque</p>
-                    </li>
+
+                    {{#each messages}}
+                        {{#if isMine}}
+                            <li class="${styles.messages_item} ${styles.messages_item_self}">
+                                <p class=${styles.list_text}>{{content}}</p>
+                            </li>
+                        {{else}}
+                            <li class=${styles.messages_item}>
+                                <p class=${styles.list_text}>{{content}}</p>
+                            </li>
+                        {{/if}}
+                    {{/each}}
                 </ul>
             </div>
-            <footer class=${styles.footer}>
-                <span class=${styles.footer_error}>${this.props.messageError}</span>
-                <form class=${styles.footer_form} onsubmit="${this.props.onSubmit}">
-                    <button class=${styles.footer_attach} type="button"></button>
-                    {{{
-                    Message
-                            onInput=onMessageInput
-                            onFocus=onMessageFocus
-                            obBlur=onMessageBlur
-                            value=messageValue
-                            error=messageError
-                            ref=messageRef
-                    }}}
-                    <button class=${styles.footer_send}></button>
-                </form>
-            </footer>
+            {{{ChatFooter}}}
         </section>
     `
   }

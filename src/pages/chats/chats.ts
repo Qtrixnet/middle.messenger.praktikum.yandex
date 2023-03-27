@@ -1,6 +1,5 @@
 import Block from '../../core/Block';
 import styles from './chats.module.pcss';
-import validateForm, {ValidateType} from "../../helpers/validate-form";
 import ChatsController from "../../controllers/ChatsController";
 import AuthController from "../../controllers/AuthController";
 import store from "../../core/Store";
@@ -10,38 +9,11 @@ export class Chats extends Block {
     super();
 
     this.setProps({
-      messageError: '',
-      messageValue: '',
       chats: [],
       selectedChat: {},
       isCreateChatPopupOpen: false,
       isUserAddPopupOpen: false,
       isUserDeletePopupOpen: false,
-
-      onMessageInput: (e: InputEvent) => {
-        const element = e.target as HTMLInputElement;
-        const errorMessage = validateForm([
-          {type: ValidateType.Message, value: element.value},
-        ])
-        this.setProps({
-          messageValue: element.value,
-          messageError: errorMessage,
-        })
-      },
-
-      onBlur: (e: FocusEvent) => {
-        const element = e.target as HTMLInputElement;
-        const errorMessage = validateForm([
-          {type: this.props.name, value: element.value},
-        ])
-        this.setProps({
-          messageError: errorMessage
-        })
-      },
-
-      onSubmit: (e: SubmitEvent) => {
-        e.preventDefault();
-      },
 
       onChatCreatePopupOpen: () => this.setProps({isCreateChatPopupOpen: true}),
       onChatCreatePopupClose: () => this.setProps({isCreateChatPopupOpen: false}),
@@ -64,12 +36,12 @@ export class Chats extends Block {
   componentDidMount() {
     AuthController.fetchUser();
     ChatsController.fetchChats().finally(() => {
-      console.log(store.getState().user)
       this.setProps({
         chats: store.getState().chats,
         isCreateChatPopupOpen: store.getState().isCreateChatPopupOpen,
         selectedChat: store.getState().chats[0],
       })
+      store.set('selectedChat', store.getState().chats[0].id);
     })
   }
 
@@ -92,8 +64,8 @@ export class Chats extends Block {
                                         id=id
                                         avatar=avatar
                                         name=title
-                                        message=last_message
-                                        time="1 : 38"
+                                        message=last_message.content
+                                        time=last_message.time
                                         notify=unread_count
                                         onClick=../onChatSelect
                                 }}}

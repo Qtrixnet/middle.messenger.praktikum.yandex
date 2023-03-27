@@ -1,6 +1,7 @@
 import Block from '../../core/Block';
 import styles from './chat-card.module.pcss';
 import baseAvatar from '../../assets/images/avatar.png';
+import formatTime from "../../helpers/format-time";
 
 interface ChatCardProps {
   id: number;
@@ -27,7 +28,7 @@ export class ChatCard extends Block {
                 <p class=${styles.text}>{{message}}</p>
             </div>
             <div class=${styles.container}>
-                <time class=${styles.time}>{{time}}</time>
+                <time class=${styles.time}>${this.props.time ? formatTime(this.props.time) : ''}</time>
                 {{#if notify}}
                     <div class=${styles.notify}>{{notify}}</div>
                 {{/if}}

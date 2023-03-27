@@ -32,7 +32,7 @@ export default class WSTransport extends EventBus {
         this.setupPing();
 
         return new Promise<void>((resolve) => {
-            this.on(WSTransportEvents.Open, () => resolve());
+            this.on(WSTransportEvents.Connected, () => resolve());
         });
     }
 
