@@ -35,7 +35,7 @@ class Router {
   }
 
   private _onRoute(pathname: string) {
-    const route = this.getRoute(pathname);
+    const route = this._getRoute(pathname);
 
     if (!route) {
       return;
@@ -64,7 +64,7 @@ class Router {
     this.history.forward();
   }
 
-  private getRoute(pathname: string) {
+  private _getRoute(pathname: string) {
     return this.routes.find(route => route.match(pathname));
   }
 

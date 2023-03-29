@@ -27,9 +27,9 @@ export default class WSTransport extends EventBus {
     public connect(): Promise<void> {
         this.socket = new WebSocket(this.url);
 
-        this.subscribe(this.socket);
+        this._subscribe(this.socket);
 
-        this.setupPing();
+        this._setupPing();
 
         return new Promise<void>((resolve) => {
             this.on(WSTransportEvents.Connected, () => resolve());
@@ -42,7 +42,7 @@ export default class WSTransport extends EventBus {
         this.socket?.close();
     }
 
-    private setupPing() {
+    private _setupPing() {
         this.pingInterval = setInterval(() => {
             this.send({ type: "ping" });
         }, 5000);
@@ -54,7 +54,7 @@ export default class WSTransport extends EventBus {
         });
     }
 
-    private subscribe(socket: WebSocket) {
+    private _subscribe(socket: WebSocket) {
         socket.addEventListener(WSTransportEvents.Open, () => {
             this.emit(WSTransportEvents.Connected);
         });

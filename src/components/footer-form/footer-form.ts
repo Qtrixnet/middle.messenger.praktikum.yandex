@@ -19,8 +19,7 @@ export class FooterForm extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Message, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.messageRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('messageRef', 'errorRef', {text: errorMessage});
       },
     })
   }

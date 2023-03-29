@@ -2,7 +2,7 @@ import EventBus from './EventBus';
 import {nanoid} from 'nanoid';
 import Handlebars from 'handlebars';
 
-type Events = Values<typeof Block.EVENTS>;
+type Events = typeof Block.EVENTS;
 
 export default class Block<P = any> {
   static EVENTS = {
@@ -18,14 +18,12 @@ export default class Block<P = any> {
   protected readonly props: P;
   protected children: { [id: string]: Block } = {};
 
-  // @ts-ignore
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
   protected refs: { [key: string]: Block } = {};
 
   public constructor(props?: P) {
-    // @ts-ignore
     const eventBus = new EventBus<Events>();
 
 
@@ -42,17 +40,15 @@ export default class Block<P = any> {
   }
 
   protected compile(template: (context: any) => string, context: any) {
-    const contextAndStubs = { ...context };
+    const contextAndStubs = {...context};
 
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });
 
-    const html = template(contextAndStubs);
-
     const temp = document.createElement('template');
 
-    temp.innerHTML = html;
+    temp.innerHTML = template(contextAndStubs);
 
     Object.entries(this.children).forEach(([_, component]) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
@@ -69,9 +65,6 @@ export default class Block<P = any> {
     return temp.content;
   }
 
-
-
-  // @ts-ignore
   private _registerEvents(eventBus: EventBus<Events>) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
@@ -235,12 +228,17 @@ export default class Block<P = any> {
     return fragment.content;
   }
 
-
   show() {
     this.getContent().style.display = 'block';
   }
 
   hide() {
     this.getContent().style.display = 'none';
+  }
+
+  public setChildRefProps(refKey: string, childRefKey: string, props: any) {
+    if (this.refs[refKey] && this.refs[refKey].refs[childRefKey]) {
+      this.refs[refKey].refs[childRefKey].setProps(props);
+    }
   }
 }

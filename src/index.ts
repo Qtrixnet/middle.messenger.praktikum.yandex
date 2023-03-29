@@ -29,13 +29,14 @@ import AddUserPopup from "./components/popups/add-user-popup";
 import DeleteUserPopup from "./components/popups/delete-user-popup";
 import ChatFooter from "./components/chat-footer";
 import FooterForm from "./components/footer-form";
+import AuthController from "./controllers/AuthController";
 
 const components = [Input, Button, Link, ControlledInput, InputError, Toolbar, ChangePassword, CloseButton, AvatarInput, MessageIcon, ProfileIcon, EmptyChats, AvatarPopup, CreateChatPopup, ChatCard, Chat, OptionsButton, Options, Option, AddUserPopup, DeleteUserPopup, ChatFooter, FooterForm];
 
 // @ts-ignore
 components.forEach(component => registerComponent(component))
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   Router
     .use(Routes.Index, Login)
     .use(Routes.Register, Register)
@@ -52,8 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   try {
+    await AuthController.fetchUser();
+
     Router.start();
+
+    if (!isProtectedRoute) {
+      Router.go(Routes.Chats);
+    }
   } catch (e) {
+    console.log(e);
+
     Router.start();
 
     if (isProtectedRoute) {

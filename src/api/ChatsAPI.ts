@@ -13,6 +13,8 @@ export interface IChatInfo {
     };
 }
 
+type GetUserResponse = IUser & { role: string }
+
 export class ChatsAPI extends BaseAPI {
     constructor() {
         super("/chats");
@@ -26,11 +28,11 @@ export class ChatsAPI extends BaseAPI {
         return this.http.delete("/", { chatId: id });
     }
 
-    read(): Promise<IChatInfo[]> {
+    getChats(): Promise<IChatInfo[]> {
         return this.http.get("/");
     }
 
-    getUsers(id: number): Promise<Array<IUser & { role: string }>> {
+    getUsers(id: number): Promise<GetUserResponse[]> {
         return this.http.get(`/${id}/users`);
     }
 

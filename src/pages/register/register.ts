@@ -29,8 +29,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Login, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
       },
 
       onEmailInput: (e: InputEvent) => {
@@ -38,8 +37,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Email, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
       },
 
       onFirstNameInput: (e: InputEvent) => {
@@ -47,8 +45,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.FirstName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
       },
 
       onPhoneInput: (e: InputEvent) => {
@@ -56,8 +53,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Phone, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
       },
 
       onSecondNameInput: (e: InputEvent) => {
@@ -65,8 +61,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.SecondName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
       },
 
       onPasswordInput: (e: InputEvent) => {
@@ -74,8 +69,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Password, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('passwordInputRef', 'errorRef', {text: errorMessage});
       },
 
       onSecondPasswordInput: (e: InputEvent) => {
@@ -83,8 +77,7 @@ export class Register extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.SecondPassword, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondPasswordInputRef', 'errorRef', {text: errorMessage});
       },
 
       onRegister: () => {

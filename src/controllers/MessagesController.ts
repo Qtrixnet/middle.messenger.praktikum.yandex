@@ -37,7 +37,7 @@ export class MessagesController {
 
         await transport.connect();
 
-        this.subscribe(transport, id);
+        this._subscribe(transport, id);
         this.fetchOldMessages(id);
     }
 
@@ -68,32 +68,27 @@ export class MessagesController {
         Object.values(this.transports).forEach((transport) => transport.close());
     }
 
-    private onMessage(id: number, messages: IMessage | IMessage[]) {
-        let messagesToAdd: IMessage[] = [];
+    private _getMessagesToAdd(messages: IMessage | IMessage[]): IMessage[] {
+        return Array.isArray(messages) ? messages.reverse() : [messages];
+    }
 
-        if (Array.isArray(messages)) {
-            messagesToAdd = messages.reverse();
-        } else {
-            messagesToAdd.push(messages);
-        }
-
-        const currentMessages = (store.getState().messages || {})[id] || [];
-
-        messagesToAdd = [...currentMessages, ...messagesToAdd];
-
-        store.set(`messages.${id}`, messagesToAdd);
+    private _onMessage(id: number, messages: IMessage | IMessage[]) {
+        const messagesToAdd = this._getMessagesToAdd(messages);
+        const currentMessages = store.getState().messages?.[id] ?? [];
+        const allMessages = [...currentMessages, ...messagesToAdd];
+        store.set(`messages.${id}`, allMessages);
         ChatsController.fetchChats();
     }
 
-    private onClose(id: number) {
+    private _onClose(id: number) {
         this.transports.delete(id);
     }
 
-    private subscribe(transport: WSTransport, id: number) {
+    private _subscribe(transport: WSTransport, id: number) {
         transport.on(WSTransportEvents.Message, (message) =>
-            this.onMessage(id, message)
+            this._onMessage(id, message)
         );
-        transport.on(WSTransportEvents.Close, () => this.onClose(id));
+        transport.on(WSTransportEvents.Close, () => this._onClose(id));
     }
 }
 

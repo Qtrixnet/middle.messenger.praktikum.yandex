@@ -17,8 +17,7 @@ export class EmptyChats extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Message, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.chatInputRef.refs.errorRef.setProps({text: errorMessage});
+        this.setChildRefProps('chatInputRef', 'errorRef', {text: errorMessage});
         this.props.chatNameValue = element.value;
       },
 

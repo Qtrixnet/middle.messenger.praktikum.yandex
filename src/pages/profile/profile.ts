@@ -63,8 +63,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Password, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.oldPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('oldPasswordInputRef', 'errorRef', {text: errorMessage});
       },
 
       onNewPasswordInput: (e: InputEvent) => {
@@ -72,8 +71,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Password, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.newPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('newPasswordInputRef', 'errorRef', {text: errorMessage});
       },
 
       OnNewPasswordSubmit: async () => {
@@ -135,8 +133,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Login, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
       },
 
       onEmailInput: (e: InputEvent) => {
@@ -144,8 +141,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Email, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
       },
 
       onFirstNameInput: (e: InputEvent) => {
@@ -153,8 +149,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.FirstName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
       },
 
       onPhoneInput: (e: InputEvent) => {
@@ -162,8 +157,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Phone, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
       },
 
       onSecondNameInput: (e: InputEvent) => {
@@ -171,8 +165,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.SecondName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
       },
 
       onDisplayNameInput: (e: InputEvent) => {
@@ -180,8 +173,7 @@ export class Profile extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.DisplayName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.displayNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('displayNameInputRef', 'errorRef', {text: errorMessage});
       },
 
       onLogout: () => {

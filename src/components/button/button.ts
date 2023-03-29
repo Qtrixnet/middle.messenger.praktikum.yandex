@@ -36,7 +36,7 @@ export class Button extends Block {
          ${this.props.isDisabled ? 'disabled' : ''}
          type="button"
         >
-            ${Boolean(this.props.type) ? `<span class="${styles.buttonIcon} ${styles.buttonIcon}_${this.props.type}"></span>` : ''}
+            ${Boolean(this.props.type) ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
             {{text}}
         </button>
     `;

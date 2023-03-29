@@ -51,6 +51,8 @@
     gap: 8px;
     list-style: none;
     padding: 32px;
+    max-height: calc(100vh - 108px - 78px);
+    overflow-y: scroll;
 }
 
 .messages_item {
@@ -59,8 +61,9 @@
     border-radius: 8px;
     overflow: hidden;
     font-size: 0;
+    flex-shrink: 0;
 
-    &_self{
+    &_self {
         background-color: var(--primary);
         align-self: flex-end;
     }

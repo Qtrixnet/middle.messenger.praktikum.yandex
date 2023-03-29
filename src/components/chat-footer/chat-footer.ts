@@ -8,12 +8,13 @@ export class ChatFooter extends Block {
     super();
 
     this.setProps({
+      messageInput: document.querySelector('input[name="message"]') as HTMLInputElement,
+
       onMessageSubmit: (e: InputEvent) => {
         e.preventDefault();
         const id = store.getState().selectedChat;
-        const message = document.querySelector('input[name="message"]') as HTMLInputElement;
-        MessagesController.sendMessage(id, message?.value || '');
-        message.value = '';
+        MessagesController.sendMessage(id, this.props.messageInput.value || '');
+        this.props.messageInput.value = '';
       }
     })
   }

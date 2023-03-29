@@ -9,6 +9,17 @@ interface ChatProps {
   handleDeleteUser: () => void,
 }
 
+interface Message {
+  chat_id: number,
+  content: string,
+  file: string | null,
+  id: number,
+  is_read: boolean,
+  time: string,
+  type: string,
+  user_id: number
+}
+
 export class Chat extends Block {
   constructor({title, id, handleAddUser, handleDeleteUser}: ChatProps) {
     super({title, id, handleAddUser, handleDeleteUser});
@@ -38,7 +49,7 @@ export class Chat extends Block {
     })
   }
 
-  adaptMessages(messages: any[]) {
+  adaptMessages(messages: Message[]) {
     if (!messages) {
       return []
     }

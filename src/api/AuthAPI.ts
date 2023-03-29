@@ -10,12 +10,11 @@ export class AuthAPI extends BaseAPI {
     return this.http.post('/signin', data);
   }
 
-
   signup(data: SignupData) {
     return this.http.post('/signup', data);
   }
 
-  read(): Promise<User> {
+  getUser(): Promise<User> {
     return this.http.get('/user');
   }
 
@@ -28,4 +27,4 @@ export class AuthAPI extends BaseAPI {
   delete = undefined;
 }
 
-export default new AuthAPI();
+export const authAPI = new AuthAPI();

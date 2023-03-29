@@ -18,16 +18,14 @@ export class Login extends Block {
         const errorMessage = validateForm([
           {type: ValidateType.Login, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
       },
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Password, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('passwordInputRef', 'errorRef', {text: errorMessage});
       },
       onLogin: () => {
         const loginElement = getElement(this.element, 'login');

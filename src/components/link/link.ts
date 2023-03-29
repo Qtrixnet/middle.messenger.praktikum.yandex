@@ -11,11 +11,11 @@ interface LinkProps {
 
 export class Link extends Block {
   constructor({to, text = '', icon = ''}: LinkProps) {
-    super({to, text, icon, events: {click: () => this.navigate()}});
+    super({to, text, icon, events: {click: () => this._navigate(to)}});
   }
 
-  navigate() {
-    Router.go(this.props.to);
+  private _navigate(path: string) {
+    Router.go(path);
   }
 
   protected render(): string {

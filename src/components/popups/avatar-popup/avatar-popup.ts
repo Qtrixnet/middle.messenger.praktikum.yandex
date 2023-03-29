@@ -16,9 +16,7 @@ export class AvatarPopup extends Block {
         const formData = new FormData();
         const input = document.querySelector('#avatar') as HTMLInputElement;
 
-        // @ts-ignore
-        if (input && input.files.length > 0) {
-          // @ts-ignore
+        if (input && input.files && input.files.length > 0) {
           formData.append("avatar", input.files[0]);
           UserController.updateAvatar(formData);
           handleClose();

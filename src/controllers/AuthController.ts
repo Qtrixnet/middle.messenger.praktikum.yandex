@@ -1,4 +1,4 @@
-import API, {AuthAPI} from '../api/AuthAPI';
+import {authAPI, AuthAPI} from '../api/AuthAPI';
 import store from '../core/Store';
 import router from '../core/Router';
 import {Routes, SigninData, SignupData} from "../types/types";
@@ -8,7 +8,7 @@ export class AuthController {
   private readonly api: AuthAPI;
 
   constructor() {
-    this.api = API;
+    this.api = authAPI;
   }
 
   async signin(data: SigninData) {
@@ -36,7 +36,7 @@ export class AuthController {
   }
 
   async fetchUser() {
-    const user = await this.api.read();
+    const user = await this.api.getUser();
 
     store.set('user', user);
   }

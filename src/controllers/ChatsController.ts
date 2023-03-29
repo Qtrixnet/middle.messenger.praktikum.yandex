@@ -12,7 +12,7 @@ class ChatsController {
     }
 
     async fetchChats() {
-        const chats = await this.api.read();
+        const chats = await this.api.getChats();
 
         chats.map(async (chat) => {
             const token = await this.getToken(chat.id);

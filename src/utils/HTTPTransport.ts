@@ -20,38 +20,38 @@ export default class HTTPTransport {
   }
 
   public get<Response>(path = '/'): Promise<Response> {
-    return this.request<Response>(this.endpoint + path);
+    return this._request<Response>(this.endpoint + path);
   }
 
   public post<Response = void>(path: string, data?: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+    return this._request<Response>(this.endpoint + path, {
       method: Method.Post,
       data,
     });
   }
 
   public put<Response = void>(path: string, data: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+    return this._request<Response>(this.endpoint + path, {
       method: Method.Put,
       data,
     });
   }
 
   public patch<Response = void>(path: string, data: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+    return this._request<Response>(this.endpoint + path, {
       method: Method.Patch,
       data,
     });
   }
 
   public delete<Response>(path: string, data?: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+    return this._request<Response>(this.endpoint + path, {
       method: Method.Delete,
       data
     });
   }
 
-  private request<Response>(url: string, options: Options = {method: Method.Get}): Promise<Response> {
+  private _request<Response>(url: string, options: Options = {method: Method.Get}): Promise<Response> {
     const {method, data} = options;
 
     return new Promise((resolve, reject) => {

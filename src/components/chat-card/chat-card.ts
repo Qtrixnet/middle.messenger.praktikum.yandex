@@ -21,7 +21,7 @@ export class ChatCard extends Block {
   render() {
     // language=hbs
     return `
-        <li class=${styles.chatCard}>
+        <li class=${styles.card}>
             <img class=${styles.avatar} src=${this.props.avatar ? this.props.avatar : baseAvatar} alt={{name}}>
             <div class=${styles.container}>
                 <h2 class=${styles.title}>{{name}}</h2>
