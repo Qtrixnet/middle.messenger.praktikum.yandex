@@ -3,6 +3,7 @@ import styles from './error.module.pcss';
 import serverError from '../../assets/images/server-error.png';
 
 export class Error extends Block {
+  static componentName = 'Error';
   constructor() {
     super();
 

@@ -8,6 +8,7 @@ interface CreateChatPopupProps {
 }
 
 export class CreateChatPopup extends Block {
+  static componentName = 'CreateChatPopup';
   constructor({handleClose}: CreateChatPopupProps) {
     super({handleClose});
 

@@ -1,13 +1,15 @@
 import Block from './Block';
 import Handlebars, {HelperOptions} from 'handlebars';
 
-// interface BlockConstructable<Props = any> {
-//   new(props: Props): Block;
-// }
+interface BlockComponent<P> {
+  new (props?: P): Block<P>;
+  componentName: string;
+}
 
-type BlockConstructable<P> = new (props?: P) => Block<P>;
+type BlockConstructable<P> = BlockComponent<P> & (new (props?: P) => Block<P>);
 export default function registerComponent<Props extends any>(Component: BlockConstructable<Record<string, unknown>>) {
-  Handlebars.registerHelper(Component.name, function (this: Props, {hash: {ref, ...hash}, data, fn}: HelperOptions) {
+  const componentName = Component.componentName || Component.name;
+  Handlebars.registerHelper(componentName, function (this: Props, {hash: {ref, ...hash}, data, fn}: HelperOptions) {
     if (!data.root.children) {
       data.root.children = {};
     }

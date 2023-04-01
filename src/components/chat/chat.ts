@@ -1,6 +1,8 @@
 import {Block} from "../../core";
 import styles from "./chat.module.pcss";
-import store from "../../core/Store";
+import store, {StoreEvents} from "../../core/Store";
+import getElement from "../../utils/getElement";
+import MessagesController from "../../controllers/MessagesController";
 
 interface ChatProps {
   title: string,
@@ -21,6 +23,7 @@ interface Message {
 }
 
 export class Chat extends Block {
+  static componentName = 'Chat';
   constructor({title, id, handleAddUser, handleDeleteUser}: ChatProps) {
     super({title, id, handleAddUser, handleDeleteUser});
 
@@ -46,6 +49,18 @@ export class Chat extends Block {
           isOptionsOpen: false
         })
       },
+
+      onMessageSubmit: (e: InputEvent) => {
+        e.preventDefault();
+
+        const inputElement = getElement(this.element, 'message');
+
+        const id = store.getState().selectedChat;
+
+        MessagesController.sendMessage(id, inputElement.value)
+
+        inputElement.value = '';
+      },
     })
   }
 
@@ -63,6 +78,13 @@ export class Chat extends Block {
     })
   }
 
+  scrollToBottom() {
+    const messagesList = document.querySelector('#messages');
+    if (messagesList) {
+      messagesList.scrollTop = messagesList.scrollHeight
+    }
+  }
+
   componentDidMount() {
     super.componentDidMount();
 
@@ -72,6 +94,13 @@ export class Chat extends Block {
         userId: store.getState().user.id
       })
     }
+
+    store.on(StoreEvents.Updated, () => {
+      this.setProps({
+        messages: this.adaptMessages(store.getState().messages[this.props.id]),
+      })
+      this.scrollToBottom();
+    });
   }
 
   render() {
@@ -92,7 +121,7 @@ export class Chat extends Block {
                 {{/if}}
             </header>
             <div class=${styles.messages}>
-                <ul class=${styles.messages_list}>
+                <ul class=${styles.messages_list} id="messages">
 
                     {{#each messages}}
                         {{#if isMine}}
@@ -107,7 +136,7 @@ export class Chat extends Block {
                     {{/each}}
                 </ul>
             </div>
-            {{{ChatFooter}}}
+            {{{ChatFooter onMessageSubmit=onMessageSubmit}}}
         </section>
     `
   }

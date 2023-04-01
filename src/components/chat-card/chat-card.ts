@@ -14,6 +14,7 @@ interface ChatCardProps {
 }
 
 export class ChatCard extends Block {
+  static componentName = 'ChatCard';
   constructor({id, avatar, name, message, time, notify, onClick}: ChatCardProps) {
     super({id,avatar, name, message, time, notify, events: {click: () => onClick(id)}});
   }

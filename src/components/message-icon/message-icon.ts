@@ -1,6 +1,7 @@
 import Block from '../../core/Block';
 
 export class MessageIcon extends Block {
+  static componentName = 'MessageIcon';
 
   protected render(): string {
     // language=hbs

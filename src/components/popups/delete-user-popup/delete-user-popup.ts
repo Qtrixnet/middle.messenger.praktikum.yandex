@@ -9,6 +9,7 @@ interface DeleteUserPopupProps {
 }
 
 export class DeleteUserPopup extends Block {
+  static componentName = 'DeleteUserPopup';
   constructor({handleClose}: DeleteUserPopupProps) {
     super({handleClose});
 

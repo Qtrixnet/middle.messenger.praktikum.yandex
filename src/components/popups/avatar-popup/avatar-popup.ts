@@ -7,6 +7,7 @@ interface AvatarPopupProps {
 }
 
 export class AvatarPopup extends Block {
+  static componentName = 'AvatarPopup';
   constructor({handleClose}: AvatarPopupProps) {
     super({handleClose});
 

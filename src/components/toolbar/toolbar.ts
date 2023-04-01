@@ -5,6 +5,7 @@ import store from "../../core/Store";
 import baseAvatar from "../../assets/images/avatar.png";
 
 export class Toolbar extends Block {
+  static componentName = 'Toolbar';
   constructor() {
     super();
   }

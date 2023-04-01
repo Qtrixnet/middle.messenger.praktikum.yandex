@@ -1,7 +1,7 @@
 import Block from '../../core/Block';
 import styles from './button.module.pcss';
 
-interface ButtonProps {
+export interface ButtonProps {
   text: string;
   onClick: () => void;
   type?: string;
@@ -9,9 +9,11 @@ interface ButtonProps {
   isDanger?: boolean;
   isDisabled?: boolean;
   className?: string;
+  actionType?: "button" | "submit";
 }
 
 export class Button extends Block {
+  static componentName = 'Button';
   constructor({
                 text,
                 type = '',
@@ -20,8 +22,9 @@ export class Button extends Block {
                 isDanger = false,
                 isDisabled = false,
                 className = '',
-  }: ButtonProps) {
-    super({text, type, isSimple, isDanger, isDisabled, className, events: {click: onClick}});
+                actionType = "button",
+              }: ButtonProps) {
+    super({text, type, isSimple, isDanger, isDisabled, className, actionType, events: {click: onClick}});
   }
 
   protected render(): string {
@@ -33,8 +36,8 @@ export class Button extends Block {
             ${this.props.isDanger ? styles.button_danger : ''}
             ${this.props.className ? this.props.className : ''}
         "
-         ${this.props.isDisabled ? 'disabled' : ''}
-         type="button"
+            ${this.props.isDisabled ? 'disabled' : ''}
+            type=${this.props.actionType}
         >
             ${Boolean(this.props.type) ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
             {{text}}

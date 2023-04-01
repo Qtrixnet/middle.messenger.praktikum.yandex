@@ -9,6 +9,7 @@ interface AddUserPopupProps {
 }
 
 export class AddUserPopup extends Block {
+  static componentName = 'AddUserPopup';
   constructor({handleClose}: AddUserPopupProps) {
     super({handleClose});
 

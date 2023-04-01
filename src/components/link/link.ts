@@ -10,6 +10,7 @@ interface LinkProps {
 }
 
 export class Link extends Block {
+  static componentName = 'Link';
   constructor({to, text = '', icon = ''}: LinkProps) {
     super({to, text, icon, events: {click: () => this._navigate(to)}});
   }

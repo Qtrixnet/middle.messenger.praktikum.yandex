@@ -7,6 +7,7 @@ interface OptionsProps {
 }
 
 export class Options extends Block {
+  static componentName = 'Options';
   constructor({handleAddUser, handleDeleteUser}: OptionsProps) {
     super({handleAddUser, handleDeleteUser});
   }

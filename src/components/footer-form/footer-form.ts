@@ -7,6 +7,7 @@ interface FooterFormProps {
 }
 
 export class FooterForm extends Block {
+  static componentName = 'FooterForm';
   constructor({onMessageSubmit}: FooterFormProps) {
     super({events: {submit: onMessageSubmit}});
 

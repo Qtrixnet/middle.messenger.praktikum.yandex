@@ -2,6 +2,7 @@ import Block from '../../core/Block';
 import styles from './avatar-input.module.pcss';
 
 export class AvatarInput extends Block {
+  static componentName = 'AvatarInput';
   constructor() {
     super();
   }

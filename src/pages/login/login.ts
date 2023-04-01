@@ -5,6 +5,7 @@ import getElement from "../../utils/getElement";
 import AuthController from "../../controllers/AuthController";
 
 export class Login extends Block {
+  static componentName = 'Login';
   constructor() {
     super();
 
@@ -100,7 +101,6 @@ export class Login extends Block {
                 </div>
             </form>
         </section>
-
     `;
   }
 }

@@ -1,22 +1,14 @@
 import Block from '../../core/Block';
 import styles from './chat-footer.module.pcss';
-import store from "../../core/Store";
-import MessagesController from "../../controllers/MessagesController";
+
+interface IChatFooter {
+  onMessageSubmit: (e: InputEvent) => void;
+}
 
 export class ChatFooter extends Block {
-  constructor() {
-    super();
-
-    this.setProps({
-      messageInput: document.querySelector('input[name="message"]') as HTMLInputElement,
-
-      onMessageSubmit: (e: InputEvent) => {
-        e.preventDefault();
-        const id = store.getState().selectedChat;
-        MessagesController.sendMessage(id, this.props.messageInput.value || '');
-        this.props.messageInput.value = '';
-      }
-    })
+  static componentName = 'ChatFooter';
+  constructor({onMessageSubmit}: IChatFooter) {
+    super({onMessageSubmit});
   }
 
   protected render(): string {

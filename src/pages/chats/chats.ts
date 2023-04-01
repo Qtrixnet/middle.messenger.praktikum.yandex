@@ -3,8 +3,11 @@ import styles from './chats.module.pcss';
 import ChatsController from "../../controllers/ChatsController";
 import AuthController from "../../controllers/AuthController";
 import store from "../../core/Store";
+import {IChatInfo} from "../../api/ChatsAPI";
+import getElement from "../../utils/getElement";
 
 export class Chats extends Block {
+  static componentName = 'Chats';
   constructor() {
     super();
 
@@ -24,10 +27,29 @@ export class Chats extends Block {
       onUserDeletePopupOpen: () => this.setProps({isUserDeletePopupOpen: true}),
       onUserDeletePopupClose: () => this.setProps({isUserDeletePopupOpen: false}),
 
+      updateChats(chats: IChatInfo[]) {
+        console.log(chats)
+        // store.set('selectedChat', store.getState().chats[0].id);
+      },
+
       onChatSelect: (id: number) => {
         ChatsController.selectChat(id);
         this.setProps({
           selectedChat: store.getState().chats.find((chat: { id: number; }) => chat.id === id) || {},
+        })
+      },
+
+      onChatCreate: async (e: SubmitEvent) => {
+        e.preventDefault();
+
+        const inputElement = getElement(this.element, 'chatName');
+
+        await ChatsController.create(inputElement.value).then(async () => {
+          await ChatsController.fetchChats();
+          this.setProps({
+            chats: store.getState().chats,
+          })
+          store.set('selectedChat', store.getState().chats[0].id);
         })
       }
     })
@@ -71,7 +93,8 @@ export class Chats extends Block {
                                 }}}
                             {{/each}}
                         </ul>
-                        {{{Button text="Создать чат" onClick=onChatCreatePopupOpen className="${styles.create_button}"}}}
+                        {{{Button text="Создать чат" onClick=onChatCreatePopupOpen
+                                  className="${styles.create_button}"}}}
                     </section>
                     {{{Chat
                             title=selectedChat.title
@@ -90,7 +113,7 @@ export class Chats extends Block {
                     {{/if}}
                 </main>
             {{else}}
-                {{{EmptyChats}}}
+                {{{EmptyChats onChatCreate=onChatCreate}}}
             {{/if}}
         </section>
     `;

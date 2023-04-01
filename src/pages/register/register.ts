@@ -5,6 +5,7 @@ import validateForm, {ValidateType} from "../../helpers/validate-form";
 import AuthController from "../../controllers/AuthController";
 
 export class Register extends Block {
+  static componentName = 'Register';
   constructor() {
     super();
 

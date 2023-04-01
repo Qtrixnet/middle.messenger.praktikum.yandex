@@ -8,6 +8,7 @@ import UserController from "../../controllers/UserController";
 import baseAvatar from "../../assets/images/avatar.png";
 
 export class Profile extends Block {
+  static componentName = 'Profile';
   constructor() {
     super();
 
@@ -180,7 +181,7 @@ export class Profile extends Block {
         AuthController.logout();
       },
 
-      onProfileDataChange: () => {
+      onProfileDataChange: async () => {
         const loginElement = getElement(this.element, 'login');
         const emailElement = getElement(this.element, 'email');
         const firstNameElement = getElement(this.element, 'first_name');
@@ -209,7 +210,7 @@ export class Profile extends Block {
         ])
 
         const displayNameErrorMessage = validateForm([
-          {type: ValidateType.Password, value: displayNameElement.value},
+          {type: ValidateType.FirstName, value: displayNameElement.value},
         ])
 
         if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || displayNameErrorMessage) {
@@ -238,6 +239,7 @@ export class Profile extends Block {
           }
 
           UserController.updateUser(data);
+          await AuthController.fetchUser();
 
           this.setProps({isFormDisabled: false})
         }

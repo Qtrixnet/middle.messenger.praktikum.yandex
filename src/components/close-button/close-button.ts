@@ -6,6 +6,7 @@ interface CloseButtonProps {
 }
 
 export class CloseButton extends Block {
+  static componentName = 'CloseButton';
   constructor({onClick}: CloseButtonProps) {
     super({events: {click: onClick}});
   }

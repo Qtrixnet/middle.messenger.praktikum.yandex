@@ -28,7 +28,7 @@ const validateForm = (rules: ValidateRule[]): string => {
         return;
       }
     } else if (type === ValidateType.Password || type === ValidateType.SecondPassword) {
-      const regExp = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,40}$/;
+      const regExp = /^(?=.*\d)(?=.*[A-Z]).{8,40}$/;
       if(!regExp.test(value)) {
         errorMessage = 'от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.';
         return;
@@ -40,7 +40,7 @@ const validateForm = (rules: ValidateRule[]): string => {
         return;
       }
     } else if (type === ValidateType.FirstName || type === ValidateType.SecondName || type === ValidateType.DisplayName) {
-      const regExp = /^[A-ZА-ЯЁ][a-zа-яё]*([-][A-ZА-ЯЁ][a-zа-яё]*)?$/
+      const regExp = /^[A-ZА-ЯЁ][a-zа-яё]*(-[A-ZА-ЯЁ][a-zа-яё]*)?$/
       if(!regExp.test(value)) {
         errorMessage = 'латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис).';
         return;

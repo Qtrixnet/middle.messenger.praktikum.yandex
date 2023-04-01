@@ -8,6 +8,7 @@ interface OptionProps {
 }
 
 export class Option extends Block {
+  static componentName = 'Option';
   constructor({title, type = 'add', handleClick}: OptionProps) {
     super({title, type, events: {click: handleClick}});
   }

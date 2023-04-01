@@ -7,6 +7,7 @@ interface ChangePasswordProps {
 }
 
 export class ChangePassword extends Block {
+  static componentName = 'ChangePassword';
   constructor({handleCancel, onSubmit,}: ChangePasswordProps) {
     super({handleCancel, onSubmit});
   }
