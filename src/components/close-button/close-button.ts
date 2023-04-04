@@ -3,18 +3,19 @@ import styles from './close-button.module.pcss';
 
 interface CloseButtonProps {
   onClick: () => void;
+  className?: string
 }
 
 export class CloseButton extends Block {
   static componentName = 'CloseButton';
-  constructor({onClick}: CloseButtonProps) {
-    super({events: {click: onClick}});
+  constructor({onClick, className = ''}: CloseButtonProps) {
+    super({className, events: {click: onClick}});
   }
 
   protected render(): string {
     // language=hbs
     return `
-        <button class=${styles.close} type="button">
+        <button class="${styles.close} ${this.props.className}" type="button">
         </button>
     `;
   }

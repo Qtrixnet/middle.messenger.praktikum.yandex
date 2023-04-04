@@ -10,6 +10,7 @@ export interface ButtonProps {
   isDisabled?: boolean;
   className?: string;
   actionType?: "button" | "submit";
+  isLoading?: boolean;
 }
 
 export class Button extends Block {
@@ -21,10 +22,11 @@ export class Button extends Block {
                 isSimple = false,
                 isDanger = false,
                 isDisabled = false,
+                isLoading = false,
                 className = '',
                 actionType = "button",
               }: ButtonProps) {
-    super({text, type, isSimple, isDanger, isDisabled, className, actionType, events: {click: onClick}});
+    super({text, type, isSimple, isDanger, isDisabled, isLoading, className, actionType, events: {click: onClick}});
   }
 
   protected render(): string {
@@ -35,12 +37,13 @@ export class Button extends Block {
             ${this.props.isSimple ? styles.button_simple : ''}
             ${this.props.isDanger ? styles.button_danger : ''}
             ${this.props.className ? this.props.className : ''}
+            ${this.props.isLoading ? styles.button_loading : ''}
         "
             ${this.props.isDisabled ? 'disabled' : ''}
             type=${this.props.actionType}
         >
             ${Boolean(this.props.type) ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
-            {{text}}
+            ${this.props.isLoading ? `<span class="${styles['button-loader']}"></span>` : this.props.text}
         </button>
     `;
   }

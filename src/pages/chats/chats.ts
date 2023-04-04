@@ -3,11 +3,11 @@ import styles from './chats.module.pcss';
 import ChatsController from "../../controllers/ChatsController";
 import AuthController from "../../controllers/AuthController";
 import store from "../../core/Store";
-import {IChatInfo} from "../../api/ChatsAPI";
 import getElement from "../../utils/getElement";
 
 export class Chats extends Block {
   static componentName = 'Chats';
+
   constructor() {
     super();
 
@@ -17,6 +17,7 @@ export class Chats extends Block {
       isCreateChatPopupOpen: false,
       isUserAddPopupOpen: false,
       isUserDeletePopupOpen: false,
+      isLoading: false,
 
       onChatCreatePopupOpen: () => this.setProps({isCreateChatPopupOpen: true}),
       onChatCreatePopupClose: () => this.setProps({isCreateChatPopupOpen: false}),
@@ -27,12 +28,19 @@ export class Chats extends Block {
       onUserDeletePopupOpen: () => this.setProps({isUserDeletePopupOpen: true}),
       onUserDeletePopupClose: () => this.setProps({isUserDeletePopupOpen: false}),
 
-      updateChats(chats: IChatInfo[]) {
-        console.log(chats)
-        // store.set('selectedChat', store.getState().chats[0].id);
+      createChat: async (value: string) => {
+        return ChatsController.create(value).then(async () => {
+          await ChatsController.fetchChats().then(() => {
+            const chats = store.getState().chats;
+            this.setProps({
+              chats,
+            })
+            store.set('selectedChat', chats[0]?.id || {});
+          });
+        })
       },
 
-      onChatSelect: (id: number) => {
+      onChatSelect: (id: number): void => {
         ChatsController.selectChat(id);
         this.setProps({
           selectedChat: store.getState().chats.find((chat: { id: number; }) => chat.id === id) || {},
@@ -44,12 +52,22 @@ export class Chats extends Block {
 
         const inputElement = getElement(this.element, 'chatName');
 
-        await ChatsController.create(inputElement.value).then(async () => {
-          await ChatsController.fetchChats();
-          this.setProps({
-            chats: store.getState().chats,
+        this.setProps({isLoading: true})
+
+        await this.props.createChat(inputElement.value).then(() => {
+          this.setProps({isLoading: false})
+        })
+      },
+
+      onChatDelete: async (id: number) => {
+        await ChatsController.delete(id).then(async () => {
+          ChatsController.fetchChats().then(() => {
+            const chats = store.getState().chats;
+            this.setProps({
+              chats,
+            })
+            store.set('selectedChat', chats[0]?.id || {});
           })
-          store.set('selectedChat', store.getState().chats[0].id);
         })
       }
     })
@@ -58,12 +76,13 @@ export class Chats extends Block {
   componentDidMount() {
     AuthController.fetchUser();
     ChatsController.fetchChats().finally(() => {
+      const chats = store.getState().chats;
       this.setProps({
-        chats: store.getState().chats,
+        chats,
         isCreateChatPopupOpen: store.getState().isCreateChatPopupOpen,
-        selectedChat: store.getState().chats[0],
+        selectedChat: chats[0],
       })
-      store.set('selectedChat', store.getState().chats[0].id);
+      store.set('selectedChat', chats[0]?.id || {});
     })
   }
 
@@ -90,11 +109,15 @@ export class Chats extends Block {
                                         time=last_message.time
                                         notify=unread_count
                                         onClick=../onChatSelect
+                                        onDelete=../onChatDelete
                                 }}}
                             {{/each}}
                         </ul>
-                        {{{Button text="Создать чат" onClick=onChatCreatePopupOpen
-                                  className="${styles.create_button}"}}}
+                        {{{Button
+                                text="Создать чат"
+                                onClick=onChatCreatePopupOpen
+                                className="${styles.create_button}"
+                        }}}
                     </section>
                     {{{Chat
                             title=selectedChat.title
@@ -103,7 +126,7 @@ export class Chats extends Block {
                             handleDeleteUser=onUserDeletePopupOpen
                     }}}
                     {{#if isCreateChatPopupOpen}}
-                        {{{CreateChatPopup handleClose=onChatCreatePopupClose}}}
+                        {{{CreateChatPopup handleClose=onChatCreatePopupClose createChat=createChat}}}
                     {{/if}}
                     {{#if isUserAddPopupOpen}}
                         {{{AddUserPopup handleClose=onUserAddPopupClose}}}
@@ -113,7 +136,7 @@ export class Chats extends Block {
                     {{/if}}
                 </main>
             {{else}}
-                {{{EmptyChats onChatCreate=onChatCreate}}}
+                {{{EmptyChats onChatCreate=onChatCreate isLoading=isLoading}}}
             {{/if}}
         </section>
     `;

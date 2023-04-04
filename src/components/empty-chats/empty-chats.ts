@@ -3,12 +3,13 @@ import styles from './empty-chats.module.pcss';
 
 interface IEmptyChats {
   onChatCreate: (e: SubmitEvent) => void;
+  isLoading: boolean;
 }
 
 export class EmptyChats extends Block {
   static componentName = 'EmptyChats';
-  constructor({onChatCreate}: IEmptyChats) {
-    super({events: {submit: onChatCreate}});
+  constructor({onChatCreate, isLoading}: IEmptyChats) {
+    super({isLoading, events: {submit: onChatCreate}});
   }
 
   render() {
@@ -28,7 +29,7 @@ export class EmptyChats extends Block {
                         value=chatNameValue
                         error=chatNameError
                 }}}
-                {{{Button text="Создать чат" actionType="submit"}}}
+                {{{Button text="Создать чат" actionType="submit" isLoading=isLoading}}}
             </div>
         </form>
     `;

@@ -29,9 +29,10 @@ import AddUserPopup from "./components/popups/add-user-popup";
 import DeleteUserPopup from "./components/popups/delete-user-popup";
 import ChatFooter from "./components/chat-footer";
 import FooterForm from "./components/footer-form";
+import CreateChatPopupForm from "./components/create-chat-popup-form";
 import AuthController from "./controllers/AuthController";
 
-const components = [Input, Button, Link, ControlledInput, InputError, Toolbar, ChangePassword, CloseButton, AvatarInput, MessageIcon, ProfileIcon, EmptyChats, AvatarPopup, CreateChatPopup, ChatCard, Chat, OptionsButton, Options, Option, AddUserPopup, DeleteUserPopup, ChatFooter, FooterForm];
+const components = [Input, Button, Link, ControlledInput, InputError, Toolbar, ChangePassword, CloseButton, AvatarInput, MessageIcon, ProfileIcon, EmptyChats, AvatarPopup, CreateChatPopup, ChatCard, Chat, OptionsButton, Options, Option, AddUserPopup, DeleteUserPopup, ChatFooter, FooterForm, CreateChatPopupForm];
 
 // @ts-ignore
 components.forEach(component => registerComponent(component))

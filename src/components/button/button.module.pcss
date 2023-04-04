@@ -54,6 +54,11 @@
       opacity: 0.8;
     }
   }
+
+  &_loading {
+    pointer-events: none;
+    background-color: var(--disabled);
+  }
 }
 
 .button-icon {
@@ -70,5 +75,21 @@
 
   &_avatar {
     background-image: url("../../assets/images/icons/avatar.svg");
+  }
+}
+
+.button-loader {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--light);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(360deg);
   }
 }
