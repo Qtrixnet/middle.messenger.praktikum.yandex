@@ -1,0 +1,54 @@
+.profile {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  min-height: 100vh;
+}
+
+.content {
+  background-color: var(--background);
+  padding-left: 100px;
+}
+
+.header {
+  padding: 56px 0 24px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  color: var(--text);
+}
+
+.avatar {
+  width: 122px;
+  height: 122px;
+  object-fit: cover;
+  border-radius: 50%;
+  outline: 1px solid #888888;
+  outline-offset: 2px;
+}
+
+.fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  border: 0;
+  grid-column-gap: 48px;
+  grid-row-gap: 24px;
+  padding: 0 0 48px;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 60px;
+}

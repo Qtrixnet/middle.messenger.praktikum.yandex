@@ -1,0 +1,84 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: var(--background-accent);
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text);
+}
+
+.status {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--light);
+}
+
+.status_text {
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--subtext);
+}
+
+.messages {
+    flex-grow: 1;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+}
+
+.messages_list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    list-style: none;
+    padding: 32px;
+    max-height: calc(100vh - 108px - 78px);
+    overflow-y: scroll;
+}
+
+.messages_item {
+    color: var(--text);
+    background-color: var(--background-accent);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0;
+    flex-shrink: 0;
+
+    &_self {
+        background-color: var(--primary);
+        align-self: flex-end;
+    }
+}
+
+.list_image {
+    width: 346px;
+    height: 208px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.list_text {
+    padding: 16px 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}

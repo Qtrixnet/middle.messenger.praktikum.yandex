@@ -1,138 +1,143 @@
 import Block from '../../core/Block';
-import './chats.css';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import styles from './chats.module.pcss';
+import ChatsController from "../../controllers/ChatsController";
+import AuthController from "../../controllers/AuthController";
+import store from "../../core/Store";
+import getElement from "../../utils/getElement";
 
 export class Chats extends Block {
+  static componentName = 'Chats';
+
   constructor() {
     super();
 
     this.setProps({
-      messageError: '',
-      messageValue: '',
+      chats: [],
+      selectedChat: {},
+      isCreateChatPopupOpen: false,
+      isUserAddPopupOpen: false,
+      isUserDeletePopupOpen: false,
+      isLoading: false,
 
-      onMessageFocus: () => console.log('message focus'),
-      onMessageInput: (e: InputEvent) => {
-        const element = e.target as HTMLInputElement;
-        const errorMessage = validateForm([
-          {type: ValidateType.Message, value: element.value},
-        ])
-        this.setProps({
-          messageValue: element.value,
-          messageError: errorMessage,
+      onChatCreatePopupOpen: () => this.setProps({isCreateChatPopupOpen: true}),
+      onChatCreatePopupClose: () => this.setProps({isCreateChatPopupOpen: false}),
+
+      onUserAddPopupOpen: () => this.setProps({isUserAddPopupOpen: true}),
+      onUserAddPopupClose: () => this.setProps({isUserAddPopupOpen: false}),
+
+      onUserDeletePopupOpen: () => this.setProps({isUserDeletePopupOpen: true}),
+      onUserDeletePopupClose: () => this.setProps({isUserDeletePopupOpen: false}),
+
+      createChat: async (value: string) => {
+        return ChatsController.create(value).then(async () => {
+          await ChatsController.fetchChats().then(() => {
+            const chats = store.getState().chats;
+            this.setProps({
+              chats,
+            })
+            store.set('selectedChat', chats[0]?.id || {});
+          });
         })
       },
-      onBlur: (e: FocusEvent) => {
-        const element = e.target as HTMLInputElement;
-        const errorMessage = validateForm([
-          {type: this.props.name, value: element.value},
-        ])
+
+      onChatSelect: (id: number): void => {
+        ChatsController.selectChat(id);
         this.setProps({
-          messageError: errorMessage
+          selectedChat: store.getState().chats.find((chat: { id: number; }) => chat.id === id) || {},
         })
       },
 
-      onSubmit: (e: SubmitEvent) => {
+      onChatCreate: async (e: SubmitEvent) => {
         e.preventDefault();
+
+        const inputElement = getElement(this.element, 'chatName');
+
+        this.setProps({isLoading: true})
+
+        await this.props.createChat(inputElement.value).then(() => {
+          this.setProps({isLoading: false})
+        })
+      },
+
+      onChatDelete: async (id: number) => {
+        await ChatsController.delete(id).then(async () => {
+          ChatsController.fetchChats().then(() => {
+            const chats = store.getState().chats;
+            this.setProps({
+              chats,
+            })
+            store.set('selectedChat', chats[0]?.id || {});
+          })
+        })
       }
+    })
+  }
+
+  componentDidMount() {
+    AuthController.fetchUser();
+    ChatsController.fetchChats().finally(() => {
+      const chats = store.getState().chats;
+      this.setProps({
+        chats,
+        isCreateChatPopupOpen: store.getState().isCreateChatPopupOpen,
+        selectedChat: chats[0],
+      })
+      store.set('selectedChat', chats[0]?.id || {});
     })
   }
 
   render() {
     // language=hbs
     return `
-        <section class="chats">
+        <section class=${styles.chats}>
             {{{Toolbar}}}
-            <main class="chats-container">
-                <section class="chats-list">
-                    <div class="chats-list__search-container">
-                        <div class="chats-list__search-line">
-                            <input class="chats-list__search" type="text" placeholder="Поиск по сообщениям..."/>
+            {{#if chats.length}}
+                <main class=${styles.container}>
+                    <section class=${styles.list}>
+                        <div class=${styles.search_container}>
+                            <div class=${styles.search_line}>
+                                <input class=${styles.search} type="text" placeholder="Поиск по сообщениям..."/>
+                            </div>
                         </div>
-                    </div>
-                    <ul class="chats-list__list">
-                        {{{ChatCard
-                                avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                name="Иван Иванов"
-                                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                time="1: 38"
-                                notify="8"
-                        }}}
-                        {{{ChatCard
-                                avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                name="Илон Маск"
-                                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                time="1: 38"
-                                notify="9"
-                        }}}
-                        {{{ChatCard
-                                avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                name="Станислав"
-                                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                time="1: 38"
-                                notify="24"
-                        }}}
-                        {{{ChatCard
-                                avatar="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                                name="Мария"
-                                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                                time="1: 38"
-                                notify="18"
-                        }}}
-                    </ul>
-                </section>
-                <section class="chat">
-                    <header class="chat__header">
-                        <div class="chat__header-container">
-                            <h1 class="chat__title">Иван Иванов</h1>
-                            <span class="chat__status"></span>
-                            <p class="chat__status-text">Был в сети 6 минут назад</p>
-                        </div>
-                        <button class="chat__options"></button>
-                    </header>
-                    <div class="chat__messages">
-                        <ul class="chat__messages-list">
-                            <li class="chat__messages-list-item">
-                                <p class="chat__messages-list-text">Друзья, у меня для вас особенный выпуск
-                                    новостей!</p>
-                            </li>
-                            <li class="chat__messages-list-item">
-                                <p class="chat__messages-list-text">У меня для вас особенный выпуск новостей!</p>
-                            </li>
-                            <li class="chat__messages-list-item">
-                                <img class="chat__messages-list-image"
-                                     src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg"
-                                     alt="">
-                            </li>
-                            <li class="chat__messages-list-item chat__messages-list-item_self">
-                                <p class="chat__messages-list-text chat__messages-list-text_self">Pellentesque habitant
-                                    morbi
-                                    tristique!</p>
-                            </li>
-                            <li class="chat__messages-list-item chat__messages-list-item_self">
-                                <p class="chat__messages-list-text chat__messages-list-text_self">Duis ac diam nec massa
-                                    aliquam
-                                    consequat. Curabitur ante neque</p>
-                            </li>
+                        <ul class=${styles.chats_list}>
+                            {{#each chats}}
+                                {{{ChatCard
+                                        id=id
+                                        avatar=avatar
+                                        name=title
+                                        message=last_message.content
+                                        time=last_message.time
+                                        notify=unread_count
+                                        onClick=../onChatSelect
+                                        onDelete=../onChatDelete
+                                }}}
+                            {{/each}}
                         </ul>
-                    </div>
-                    <footer class="chat__footer">
-                        <span class="chat__footer-error">${this.props.messageError}</span>
-                        <form class="chat__footer-form" onsubmit="${this.props.onSubmit}">
-                            <button class="chat__footer-attach" type="button"></button>
-                            {{{
-                            Message
-                                    onInput=onMessageInput
-                                    onFocus=onMessageFocus
-                                    obBlur=onMessageBlur
-                                    value=messageValue
-                                    error=messageError
-                                    ref=messageRef
-                            }}}
-                            <button class="chat__footer-send"></button>
-                        </form>
-                    </footer>
-                </section>
-            </main>
+                        {{{Button
+                                text="Создать чат"
+                                onClick=onChatCreatePopupOpen
+                                className="${styles.create_button}"
+                        }}}
+                    </section>
+                    {{{Chat
+                            title=selectedChat.title
+                            id=selectedChat.id
+                            handleAddUser=onUserAddPopupOpen
+                            handleDeleteUser=onUserDeletePopupOpen
+                    }}}
+                    {{#if isCreateChatPopupOpen}}
+                        {{{CreateChatPopup handleClose=onChatCreatePopupClose createChat=createChat}}}
+                    {{/if}}
+                    {{#if isUserAddPopupOpen}}
+                        {{{AddUserPopup handleClose=onUserAddPopupClose}}}
+                    {{/if}}
+                    {{#if isUserDeletePopupOpen}}
+                        {{{DeleteUserPopup handleClose=onUserDeletePopupClose}}}
+                    {{/if}}
+                </main>
+            {{else}}
+                {{{EmptyChats onChatCreate=onChatCreate isLoading=isLoading}}}
+            {{/if}}
         </section>
     `;
   }

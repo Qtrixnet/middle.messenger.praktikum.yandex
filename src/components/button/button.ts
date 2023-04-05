@@ -1,20 +1,50 @@
 import Block from '../../core/Block';
-import './button.css';
+import styles from './button.module.pcss';
 
-interface ButtonProps {
+export interface ButtonProps {
   text: string;
   onClick: () => void;
+  type?: string;
+  isSimple?: boolean;
+  isDanger?: boolean;
+  isDisabled?: boolean;
+  className?: string;
+  actionType?: "button" | "submit";
+  isLoading?: boolean;
 }
 
 export class Button extends Block {
-  constructor({text, onClick}: ButtonProps) {
-    super({text, events: {click: onClick}});
+  static componentName = 'Button';
+  constructor({
+                text,
+                type = '',
+                onClick,
+                isSimple = false,
+                isDanger = false,
+                isDisabled = false,
+                isLoading = false,
+                className = '',
+                actionType = "button",
+              }: ButtonProps) {
+    super({text, type, isSimple, isDanger, isDisabled, isLoading, className, actionType, events: {click: onClick}});
   }
 
   protected render(): string {
     // language=hbs
     return `
-        <button class="button" type="button">{{text}}</button>
+        <button class="
+            ${styles.button}
+            ${this.props.isSimple ? styles.button_simple : ''}
+            ${this.props.isDanger ? styles.button_danger : ''}
+            ${this.props.className ? this.props.className : ''}
+            ${this.props.isLoading ? styles.button_loading : ''}
+        "
+            ${this.props.isDisabled ? 'disabled' : ''}
+            type=${this.props.actionType}
+        >
+            ${Boolean(this.props.type) ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
+            ${this.props.isLoading ? `<span class="${styles['button-loader']}"></span>` : this.props.text}
+        </button>
     `;
   }
 }

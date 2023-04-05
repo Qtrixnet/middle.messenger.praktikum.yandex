@@ -1,20 +1,36 @@
 import Block from '../../core/Block';
-import './toolbar.css';
+import styles from './toolbar.module.pcss';
+import {Routes} from "../../types/types";
+import store from "../../core/Store";
+import baseAvatar from "../../assets/images/avatar.png";
 
 export class Toolbar extends Block {
+  static componentName = 'Toolbar';
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+    const {user} = store.getState();
+    if (user) {
+      this.setProps({avatar: user.avatar});
+    }
+  }
+
   render() {
     // language=hbs
     return `
-        <header class="toolbar">
-            <img class="toolbar__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
-                 alt="avatar"/>
-            <nav class="toolbar__nav">
-                <ul class="toolbar__list">
-                    <li class="toolbar__list-item">
-                        <a href="../../pages/chats/chats.hbs" class="toolbar__button toolbar__button_chats"></a>
+        <header class=${styles.toolbar}>
+            <img class=${styles.avatar}
+                 src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
+                 alt="avatar">
+            <nav>
+                <ul class=${styles.list}>
+                    <li>
+                        {{{Link to="${Routes.Chats}" icon="${Routes.Chats}"}}}
                     </li>
-                    <li class="toolbar__list-item">
-                        <a href="../../pages/profile/profile.hbs" class="toolbar__button toolbar__button_profile"></a>
+                    <li>
+                        {{{Link to="${Routes.Profile}" icon="${Routes.Profile}"}}}
                     </li>
                 </ul>
             </nav>

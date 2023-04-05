@@ -1,9 +1,11 @@
 import Block from '../../core/Block';
-import './register.css';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import styles from './register.module.pcss';
 import getElement from "../../utils/getElement";
+import validateForm, {ValidateType} from "../../helpers/validate-form";
+import AuthController from "../../controllers/AuthController";
 
 export class Register extends Block {
+  static componentName = 'Register';
   constructor() {
     super();
 
@@ -23,74 +25,60 @@ export class Register extends Block {
       secondPasswordError: '',
       secondPasswordValue: '',
 
-      onLoginFocus: () => console.log('login focus'),
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Login, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onEmailFocus: () => console.log('email focus'),
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Email, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onFirstNameFocus: () => console.log('first_name focus'),
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.FirstName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onPhoneFocus: () => console.log('phone focus'),
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Phone, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onSecondNameFocus: () => console.log('second_name focus'),
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.SecondName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onPasswordFocus: () => console.log('password focus'),
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Password, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.passwordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('passwordInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onSecondPasswordFocus: () => console.log('password__second focus'),
       onSecondPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.SecondPassword, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondPasswordInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondPasswordInputRef', 'errorRef', {text: errorMessage});
       },
 
       onRegister: () => {
@@ -149,15 +137,15 @@ export class Register extends Block {
           })
         } else {
           const data = {
-            loginValue: loginElement.value,
-            emailValue: emailElement.value,
-            firstNameValue: firstNameElement.value,
-            phoneValue: phoneElement.value,
-            secondNameValue: secondNameElement.value,
-            passwordValue: passwordElement.value,
-            secondPasswordValue: secondNameElement.value
+            first_name: firstNameElement.value,
+            second_name: secondNameElement.value,
+            login: loginElement.value,
+            email: emailElement.value,
+            phone: phoneElement.value,
+            password: passwordElement.value,
           }
-          console.log(data)
+
+          AuthController.signup(data);
         }
       }
     })
@@ -166,10 +154,10 @@ export class Register extends Block {
   render() {
     // language=hbs
     return `
-        <section class="register">
-            <form class="register__form">
-                <h2 class="register__title">Регистрация аккаунта</h2>
-                <fieldset class="register__fieldset">
+        <section class=${styles.register}>
+            <form class=${styles.form}>
+                <h2 class=${styles.title}>Регистрация аккаунта</h2>
+                <fieldset class=${styles.fieldset}>
                     {{{ControlledInput
                             onInput=onLoginInput
                             onFocus=onLoginFocus
@@ -230,7 +218,7 @@ export class Register extends Block {
                             error=secondNameError
                             value=secondNameValue
                     }}}
-                    <fieldset class="register__container">
+                    <fieldset class=${styles.container}>
                         {{{ControlledInput
                                 onInput=onPasswordInput
                                 onFocus=onPasswordFocus
@@ -257,9 +245,9 @@ export class Register extends Block {
                         }}}
                     </fieldset>
                 </fieldset>
-                <div class="register__buttons">
+                <div class=${styles.buttons}>
                     {{{Button text="Зарегистрироваться" onClick=onRegister}}}
-                    <a href="#" class="register__link">Вернуться назад</a>
+                    {{{Link text="Вернуться назад" to="/"}}}
                 </div>
             </form>
         </section>

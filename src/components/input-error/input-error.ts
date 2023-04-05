@@ -1,15 +1,16 @@
 import Block from '../../core/Block';
-import './input-error.css';
+import styles from './input-error.module.pcss';
 
 interface InputErrorProps {
   text: string;
 }
 
 export class InputError extends Block<InputErrorProps>{
+  static componentName = 'InputError';
   render() {
     // language=hbs
     return `
-        <span class="input-error">{{#if text}}{{text}}{{/if}}</span>
+        <span class=${styles.input}>{{#if text}}{{text}}{{/if}}</span>
     `;
   }
 }

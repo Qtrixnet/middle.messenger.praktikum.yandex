@@ -1,7 +1,8 @@
 import Block from '../../core/Block';
-import './input.css';
+import styles from './input.module.pcss';
 
 interface InputProps {
+  isDisabled: boolean;
   onInput: () => void;
   onFocus: () => void;
   onBlur: () => void;
@@ -13,6 +14,7 @@ interface InputProps {
 }
 
 export class Input extends Block {
+  static componentName = 'Input';
   constructor({
                 onInput,
                 onFocus,
@@ -33,7 +35,8 @@ export class Input extends Block {
     // language=hbs
     return `
         <input
-                class="input input_{{color}}"
+                ${this.props.isDisabled ? 'disabled' : 'enabled'}
+                class="${styles.input} ${styles.input}_${this.props.color}"
                 value="{{value}}"
                 type="{{type}}"
                 placeholder="{{placeholder}}"

@@ -1,87 +1,187 @@
 import Block from '../../core/Block';
-import './profile.css';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import styles from './profile.module.pcss';
+import validateForm, {ValidateType} from "../../helpers/validate-form";
 import getElement from "../../utils/getElement";
+import AuthController from "../../controllers/AuthController";
+import store from "../../core/Store";
+import UserController from "../../controllers/UserController";
+import baseAvatar from "../../assets/images/avatar.png";
 
 export class Profile extends Block {
+  static componentName = 'Profile';
   constructor() {
     super();
 
     this.setProps({
+      avatar: '',
       loginError: '',
-      loginValue: 'ivanivanov',
+      loginValue: '',
       emailError: '',
-      emailValue: 'example@gmail.com',
+      emailValue: '',
       firstNameError: '',
-      firstNameValue: 'Иван',
+      firstNameValue: '',
       phoneError: '',
-      phoneValue: '+7123456789',
+      phoneValue: '',
       secondNameError: '',
-      secondNameValue: 'Иванов',
+      secondNameValue: '',
       displayNameError: '',
-      displayNameValue: 'Иваныч',
+      displayNameValue: '',
+      oldPasswordError: '',
+      oldPasswordValue: '',
+      newPasswordError: '',
+      newPasswordValue: '',
+      isFormDisabled: true,
+      isPasswordChanging: false,
+      isPopupOpen: false,
+      previousData: {},
 
-      onLoginFocus: () => console.log('login focus'),
+      avatarPopupOpen: () => {
+        this.setProps({
+          isPopupOpen: true,
+        })
+      },
+
+      avatarPopupClose: () => {
+        this.setProps({
+          isPopupOpen: false,
+        })
+      },
+
+      onPasswordChangeEnabled: () => {
+        this.setProps({
+          isPasswordChanging: true,
+        })
+      },
+
+      onPasswordChangeDisabled: () => {
+        this.setProps({
+          isPasswordChanging: false,
+        })
+      },
+
+      onOldPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        this.setChildRefProps('oldPasswordInputRef', 'errorRef', {text: errorMessage});
+      },
+
+      onNewPasswordInput: (e: InputEvent) => {
+        const element = e.target as HTMLInputElement;
+        const errorMessage = validateForm([
+          {type: ValidateType.Password, value: element.value},
+        ])
+        this.setChildRefProps('newPasswordInputRef', 'errorRef', {text: errorMessage});
+      },
+
+      OnNewPasswordSubmit: async () => {
+        const oldPasswordElement = getElement(this.element, 'password');
+        const newPasswordElement = getElement(this.element, 'password__second');
+
+        const oldPasswordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: oldPasswordElement.value},
+        ])
+
+        const newPasswordErrorMessage = validateForm([
+          {type: ValidateType.Password, value: newPasswordElement.value},
+        ])
+
+        if (oldPasswordErrorMessage || newPasswordErrorMessage) {
+          this.setProps({
+            oldPasswordError: oldPasswordErrorMessage,
+            oldPasswordValue: oldPasswordElement.value,
+            newPasswordError: newPasswordErrorMessage,
+            newPasswordValue: newPasswordElement.value,
+          })
+        } else {
+          const data = {
+            oldPassword: oldPasswordElement.value,
+            newPassword: newPasswordElement.value,
+          }
+
+          await UserController.updatePassword(data);
+        }
+      },
+
+      onProfileDataEnabled: () => {
+        this.setProps({
+          isFormDisabled: false,
+          previousData: {
+            loginValue: this.props.loginValue,
+            emailValue: this.props.emailValue,
+            firstNameValue: this.props.firstNameValue,
+            phoneValue: this.props.phoneValue,
+            secondNameValue: this.props.secondNameValue,
+            displayNameValue: this.props.displayNameValue,
+          }
+        })
+      },
+      onProfileDataDisabled: () => {
+        this.setProps({
+          isFormDisabled: true,
+          loginValue: this.props.previousData.loginValue,
+          emailValue: this.props.previousData.emailValue,
+          firstNameValue: this.props.previousData.firstNameValue,
+          phoneValue: this.props.previousData.phoneValue,
+          secondNameValue: this.props.previousData.secondNameValue,
+          displayNameValue: this.props.previousData.displayNameValue,
+        })
+      },
+
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Login, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.loginInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onEmailFocus: () => console.log('email focus'),
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Email, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.emailInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onFirstNameFocus: () => console.log('first_name focus'),
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.FirstName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.firstNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onPhoneFocus: () => console.log('phone focus'),
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.Phone, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.phoneInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onSecondNameFocus: () => console.log('second_name focus'),
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.SecondName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.secondNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onDisplayNameFocus: () => console.log('display_name focus'),
       onDisplayNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
           {type: ValidateType.DisplayName, value: element.value},
         ])
-        // @ts-ignore
-        this.refs.displayNameInputRef.refs.errorRef.setProps({text: errorMessage})
+        this.setChildRefProps('displayNameInputRef', 'errorRef', {text: errorMessage});
       },
 
-      onProfileDataChange: () => {
+      onLogout: () => {
+        AuthController.logout();
+      },
+
+      onProfileDataChange: async () => {
         const loginElement = getElement(this.element, 'login');
         const emailElement = getElement(this.element, 'email');
         const firstNameElement = getElement(this.element, 'first_name');
@@ -110,7 +210,7 @@ export class Profile extends Block {
         ])
 
         const displayNameErrorMessage = validateForm([
-          {type: ValidateType.Password, value: displayNameElement.value},
+          {type: ValidateType.FirstName, value: displayNameElement.value},
         ])
 
         if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || displayNameErrorMessage) {
@@ -130,42 +230,69 @@ export class Profile extends Block {
           })
         } else {
           const data = {
-            loginValue: loginElement.value,
-            emailValue: emailElement.value,
-            firstNameValue: firstNameElement.value,
-            phoneValue: phoneElement.value,
-            secondNameValue: secondNameElement.value,
-            displayNameValue: displayNameElement.value,
+            login: loginElement.value,
+            email: emailElement.value,
+            first_name: firstNameElement.value,
+            phone: phoneElement.value,
+            second_name: secondNameElement.value,
+            display_name: displayNameElement.value,
           }
-          console.log(data)
+
+          UserController.updateUser(data);
+          await AuthController.fetchUser();
+
+          this.setProps({isFormDisabled: false})
         }
       }
     })
 
   }
 
+  async componentDidMount() {
+    await AuthController.fetchUser();
+    const {user} = store.getState();
+
+    this.setProps({
+      avatar: user.avatar || '',
+      loginValue: user.login,
+      emailValue: user.email,
+      firstNameValue: user.first_name,
+      phoneValue: user.phone,
+      secondNameValue: user.second_name,
+      displayNameValue: user.display_name,
+    })
+  }
+
   render() {
     // language=hbs
     return `
-        <section class="profile">
+        <section class=${styles.profile}>
             {{{Toolbar}}}
-            <div class="profile__content">
-                <header class="profile__header">
-                    <img class="profile__avatar" src="https://basetop.ru/wp-content/uploads/2021/09/majkl-ili2.jpg"
+            <div class=${styles.content}>
+                <header class=${styles.header}>
+                    <img class=${styles.avatar}
+                         src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
                          alt="avatar">
-                    <div class="profile__data">
-                        <h1 class="profile__title">Иван Иванов</h1>
-                        <button class="profile__button profile__button_avatar">
-                            <span class="profile__button-icon profile__button-icon_avatar"></span>
-                            Поменять аватар
-                        </button>
+                    <div class=${styles.data}>
+                        <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>
+                        {{{Button
+                                text="Поменять аватар"
+                                isSimple=true
+                                onClick=avatarPopupOpen
+                                type="avatar"
+                        }}}
                     </div>
                 </header>
-                <form class="profile__form">
-                    <fieldset class="profile__fieldset">
+                <form class=${styles.form}>
+                    ${this.props.isPasswordChanging ? `{{{ChangePassword
+                      handleCancel=onPasswordChangeDisabled
+                      onSubmit=OnNewPasswordSubmit
+                      oldPasswordValue=oldPasswordValue
+                      onOldPasswordInput=onOldPasswordInput
+                    }}}` : `
+                      <fieldset class=${styles.fieldset}>
                         {{{ControlledInput
                                 onInput=onLoginInput
-                                onFocus=onLoginFocus
                                 type="text"
                                 name="login"
                                 placeholder="Ваш логин"
@@ -174,10 +301,10 @@ export class Profile extends Block {
                                 ref="loginInputRef"
                                 error=loginError
                                 value=loginValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onFirstNameInput
-                                onFocus=onFirstNameFocus
                                 type="text"
                                 name="first_name"
                                 placeholder="Ваше имя"
@@ -186,10 +313,10 @@ export class Profile extends Block {
                                 ref="firstNameInputRef"
                                 error=firstNameError
                                 value=firstNameValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onEmailInput
-                                onFocus=onEmailFocus
                                 type="email"
                                 name="email"
                                 placeholder="Ваш электронный адрес"
@@ -198,10 +325,10 @@ export class Profile extends Block {
                                 ref="emailInputRef"
                                 error=emailError
                                 value=emailValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onSecondNameInput
-                                onFocus=onSecondNameFocus
                                 type="text"
                                 name="second_name"
                                 placeholder="Ваша фамилия"
@@ -210,10 +337,10 @@ export class Profile extends Block {
                                 ref="secondNameInputRef"
                                 error=secondNameError
                                 value=secondNameValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onPhoneInput
-                                onFocus=onPhoneFocus
                                 type="phone"
                                 name="phone"
                                 placeholder="Ваш номер телефона"
@@ -222,10 +349,10 @@ export class Profile extends Block {
                                 ref="phoneInputRef"
                                 error=phoneError
                                 value=phoneValue
+                                isDisabled=isFormDisabled
                         }}}
                         {{{ControlledInput
                                 onInput=onDisplayNameInput
-                                onFocus=onDisplayNameFocus
                                 type="text"
                                 name="display_name"
                                 placeholder="Ваше имя в чате"
@@ -234,18 +361,33 @@ export class Profile extends Block {
                                 ref="displayNameInputRef"
                                 error=displayNameError
                                 value=displayNameValue
+                                isDisabled=isFormDisabled
                         }}}
                     </fieldset>
-                    <div class="profile__buttons">
-                        {{{Button text="Изменить данные" onClick=onProfileDataChange}}}
-                        {{{Button text="Изменить пароль"}}}
+                    <div class=${styles.buttons}>
+                        ${this.props.isFormDisabled ? `
+                          {{{Button text="Изменить данные" onClick=onProfileDataEnabled}}}
+                          {{{Button text="Изменить пароль" onClick=onPasswordChangeEnabled}}}            
+                        ` : `
+                          {{{Button text="Сохранить" onClick=onProfileDataChange}}}
+                          {{{Button text="Отменить" onClick=onProfileDataDisabled}}}
+                        `}
                     </div>
-                    <button class="profile__button profile__button_quit">
-                        <span class="profile__button-icon profile__button-icon_quit"></span>
-                        Выйти
-                    </button>
+                    `}
+                    {{{Button
+                            text="Выйти"
+                            isSimple=true
+                            isDanger=true
+                            onClick=onLogout
+                            type="quit"
+                    }}}
                 </form>
             </div>
+            {{#if isPopupOpen}}
+                {{{AvatarPopup
+                        handleClose=avatarPopupClose
+                }}}
+            {{/if}}
         </section>
     `;
   }

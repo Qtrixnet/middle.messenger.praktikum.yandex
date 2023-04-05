@@ -1,8 +1,9 @@
 import Block from '../../core/Block';
-import './controlled-input.css';
-import {validateForm} from "../../helpers/validateForm";
+import styles from './controlled-input.module.pcss';
+import validateForm from "../../helpers/validate-form";
 
 interface ControlledInputProps {
+  isDisabled?: boolean;
   onInput: () => void;
   onFocus: () => void;
   type: 'text' | 'password' | 'email';
@@ -14,6 +15,7 @@ interface ControlledInputProps {
 }
 
 export class ControlledInput extends Block {
+  static componentName = 'ControlledInput';
   constructor(props: ControlledInputProps) {
     super({
       ...props,
@@ -34,9 +36,10 @@ export class ControlledInput extends Block {
   render() {
     // language=hbs
     return `
-        <label class="controlled-input">
-            <span class="controlled-input__label">{{label}}</span>
+        <label class=${styles.input}>
+            <span class=${styles.label}>{{label}}</span>
             {{{Input
+                    isDisabled=isDisabled
                     onInput=onInput
                     onFocus=onFocus
                     onBlur=onBlur
