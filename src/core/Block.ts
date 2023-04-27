@@ -14,7 +14,7 @@ export default class Block<P = any> {
 
   public id = nanoid(6);
 
-  protected _element: Nullable<HTMLElement> = null;
+  protected _element: HTMLElement | null = null;
   protected readonly props: P;
   protected children: { [id: string]: Block } = {};
 
