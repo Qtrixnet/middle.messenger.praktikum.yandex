@@ -36,7 +36,7 @@ export class Input extends Block {
     return `
         <input
                 ${this.props.isDisabled ? 'disabled' : 'enabled'}
-                class="${styles.input} ${styles.input}_${this.props.color}"
+                class="${styles.input} ${this.props.color === 'light' ? styles.light : styles.dark}"
                 value="{{value}}"
                 type="{{type}}"
                 placeholder="{{placeholder}}"
