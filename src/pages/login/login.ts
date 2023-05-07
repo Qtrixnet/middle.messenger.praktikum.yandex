@@ -1,11 +1,12 @@
 import Block from '../../core/Block';
 import styles from './login.module.pcss';
-import validateForm, {ValidateType} from "../../helpers/validate-form";
-import getElement from "../../utils/getElement";
-import AuthController from "../../controllers/AuthController";
+import validateForm, { ValidateType } from '../../helpers/validate-form';
+import getElement from '../../utils/getElement';
+import AuthController from '../../controllers/AuthController';
 
 export class Login extends Block {
   static componentName = 'Login';
+
   constructor() {
     super();
 
@@ -17,28 +18,28 @@ export class Login extends Block {
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Login, value: element.value},
-        ])
-        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Login, value: element.value },
+        ]);
+        this.setChildRefProps('loginInputRef', 'errorRef', { text: errorMessage });
       },
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Password, value: element.value},
-        ])
-        this.setChildRefProps('passwordInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Password, value: element.value },
+        ]);
+        this.setChildRefProps('passwordInputRef', 'errorRef', { text: errorMessage });
       },
       onLogin: () => {
         const loginElement = getElement(this.element, 'login');
         const passwordElement = getElement(this.element, 'password');
 
         const loginErrorMessage = validateForm([
-          {type: ValidateType.Login, value: loginElement.value},
-        ])
+          { type: ValidateType.Login, value: loginElement.value },
+        ]);
 
         const passwordErrorMessage = validateForm([
-          {type: ValidateType.Password, value: passwordElement.value},
-        ])
+          { type: ValidateType.Password, value: passwordElement.value },
+        ]);
 
         if (loginErrorMessage || passwordErrorMessage) {
           this.setProps({
@@ -46,17 +47,17 @@ export class Login extends Block {
             loginError: loginErrorMessage,
             loginValue: loginElement.value,
             passwordValue: passwordElement.value,
-          })
+          });
         } else {
           const data = {
             login: loginElement.value,
             password: passwordElement.value,
-          }
+          };
 
           AuthController.signin(data);
         }
-      }
-    })
+      },
+    });
   }
 
   render() {
@@ -91,8 +92,8 @@ export class Login extends Block {
                 </fieldset>
                 {{#if error}}
                     <div class=${styles.error}>
-                        <span class=${styles.error_icon}></span>
-                        <span class=${styles.error_text}>{{error}}</span>
+                        <span class=${styles['error-icon']}></span>
+                        <span class=${styles['error-text']}>{{error}}</span>
                     </div>
                 {{/if}}
                 <div class=${styles.buttons}>

@@ -9,8 +9,9 @@ interface ICreateChatPopupForm {
 
 export class CreateChatPopupForm extends Block {
   static componentName = 'CreateChatPopupForm';
-  constructor({handleClose, onSubmit, isLoading}: ICreateChatPopupForm) {
-    super({handleClose, isLoading, events: {submit: onSubmit}});
+
+  constructor({ handleClose, onSubmit, isLoading }: ICreateChatPopupForm) {
+    super({ handleClose, isLoading, events: { submit: onSubmit } });
   }
 
   render() {

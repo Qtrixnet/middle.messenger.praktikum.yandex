@@ -1,11 +1,11 @@
-import {expect} from "chai";
-import HTTPTransport from "./HTTPTransport";
+import { expect } from 'chai';
 import sinon, {
   SinonFakeXMLHttpRequest,
   SinonFakeXMLHttpRequestStatic,
-} from "sinon";
+} from 'sinon';
+import HTTPTransport from './HTTPTransport';
 
-describe("HTTPTransport", () => {
+describe('HTTPTransport', () => {
   let xhr: SinonFakeXMLHttpRequestStatic;
   let instance: HTTPTransport;
   const requests: SinonFakeXMLHttpRequest[] = [];
@@ -20,7 +20,7 @@ describe("HTTPTransport", () => {
       requests.push(request);
     };
 
-    instance = new HTTPTransport("/auth");
+    instance = new HTTPTransport('/auth');
   });
 
   afterEach(() => {
@@ -28,18 +28,18 @@ describe("HTTPTransport", () => {
   });
 
   it("Method 'get' should send a GET request", () => {
-    instance.get("/user");
+    instance.get('/user');
 
     const [request] = requests;
 
-    expect(request.method).to.eq("Get");
+    expect(request.method).to.eq('Get');
   });
 
   it("Method 'post' should send a POST request", () => {
-    instance.post("/signin");
+    instance.post('/signin');
 
     const [request] = requests;
 
-    expect(request.method).to.eq("Post");
+    expect(request.method).to.eq('Post');
   });
 });

@@ -9,8 +9,9 @@ interface OptionProps {
 
 export class Option extends Block {
   static componentName = 'Option';
-  constructor({title, type = 'add', handleClick}: OptionProps) {
-    super({title, type, events: {click: handleClick}});
+
+  constructor({ title, type = 'add', handleClick }: OptionProps) {
+    super({ title, type, events: { click: handleClick } });
   }
 
   protected render(): string {
@@ -20,7 +21,7 @@ export class Option extends Block {
             <span
                     class="
                     ${styles.icon}
-                    ${this.props.type === 'add' ? styles.icon_add : styles.icon_delete}
+                    ${this.props.type === 'add' ? styles['icon-add'] : styles['icon-delete']}
                 "
             >
             </span>

@@ -1,19 +1,19 @@
-import sinon from "sinon";
-import Router from "./Router";
-import {expect} from "chai";
-import Block from "./Block";
+import sinon from 'sinon';
+import { expect } from 'chai';
+import Router from './Router';
+import Block from './Block';
 
-describe("Router", () => {
+describe('Router', () => {
   global.window.history.back = () => {
     if (typeof window.onpopstate === 'function') {
-      window.onpopstate({currentTarget: window} as unknown as PopStateEvent);
+      window.onpopstate({ currentTarget: window } as unknown as PopStateEvent);
     }
   };
   global.window.history.forward = () => {
     if (typeof window.onpopstate === 'function') {
-      window.onpopstate({currentTarget: window} as unknown as PopStateEvent);
+      window.onpopstate({ currentTarget: window } as unknown as PopStateEvent);
     }
-  }
+  };
 
   const getContentFake = sinon.fake.returns(document.createElement('div'));
 

@@ -4,14 +4,16 @@ import serverError from '../../assets/images/server-error.png';
 
 export class Error extends Block {
   static componentName = 'Error';
+
   constructor() {
     super();
 
     this.setProps({
       message: 'Мы уже фиксим',
-      image: serverError
+      image: serverError,
     });
   }
+
   render() {
     // language=hbs
     return `

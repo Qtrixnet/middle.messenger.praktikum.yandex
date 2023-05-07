@@ -1,7 +1,7 @@
 import Block from '../../core/Block';
 import styles from './chat-card.module.pcss';
 import baseAvatar from '../../assets/images/avatar.png';
-import formatTime from "../../helpers/format-time";
+import formatTime from '../../helpers/format-time';
 
 interface ChatCardProps {
   id: number;
@@ -16,14 +16,19 @@ interface ChatCardProps {
 
 export class ChatCard extends Block {
   static componentName = 'ChatCard';
-  constructor({id, avatar, name, message, time, notify, onClick, onDelete}: ChatCardProps) {
-    super({id,avatar, name, message, time, notify, onDelete, events: {click: () => onClick(id)}});
+
+  constructor({
+    id, avatar, name, message, time, notify, onClick, onDelete,
+  }: ChatCardProps) {
+    super({
+      id, avatar, name, message, time, notify, onDelete, events: { click: () => onClick(id) },
+    });
 
     this.setProps({
       onChatDelete: (): void => {
         onDelete(id);
-      }
-    })
+      },
+    });
   }
 
   render() {

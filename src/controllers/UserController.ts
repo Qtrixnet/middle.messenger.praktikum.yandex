@@ -1,6 +1,5 @@
-import {IPassword, IUserInfo, UserAPI} from "../api/UserAPI";
-import AuthController from "./AuthController";
-import API from "../api/UserAPI";
+import API, { IPassword, IUserInfo, UserAPI } from '../api/UserAPI';
+import AuthController from './AuthController';
 
 export class UserController {
   private readonly api: UserAPI;

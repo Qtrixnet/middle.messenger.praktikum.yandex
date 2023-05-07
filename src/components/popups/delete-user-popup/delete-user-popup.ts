@@ -1,8 +1,8 @@
 import Block from '../../../core/Block';
 import styles from './delete-user-popup.module.pcss';
-import getElement from "../../../utils/getElement";
-import ChatsController from "../../../controllers/ChatsController";
-import store from "../../../core/Store";
+import getElement from '../../../utils/getElement';
+import ChatsController from '../../../controllers/ChatsController';
+import store from '../../../core/Store';
 
 interface DeleteUserPopupProps {
   handleClose: () => void
@@ -10,8 +10,9 @@ interface DeleteUserPopupProps {
 
 export class DeleteUserPopup extends Block {
   static componentName = 'DeleteUserPopup';
-  constructor({handleClose}: DeleteUserPopupProps) {
-    super({handleClose});
+
+  constructor({ handleClose }: DeleteUserPopupProps) {
+    super({ handleClose });
 
     this.setProps({
       onSubmit: (e: Event) => {
@@ -22,9 +23,9 @@ export class DeleteUserPopup extends Block {
 
         ChatsController.deleteUserFromChat(id, Number(inputElement.value)).then(() => {
           handleClose();
-        })
+        });
       },
-    })
+    });
   }
 
   protected render(): string {

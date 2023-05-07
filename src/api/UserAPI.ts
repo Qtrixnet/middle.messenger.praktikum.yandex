@@ -1,4 +1,4 @@
-import BaseAPI from "./BaseAPI";
+import BaseAPI from './BaseAPI';
 
 export interface IUserInfo {
   login: string,
@@ -27,26 +27,29 @@ export interface IPassword {
 
 export class UserAPI extends BaseAPI {
   constructor() {
-    super("/user");
+    super('/user');
   }
 
-  headers: Record<string, string> = { "Content-Type": "application/json" };
+  headers: Record<string, string> = { 'Content-Type': 'application/json' };
 
   updateUser(data: IUserInfo) {
-    return this.http.put("/profile", data);
+    return this.http.put('/profile', data);
   }
 
   updatePassword(data: IPassword) {
-    return this.http.put("/password", data);
+    return this.http.put('/password', data);
   }
 
   updateAvatar(data: FormData) {
-    return this.http.put("/profile/avatar", data);
+    return this.http.put('/profile/avatar', data);
   }
 
   create = undefined;
+
   read = undefined;
+
   update = undefined;
+
   delete = undefined;
 }
 

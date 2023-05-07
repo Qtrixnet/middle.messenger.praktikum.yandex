@@ -1,1 +1,1 @@
-export { CreateChatPopupForm as default} from './create-chat-popup-form';
+export { CreateChatPopupForm as default } from './create-chat-popup-form';

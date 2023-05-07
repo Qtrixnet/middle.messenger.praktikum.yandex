@@ -1,3 +1,19 @@
+.button {
+  opacity: 0;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/images/icons/close.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: transparent;
+  border: 0;
+  transition: opacity .2s ease;
+}
+
 .card {
   display: grid;
   grid-template-columns: 48px 1fr 26px;
@@ -21,22 +37,6 @@
     }
   }
 
-}
-
-.button {
-  opacity: 0;
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 24px;
-  height: 24px;
-  background-image: url(../../assets/images/icons/close.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-color: transparent;
-  border: 0;
-  transition: opacity .2s ease;
 }
 
 .avatar {

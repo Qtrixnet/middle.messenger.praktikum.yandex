@@ -1,51 +1,51 @@
-import { ChatsAPI } from "../api/ChatsAPI";
-import MessagesController from "./MessagesController";
-import store from "../core/Store";
+import { ChatsAPI } from '../api/ChatsAPI';
+import MessagesController from './MessagesController';
+import store from '../core/Store';
 
 class ChatsController {
-    constructor(private api: ChatsAPI) {}
+  constructor(private api: ChatsAPI) {}
 
-    async create(title: string) {
-        await this.api.create(title);
+  async create(title: string) {
+    await this.api.create(title);
 
-        await this.fetchChats();
-    }
+    await this.fetchChats();
+  }
 
-    async fetchChats() {
-        const chats = await this.api.getChats();
+  async fetchChats() {
+    const chats = await this.api.getChats();
 
-        chats.map(async (chat) => {
-            const token = await this.getToken(chat.id);
+    chats.map(async (chat) => {
+      const token = await this.getToken(chat.id);
 
-            await MessagesController.connect(chat.id, token);
-        });
+      await MessagesController.connect(chat.id, token);
+    });
 
-        store.set("chats", chats);
-    }
+    store.set('chats', chats);
+  }
 
-    async addUserToChat(id: number, userId: number) {
-        this.api.addUsers(id, [userId]);
-        await this.fetchChats();
-    }
+  async addUserToChat(id: number, userId: number) {
+    this.api.addUsers(id, [userId]);
+    await this.fetchChats();
+  }
 
-    async deleteUserFromChat(id: number, userId: number) {
-        await this.api.deleteUsers(id, [userId]);
-        await this.fetchChats();
-    }
+  async deleteUserFromChat(id: number, userId: number) {
+    await this.api.deleteUsers(id, [userId]);
+    await this.fetchChats();
+  }
 
-    async delete(id: number) {
-        await this.api.delete(id);
+  async delete(id: number) {
+    await this.api.delete(id);
 
-        this.fetchChats();
-    }
+    this.fetchChats();
+  }
 
-    getToken(id: number) {
-        return this.api.getToken(id);
-    }
+  getToken(id: number) {
+    return this.api.getToken(id);
+  }
 
-    selectChat(id: number | string) {
-        store.set("selectedChat", id);
-    }
+  selectChat(id: number | string) {
+    store.set('selectedChat', id);
+  }
 }
 
 const chatsController = new ChatsController(new ChatsAPI());

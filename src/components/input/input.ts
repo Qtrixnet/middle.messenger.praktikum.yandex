@@ -15,19 +15,20 @@ interface InputProps {
 
 export class Input extends Block {
   static componentName = 'Input';
+
   constructor({
-                onInput,
-                onFocus,
-                onBlur,
-                ...props
-              }: InputProps) {
+    onInput,
+    onFocus,
+    onBlur,
+    ...props
+  }: InputProps) {
     super({
       ...props,
       events: {
         input: onInput,
         focus: onFocus,
         blur: onBlur,
-      }
+      },
     });
   }
 
