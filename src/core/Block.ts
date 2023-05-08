@@ -185,7 +185,7 @@ export default class Block<P = any> {
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.removeEventListener(event, listener);
+      this._element!.removeEventListener(event as keyof HTMLElementEventMap, listener as EventListenerOrEventListenerObject);
     });
   }
 
@@ -197,7 +197,7 @@ export default class Block<P = any> {
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.addEventListener(event, listener);
+      this._element!.addEventListener(event as keyof HTMLElementEventMap, listener as EventListenerOrEventListenerObject);
     });
   }
 
