@@ -3,7 +3,9 @@
 
 ### [Макет в figma](https://www.figma.com/file/APqAFWbtnbajjsNBkbmESg/Мессенджер?node-id=25%3A1215)
 
-### [Деплой проекта](https://chimerical-tartufo-920604.netlify.app)
+### [Деплой на Netlify](https://chimerical-tartufo-920604.netlify.app)
+
+### [Деплой докера на render.com](https://messenger-gi94.onrender.com/)
 
 Проект реализует веб мессенджер и позволяет регистрировать аккаунт, обмениваться сообщениями и настраивать профиль.
 
