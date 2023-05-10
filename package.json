@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start": "npm run build  && node ./server.js",
     "dev": "webpack serve",
     "build": "rimraf dist && webpack build",
     "test": "mocha --require ts-node/register --require ./mochaSetup.js './src/**/*.test.ts'",
@@ -21,12 +22,6 @@
   },
   "bugs": {
     "url": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex/issues"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
   },
   "homepage": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex#readme",
   "keywords": [],
