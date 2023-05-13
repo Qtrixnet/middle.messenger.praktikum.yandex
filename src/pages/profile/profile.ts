@@ -1,14 +1,15 @@
 import Block from '../../core/Block';
 import styles from './profile.module.pcss';
-import validateForm, {ValidateType} from "../../helpers/validate-form";
-import getElement from "../../utils/getElement";
-import AuthController from "../../controllers/AuthController";
-import store from "../../core/Store";
-import UserController from "../../controllers/UserController";
-import baseAvatar from "../../assets/images/avatar.png";
+import validateForm, { ValidateType } from '../../helpers/validate-form';
+import getElement from '../../utils/getElement';
+import AuthController from '../../controllers/AuthController';
+import store from '../../core/Store';
+import UserController from '../../controllers/UserController';
+import baseAvatar from '../../assets/images/avatar.png';
 
 export class Profile extends Block {
   static componentName = 'Profile';
+
   constructor() {
     super();
 
@@ -38,41 +39,41 @@ export class Profile extends Block {
       avatarPopupOpen: () => {
         this.setProps({
           isPopupOpen: true,
-        })
+        });
       },
 
       avatarPopupClose: () => {
         this.setProps({
           isPopupOpen: false,
-        })
+        });
       },
 
       onPasswordChangeEnabled: () => {
         this.setProps({
           isPasswordChanging: true,
-        })
+        });
       },
 
       onPasswordChangeDisabled: () => {
         this.setProps({
           isPasswordChanging: false,
-        })
+        });
       },
 
       onOldPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Password, value: element.value},
-        ])
-        this.setChildRefProps('oldPasswordInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Password, value: element.value },
+        ]);
+        this.setChildRefProps('oldPasswordInputRef', 'errorRef', { text: errorMessage });
       },
 
       onNewPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Password, value: element.value},
-        ])
-        this.setChildRefProps('newPasswordInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Password, value: element.value },
+        ]);
+        this.setChildRefProps('newPasswordInputRef', 'errorRef', { text: errorMessage });
       },
 
       OnNewPasswordSubmit: async () => {
@@ -80,12 +81,12 @@ export class Profile extends Block {
         const newPasswordElement = getElement(this.element, 'password__second');
 
         const oldPasswordErrorMessage = validateForm([
-          {type: ValidateType.Password, value: oldPasswordElement.value},
-        ])
+          { type: ValidateType.Password, value: oldPasswordElement.value },
+        ]);
 
         const newPasswordErrorMessage = validateForm([
-          {type: ValidateType.Password, value: newPasswordElement.value},
-        ])
+          { type: ValidateType.Password, value: newPasswordElement.value },
+        ]);
 
         if (oldPasswordErrorMessage || newPasswordErrorMessage) {
           this.setProps({
@@ -93,12 +94,12 @@ export class Profile extends Block {
             oldPasswordValue: oldPasswordElement.value,
             newPasswordError: newPasswordErrorMessage,
             newPasswordValue: newPasswordElement.value,
-          })
+          });
         } else {
           const data = {
             oldPassword: oldPasswordElement.value,
             newPassword: newPasswordElement.value,
-          }
+          };
 
           await UserController.updatePassword(data);
         }
@@ -114,8 +115,8 @@ export class Profile extends Block {
             phoneValue: this.props.phoneValue,
             secondNameValue: this.props.secondNameValue,
             displayNameValue: this.props.displayNameValue,
-          }
-        })
+          },
+        });
       },
       onProfileDataDisabled: () => {
         this.setProps({
@@ -126,55 +127,55 @@ export class Profile extends Block {
           phoneValue: this.props.previousData.phoneValue,
           secondNameValue: this.props.previousData.secondNameValue,
           displayNameValue: this.props.previousData.displayNameValue,
-        })
+        });
       },
 
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Login, value: element.value},
-        ])
-        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Login, value: element.value },
+        ]);
+        this.setChildRefProps('loginInputRef', 'errorRef', { text: errorMessage });
       },
 
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Email, value: element.value},
-        ])
-        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Email, value: element.value },
+        ]);
+        this.setChildRefProps('emailInputRef', 'errorRef', { text: errorMessage });
       },
 
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.FirstName, value: element.value},
-        ])
-        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.FirstName, value: element.value },
+        ]);
+        this.setChildRefProps('firstNameInputRef', 'errorRef', { text: errorMessage });
       },
 
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Phone, value: element.value},
-        ])
-        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Phone, value: element.value },
+        ]);
+        this.setChildRefProps('phoneInputRef', 'errorRef', { text: errorMessage });
       },
 
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.SecondName, value: element.value},
-        ])
-        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.SecondName, value: element.value },
+        ]);
+        this.setChildRefProps('secondNameInputRef', 'errorRef', { text: errorMessage });
       },
 
       onDisplayNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.DisplayName, value: element.value},
-        ])
-        this.setChildRefProps('displayNameInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.DisplayName, value: element.value },
+        ]);
+        this.setChildRefProps('displayNameInputRef', 'errorRef', { text: errorMessage });
       },
 
       onLogout: () => {
@@ -190,28 +191,28 @@ export class Profile extends Block {
         const displayNameElement = getElement(this.element, 'display_name');
 
         const loginErrorMessage = validateForm([
-          {type: ValidateType.Login, value: loginElement.value},
-        ])
+          { type: ValidateType.Login, value: loginElement.value },
+        ]);
 
         const emailErrorMessage = validateForm([
-          {type: ValidateType.Email, value: emailElement.value},
-        ])
+          { type: ValidateType.Email, value: emailElement.value },
+        ]);
 
         const firstNameErrorMessage = validateForm([
-          {type: ValidateType.FirstName, value: firstNameElement.value},
-        ])
+          { type: ValidateType.FirstName, value: firstNameElement.value },
+        ]);
 
         const phoneErrorMessage = validateForm([
-          {type: ValidateType.Phone, value: phoneElement.value},
-        ])
+          { type: ValidateType.Phone, value: phoneElement.value },
+        ]);
 
         const secondNameErrorMessage = validateForm([
-          {type: ValidateType.SecondName, value: secondNameElement.value},
-        ])
+          { type: ValidateType.SecondName, value: secondNameElement.value },
+        ]);
 
         const displayNameErrorMessage = validateForm([
-          {type: ValidateType.FirstName, value: displayNameElement.value},
-        ])
+          { type: ValidateType.FirstName, value: displayNameElement.value },
+        ]);
 
         if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || displayNameErrorMessage) {
           this.setProps({
@@ -227,7 +228,7 @@ export class Profile extends Block {
             secondNameValue: secondNameElement.value,
             displayNameError: displayNameErrorMessage,
             displayNameValue: displayNameElement.value,
-          })
+          });
         } else {
           const data = {
             login: loginElement.value,
@@ -236,21 +237,20 @@ export class Profile extends Block {
             phone: phoneElement.value,
             second_name: secondNameElement.value,
             display_name: displayNameElement.value,
-          }
+          };
 
           UserController.updateUser(data);
           await AuthController.fetchUser();
 
-          this.setProps({isFormDisabled: false})
+          this.setProps({ isFormDisabled: false });
         }
-      }
-    })
-
+      },
+    });
   }
 
   async componentDidMount() {
     await AuthController.fetchUser();
-    const {user} = store.getState();
+    const { user } = store.getState();
 
     this.setProps({
       avatar: user.avatar || '',
@@ -260,7 +260,7 @@ export class Profile extends Block {
       phoneValue: user.phone,
       secondNameValue: user.second_name,
       displayNameValue: user.display_name,
-    })
+    });
   }
 
   render() {
@@ -271,7 +271,7 @@ export class Profile extends Block {
             <div class=${styles.content}>
                 <header class=${styles.header}>
                     <img class=${styles.avatar}
-                         src=${Boolean(this.props.avatar) ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
+                         src=${this.props.avatar ? `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` : baseAvatar}
                          alt="avatar">
                     <div class=${styles.data}>
                         <h1 class=${styles.title}>${this.props.firstNameValue} ${this.props.secondNameValue}</h1>

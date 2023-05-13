@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel src/index.html --no-cache",
-    "build": "parcel build src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint ."
+    "start": "npm run build  && node ./server.js",
+    "dev": "webpack serve",
+    "build": "rimraf dist && webpack build",
+    "test": "mocha --require ts-node/register --require ./mochaSetup.js './src/**/*.test.ts'",
+    "lint:styles": "stylelint **/*.pcss",
+    "lint:styles:fix": "stylelint **/*.pcss --fix",
+    "lint:scripts": "eslint --ext .ts src/",
+    "lint:scripts:fix": "eslint --ext .ts src/ --fix",
+    "lint": "npm run lint:styles && npm run lint:scripts"
   },
   "alias": {
     "core": "src/core"
@@ -18,30 +23,60 @@
   "bugs": {
     "url": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex/issues"
   },
+  "lint-staged": {
+    "**/*.pcss": "stylelint",
+    "**/*.{ts,js}": "eslint"
+  },
   "homepage": "https://github.com/Qtrixnet/middle.messenger.praktikum.yandex#readme",
   "keywords": [],
   "author": "Kirill Shashichev",
   "license": "ISC",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@anikin/parcel-transformer-handlebars": "^1.0.2",
+    "@types/chai": "^4.3.4",
+    "@types/jsdom": "^21.1.1",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.8.1",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^10.0.14",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
-    "autoprefixer": "^10.4.10",
+    "autoprefixer": "^10.4.14",
+    "css-loader": "^6.7.3",
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
-    "parcel": "^2.7.0",
-    "parcel-optimizer-css-url": "^2.0.2",
-    "postcss": "^8.4.16",
+    "esm": "^3.2.25",
+    "file-loader": "^6.2.0",
+    "handlebars-loader": "^1.7.3",
+    "html-webpack-plugin": "^5.5.1",
+    "husky": "^8.0.3",
+    "jsdom": "^21.1.1",
+    "lint-staged": "^13.2.2",
+    "mini-css-extract-plugin": "^2.7.5",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "postcss": "^8.4.23",
     "postcss-import": "^15.0.0",
+    "postcss-loader": "^7.2.4",
     "postcss-nested": "^5.0.6",
-    "stylelint": "^14.13.0",
-    "typescript": "^4.8.4"
+    "style-loader": "^3.3.2",
+    "stylelint": "^15.6.1",
+    "stylelint-config-standard": "^33.0.0",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@parcel/optimizer-css": "^2.7.0",
+    "chai": "^4.3.7",
     "express": "^4.18.1",
     "handlebars": "^4.7.7",
-    "nanoid": "^4.0.0"
+    "nanoid": "^3.3.6",
+    "proxyquire": "^2.1.3",
+    "sinon": "^15.0.4"
   }
 }

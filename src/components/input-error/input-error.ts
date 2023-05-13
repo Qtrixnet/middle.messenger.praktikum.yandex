@@ -5,8 +5,9 @@ interface InputErrorProps {
   text: string;
 }
 
-export class InputError extends Block<InputErrorProps>{
+export class InputError extends Block<InputErrorProps> {
   static componentName = 'InputError';
+
   render() {
     // language=hbs
     return `

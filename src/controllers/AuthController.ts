@@ -1,8 +1,8 @@
-import {authAPI, AuthAPI} from '../api/AuthAPI';
+import { authAPI, AuthAPI } from '../api/AuthAPI';
 import store from '../core/Store';
 import router from '../core/Router';
-import {Routes, SigninData, SignupData} from "../types/types";
-import MessagesController from "./MessagesController";
+import { Routes, SigninData, SignupData } from '../types/types';
+import MessagesController from './MessagesController';
 
 export class AuthController {
   private readonly api: AuthAPI;

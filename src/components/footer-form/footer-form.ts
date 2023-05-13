@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import styles from './footer-form.module.pcss';
-import validateForm, {ValidateType} from "../../helpers/validate-form";
+import validateForm, { ValidateType } from '../../helpers/validate-form';
 
 interface FooterFormProps {
   onMessageSubmit: () => void;
@@ -8,8 +8,9 @@ interface FooterFormProps {
 
 export class FooterForm extends Block {
   static componentName = 'FooterForm';
-  constructor({onMessageSubmit}: FooterFormProps) {
-    super({events: {submit: onMessageSubmit}});
+
+  constructor({ onMessageSubmit }: FooterFormProps) {
+    super({ events: { submit: onMessageSubmit } });
 
     this.setProps({
       messageError: '',
@@ -18,19 +19,19 @@ export class FooterForm extends Block {
       onMessageInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Message, value: element.value},
-        ])
-        this.setChildRefProps('messageRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Message, value: element.value },
+        ]);
+        this.setChildRefProps('messageRef', 'errorRef', { text: errorMessage });
       },
-    })
+    });
   }
 
   protected render(): string {
     // language=hbs
     return `
-        <form class=${styles.footer_form}>
-            <button class=${styles.footer_attach} type="button"></button>
-            <div class=${styles.footer_wrapper}>
+        <form class=${styles['footer-form']}>
+            <button class=${styles['footer-attach']} type="button"></button>
+            <div class=${styles['footer-wrapper']}>
                 {{{ControlledInput
                         onInput=onMessageInput
                         type="text"
@@ -42,7 +43,7 @@ export class FooterForm extends Block {
                         value=messageValue
                 }}}
             </div>
-            <button class=${styles.footer_send}></button>
+            <button class=${styles['footer-send']}></button>
         </form>
     `;
   }

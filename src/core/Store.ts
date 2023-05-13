@@ -1,6 +1,6 @@
-import EventBus from "./EventBus";
-import set from "../helpers/set";
-import Block from "./Block";
+import EventBus from './EventBus';
+import set from '../helpers/set';
+import Block from './Block';
 
 export enum StoreEvents {
   Updated = 'updated'
@@ -23,13 +23,10 @@ export class Store extends EventBus {
 const store = new Store();
 
 export function withStore(mapStateToProps: (state: any) => any) {
-
-  return function wrap(Component: typeof Block){
+  return function wrap(Component: typeof Block) {
     let previousState: any;
 
-
     return class WithStore extends Component {
-
       constructor(props: any) {
         previousState = mapStateToProps(store.getState());
 
@@ -43,10 +40,8 @@ export function withStore(mapStateToProps: (state: any) => any) {
           this.setProps({ ...stateProps });
         });
       }
-    }
-
-  }
-
+    };
+  };
 }
 
 export default store;

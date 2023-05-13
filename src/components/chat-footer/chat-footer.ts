@@ -7,8 +7,9 @@ interface IChatFooter {
 
 export class ChatFooter extends Block {
   static componentName = 'ChatFooter';
-  constructor({onMessageSubmit}: IChatFooter) {
-    super({onMessageSubmit});
+
+  constructor({ onMessageSubmit }: IChatFooter) {
+    super({ onMessageSubmit });
   }
 
   protected render(): string {

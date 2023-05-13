@@ -1,4 +1,4 @@
-import Router from "../core/Router";
+import Router from '../core/Router';
 
 export type Indexed<T = any> = {
   [key in string]: T;

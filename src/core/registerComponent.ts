@@ -1,5 +1,5 @@
+import Handlebars, { HelperOptions } from 'handlebars';
 import Block from './Block';
-import Handlebars, {HelperOptions} from 'handlebars';
 
 interface BlockComponent<P> {
   new (props?: P): Block<P>;
@@ -9,7 +9,7 @@ interface BlockComponent<P> {
 type BlockConstructable<P> = BlockComponent<P> & (new (props?: P) => Block<P>);
 export default function registerComponent<Props extends any>(Component: BlockConstructable<Record<string, unknown>>) {
   const componentName = Component.componentName || Component.name;
-  Handlebars.registerHelper(componentName, function (this: Props, {hash: {ref, ...hash}, data, fn}: HelperOptions) {
+  Handlebars.registerHelper(componentName, function (this: Props, { hash: { ref, ...hash }, data, fn }: HelperOptions) {
     if (!data.root.children) {
       data.root.children = {};
     }
@@ -18,7 +18,7 @@ export default function registerComponent<Props extends any>(Component: BlockCon
       data.root.refs = {};
     }
 
-    const {children, refs} = data.root;
+    const { children, refs } = data.root;
 
     /**
      * Костыль для того, чтобы передавать переменные
@@ -41,5 +41,5 @@ export default function registerComponent<Props extends any>(Component: BlockCon
     const contents = fn ? fn(this) : '';
 
     return `<div data-id="${component.id}">${contents}</div>`;
-  })
+  });
 }

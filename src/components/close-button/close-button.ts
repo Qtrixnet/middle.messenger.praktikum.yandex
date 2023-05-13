@@ -8,8 +8,9 @@ interface CloseButtonProps {
 
 export class CloseButton extends Block {
   static componentName = 'CloseButton';
-  constructor({onClick, className = ''}: CloseButtonProps) {
-    super({className, events: {click: onClick}});
+
+  constructor({ onClick, className = '' }: CloseButtonProps) {
+    super({ className, events: { click: onClick } });
   }
 
   protected render(): string {

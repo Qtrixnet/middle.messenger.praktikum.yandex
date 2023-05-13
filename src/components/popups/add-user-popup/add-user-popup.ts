@@ -1,8 +1,8 @@
 import Block from '../../../core/Block';
 import styles from './add-user-popup.module.pcss';
-import getElement from "../../../utils/getElement";
-import ChatsController from "../../../controllers/ChatsController";
-import store from "../../../core/Store";
+import getElement from '../../../utils/getElement';
+import ChatsController from '../../../controllers/ChatsController';
+import store from '../../../core/Store';
 
 interface AddUserPopupProps {
   handleClose: () => void
@@ -10,8 +10,9 @@ interface AddUserPopupProps {
 
 export class AddUserPopup extends Block {
   static componentName = 'AddUserPopup';
-  constructor({handleClose}: AddUserPopupProps) {
-    super({handleClose});
+
+  constructor({ handleClose }: AddUserPopupProps) {
+    super({ handleClose });
 
     this.setProps({
       onSubmit: (e: Event) => {
@@ -21,9 +22,9 @@ export class AddUserPopup extends Block {
 
         ChatsController.addUserToChat(id, Number(inputElement.value)).then(() => {
           handleClose();
-        })
+        });
       },
-    })
+    });
   }
 
   protected render(): string {

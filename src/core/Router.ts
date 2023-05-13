@@ -1,10 +1,13 @@
 import Block from './Block';
-import Route from "./Route";
+import Route from './Route';
 
 class Router {
   private static __instance: Router;
+
   private routes: Route[] = [];
+
   public currentRoute: Route | null = null;
+
   private history = window.history;
 
   constructor(private readonly rootQuery: string) {
@@ -29,7 +32,7 @@ class Router {
       const target = event.currentTarget as Window;
 
       this._onRoute(target.location.pathname);
-    }
+    };
 
     this._onRoute(window.location.pathname);
   }
@@ -65,15 +68,14 @@ class Router {
   }
 
   private _getRoute(pathname: string) {
-    return this.routes.find(route => route.match(pathname));
+    return this.routes.find((route) => route.match(pathname));
   }
 
   public getCurrentRoute() {
-    if(this.currentRoute) {
+    if (this.currentRoute) {
       return this.currentRoute.getPath();
-    } else {
-      return '';
     }
+    return '';
   }
 }
 

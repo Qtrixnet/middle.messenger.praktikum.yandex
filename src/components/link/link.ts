@@ -1,7 +1,7 @@
 import Block from '../../core/Block';
 import styles from './link.module.pcss';
-import Router from "../../core/Router";
-import {Routes} from "../../types/types";
+import Router from '../../core/Router';
+import { Routes } from '../../types/types';
 
 interface LinkProps {
   to: string;
@@ -11,8 +11,11 @@ interface LinkProps {
 
 export class Link extends Block {
   static componentName = 'Link';
-  constructor({to, text = '', icon = ''}: LinkProps) {
-    super({to, text, icon, events: {click: () => this._navigate(to)}});
+
+  constructor({ to, text = '', icon = '' }: LinkProps) {
+    super({
+      to, text, icon, events: { click: () => this._navigate(to) },
+    });
   }
 
   private _navigate(path: string) {

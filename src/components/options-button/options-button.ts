@@ -7,8 +7,9 @@ interface OptionsButtonProps {
 
 export class OptionsButton extends Block {
   static componentName = 'OptionsButton';
-  constructor({handleClick}: OptionsButtonProps) {
-    super({events: {click: handleClick}});
+
+  constructor({ handleClick }: OptionsButtonProps) {
+    super({ events: { click: handleClick } });
   }
 
   protected render(): string {

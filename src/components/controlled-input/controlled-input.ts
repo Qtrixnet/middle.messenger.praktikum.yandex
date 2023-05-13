@@ -1,6 +1,6 @@
 import Block from '../../core/Block';
 import styles from './controlled-input.module.pcss';
-import validateForm from "../../helpers/validate-form";
+import validateForm from '../../helpers/validate-form';
 
 interface ControlledInputProps {
   isDisabled?: boolean;
@@ -16,6 +16,7 @@ interface ControlledInputProps {
 
 export class ControlledInput extends Block {
   static componentName = 'ControlledInput';
+
   constructor(props: ControlledInputProps) {
     super({
       ...props,
@@ -23,14 +24,14 @@ export class ControlledInput extends Block {
         const element = e.target as HTMLInputElement;
 
         const errorMessage = validateForm([
-          {type: this.props.name, value: element.value},
-        ])
+          { type: this.props.name, value: element.value },
+        ]);
 
         this.refs.errorRef.setProps({
-          text: errorMessage
+          text: errorMessage,
         });
-      }
-    })
+      },
+    });
   }
 
   render() {

@@ -8,14 +8,15 @@ interface IEmptyChats {
 
 export class EmptyChats extends Block {
   static componentName = 'EmptyChats';
-  constructor({onChatCreate, isLoading}: IEmptyChats) {
-    super({isLoading, events: {submit: onChatCreate}});
+
+  constructor({ onChatCreate, isLoading }: IEmptyChats) {
+    super({ isLoading, events: { submit: onChatCreate } });
   }
 
   render() {
     // language=hbs
     return `
-        <form class=${styles.empty_chats}>
+        <form class=${styles['empty-chats']}>
             <div class=${styles.wrapper}>
                 <p class=${styles.title}>Создайте чат, чтобы начать общение</p>
                 {{{ControlledInput

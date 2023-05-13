@@ -6,6 +6,6 @@ const formatTime = (timeStr: string) => {
   const formattedMinutes = minutes.toString().padStart(2, '0');
 
   return `${formattedHours}:${formattedMinutes}`;
-}
+};
 
 export default formatTime;

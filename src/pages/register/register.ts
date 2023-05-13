@@ -1,11 +1,12 @@
 import Block from '../../core/Block';
 import styles from './register.module.pcss';
-import getElement from "../../utils/getElement";
-import validateForm, {ValidateType} from "../../helpers/validate-form";
-import AuthController from "../../controllers/AuthController";
+import getElement from '../../utils/getElement';
+import validateForm, { ValidateType } from '../../helpers/validate-form';
+import AuthController from '../../controllers/AuthController';
 
 export class Register extends Block {
   static componentName = 'Register';
+
   constructor() {
     super();
 
@@ -28,57 +29,57 @@ export class Register extends Block {
       onLoginInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Login, value: element.value},
-        ])
-        this.setChildRefProps('loginInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Login, value: element.value },
+        ]);
+        this.setChildRefProps('loginInputRef', 'errorRef', { text: errorMessage });
       },
 
       onEmailInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Email, value: element.value},
-        ])
-        this.setChildRefProps('emailInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Email, value: element.value },
+        ]);
+        this.setChildRefProps('emailInputRef', 'errorRef', { text: errorMessage });
       },
 
       onFirstNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.FirstName, value: element.value},
-        ])
-        this.setChildRefProps('firstNameInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.FirstName, value: element.value },
+        ]);
+        this.setChildRefProps('firstNameInputRef', 'errorRef', { text: errorMessage });
       },
 
       onPhoneInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Phone, value: element.value},
-        ])
-        this.setChildRefProps('phoneInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Phone, value: element.value },
+        ]);
+        this.setChildRefProps('phoneInputRef', 'errorRef', { text: errorMessage });
       },
 
       onSecondNameInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.SecondName, value: element.value},
-        ])
-        this.setChildRefProps('secondNameInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.SecondName, value: element.value },
+        ]);
+        this.setChildRefProps('secondNameInputRef', 'errorRef', { text: errorMessage });
       },
 
       onPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.Password, value: element.value},
-        ])
-        this.setChildRefProps('passwordInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.Password, value: element.value },
+        ]);
+        this.setChildRefProps('passwordInputRef', 'errorRef', { text: errorMessage });
       },
 
       onSecondPasswordInput: (e: InputEvent) => {
         const element = e.target as HTMLInputElement;
         const errorMessage = validateForm([
-          {type: ValidateType.SecondPassword, value: element.value},
-        ])
-        this.setChildRefProps('secondPasswordInputRef', 'errorRef', {text: errorMessage});
+          { type: ValidateType.SecondPassword, value: element.value },
+        ]);
+        this.setChildRefProps('secondPasswordInputRef', 'errorRef', { text: errorMessage });
       },
 
       onRegister: () => {
@@ -91,32 +92,32 @@ export class Register extends Block {
         const passwordSecondElement = getElement(this.element, 'password__second');
 
         const loginErrorMessage = validateForm([
-          {type: ValidateType.Login, value: loginElement.value},
-        ])
+          { type: ValidateType.Login, value: loginElement.value },
+        ]);
 
         const emailErrorMessage = validateForm([
-          {type: ValidateType.Email, value: emailElement.value},
-        ])
+          { type: ValidateType.Email, value: emailElement.value },
+        ]);
 
         const firstNameErrorMessage = validateForm([
-          {type: ValidateType.FirstName, value: firstNameElement.value},
-        ])
+          { type: ValidateType.FirstName, value: firstNameElement.value },
+        ]);
 
         const phoneErrorMessage = validateForm([
-          {type: ValidateType.Phone, value: phoneElement.value},
-        ])
+          { type: ValidateType.Phone, value: phoneElement.value },
+        ]);
 
         const secondNameErrorMessage = validateForm([
-          {type: ValidateType.SecondName, value: secondNameElement.value},
-        ])
+          { type: ValidateType.SecondName, value: secondNameElement.value },
+        ]);
 
         const passwordErrorMessage = validateForm([
-          {type: ValidateType.Password, value: passwordElement.value},
-        ])
+          { type: ValidateType.Password, value: passwordElement.value },
+        ]);
 
         const secondPasswordErrorMessage = validateForm([
-          {type: ValidateType.SecondPassword, value: passwordSecondElement.value},
-        ])
+          { type: ValidateType.SecondPassword, value: passwordSecondElement.value },
+        ]);
 
         if (loginErrorMessage || emailErrorMessage || firstNameErrorMessage || phoneErrorMessage || secondNameErrorMessage || passwordErrorMessage || secondPasswordErrorMessage) {
           this.setProps({
@@ -134,7 +135,7 @@ export class Register extends Block {
             passwordValue: passwordElement.value,
             secondPasswordError: secondPasswordErrorMessage,
             secondPasswordValue: passwordSecondElement.value,
-          })
+          });
         } else {
           const data = {
             first_name: firstNameElement.value,
@@ -143,12 +144,12 @@ export class Register extends Block {
             email: emailElement.value,
             phone: phoneElement.value,
             password: passwordElement.value,
-          }
+          };
 
           AuthController.signup(data);
         }
-      }
-    })
+      },
+    });
   }
 
   render() {

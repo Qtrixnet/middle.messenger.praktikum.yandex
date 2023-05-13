@@ -1,5 +1,5 @@
 import BaseAPI from './BaseAPI';
-import {SigninData, SignupData, User} from "../types/types";
+import { SigninData, SignupData, User } from '../types/types';
 
 export class AuthAPI extends BaseAPI {
   constructor() {
@@ -23,7 +23,9 @@ export class AuthAPI extends BaseAPI {
   }
 
   create = undefined;
+
   update = undefined;
+
   delete = undefined;
 }
 

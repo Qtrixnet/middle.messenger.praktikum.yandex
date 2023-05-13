@@ -1,6 +1,6 @@
-import WSTransport, { WSTransportEvents } from "../utils/WSTransport";
-import ChatsController from "./ChatsController";
-import store from "../core/Store";
+import WSTransport, { WSTransportEvents } from '../utils/WSTransport';
+import ChatsController from './ChatsController';
+import store from '../core/Store';
 
 export interface IMessage {
     chat_id: number;
@@ -20,76 +20,74 @@ export interface IMessage {
 }
 
 export class MessagesController {
-    private transports: Map<number, WSTransport> = new Map();
+  private transports: Map<number, WSTransport> = new Map();
 
-    async connect(id: number, token: string) {
-        if (this.transports.has(id)) {
-            return;
-        }
-
-        const userId = store.getState().user.id;
-
-        const transport = new WSTransport(
-            `wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`
-        );
-
-        this.transports.set(id, transport);
-
-        await transport.connect();
-
-        this._subscribe(transport, id);
-        this.fetchOldMessages(id);
+  async connect(id: number, token: string) {
+    if (this.transports.has(id)) {
+      return;
     }
 
-    async sendMessage(id: number, message: string) {
-        const transport = this.transports.get(id);
+    const userId = store.getState().user.id;
 
-        if (!transport) {
-            throw new Error(`Chat ${id} is not connected`);
-        }
+    const transport = new WSTransport(
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`,
+    );
+
+    this.transports.set(id, transport);
+
+    await transport.connect();
+
+    this._subscribe(transport, id);
+    this.fetchOldMessages(id);
+  }
+
+  async sendMessage(id: number, message: string) {
+    const transport = this.transports.get(id);
+
+    if (!transport) {
+      throw new Error(`Chat ${id} is not connected`);
+    }
 
         transport!.send({
-            type: "message",
-            content: message,
+          type: 'message',
+          content: message,
         });
+  }
+
+  fetchOldMessages(id: number) {
+    const transport = this.transports.get(id);
+
+    if (!transport) {
+      throw new Error(`Chat ${id} is not connected`);
     }
 
-    fetchOldMessages(id: number) {
-        const transport = this.transports.get(id);
+    transport.send({ type: 'get old', content: '0' });
+  }
 
-        if (!transport) {
-            throw new Error(`Chat ${id} is not connected`);
-        }
+  closeAll() {
+    Object.values(this.transports).forEach((transport) => transport.close());
+  }
 
-        transport.send({ type: "get old", content: "0" });
-    }
+  private _getMessagesToAdd(messages: IMessage | IMessage[]): IMessage[] {
+    return Array.isArray(messages) ? messages.reverse() : [messages];
+  }
 
-    closeAll() {
-        Object.values(this.transports).forEach((transport) => transport.close());
-    }
+  private _onMessage(id: number, messages: IMessage | IMessage[]) {
+    const messagesToAdd = this._getMessagesToAdd(messages);
+    const currentMessages = store.getState().messages?.[id] ?? [];
+    const allMessages = [...currentMessages, ...messagesToAdd];
+    store.set(`messages.${id}`, allMessages);
+    ChatsController.fetchChats();
+  }
 
-    private _getMessagesToAdd(messages: IMessage | IMessage[]): IMessage[] {
-        return Array.isArray(messages) ? messages.reverse() : [messages];
-    }
+  private _onClose(id: number) {
+    this.transports.delete(id);
+  }
 
-    private _onMessage(id: number, messages: IMessage | IMessage[]) {
-        const messagesToAdd = this._getMessagesToAdd(messages);
-        const currentMessages = store.getState().messages?.[id] ?? [];
-        const allMessages = [...currentMessages, ...messagesToAdd];
-        store.set(`messages.${id}`, allMessages);
-        ChatsController.fetchChats();
-    }
-
-    private _onClose(id: number) {
-        this.transports.delete(id);
-    }
-
-    private _subscribe(transport: WSTransport, id: number) {
-        transport.on(WSTransportEvents.Message, (message) =>
-            this._onMessage(id, message)
-        );
-        transport.on(WSTransportEvents.Close, () => this._onClose(id));
-    }
+  private _subscribe(transport: WSTransport, id: number) {
+    transport.on(WSTransportEvents.Message, (message) => this._onMessage(id, message));
+    transport.on(WSTransportEvents.Close, () => this._onClose(id));
+  }
 }
 
 const messagesController = new MessagesController();

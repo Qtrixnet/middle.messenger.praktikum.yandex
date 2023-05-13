@@ -1,6 +1,6 @@
-import Block from "./Block";
-import isEqual from "../helpers/is-equal";
-import render from "./render";
+import Block from './Block';
+import isEqual from '../helpers/is-equal';
+import render from './render';
 
 class Route {
   private block: Block | null = null;
@@ -8,7 +8,8 @@ class Route {
   constructor(
     private readonly pathname: string,
     private readonly blockClass: typeof Block,
-    private readonly query: string) {
+    private readonly query: string,
+  ) {
   }
 
   public leave() {
@@ -24,7 +25,6 @@ class Route {
       this.block = new this.blockClass({});
 
       render(this.query, this.block);
-      return;
     }
   }
 

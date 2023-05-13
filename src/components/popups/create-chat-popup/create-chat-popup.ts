@@ -1,6 +1,6 @@
 import Block from '../../../core/Block';
 import styles from './create-chat-popup.module.pcss';
-import getElement from "../../../utils/getElement";
+import getElement from '../../../utils/getElement';
 
 interface CreateChatPopupProps {
   handleClose: () => void;
@@ -9,8 +9,9 @@ interface CreateChatPopupProps {
 
 export class CreateChatPopup extends Block {
   static componentName = 'CreateChatPopup';
-  constructor({handleClose, createChat}: CreateChatPopupProps) {
-    super({handleClose, createChat});
+
+  constructor({ handleClose, createChat }: CreateChatPopupProps) {
+    super({ handleClose, createChat });
 
     this.setProps({
       isLoading: false,
@@ -19,14 +20,14 @@ export class CreateChatPopup extends Block {
 
         const inputElement = getElement(this.element, 'chat');
 
-        this.setProps({isLoading: true})
+        this.setProps({ isLoading: true });
 
         createChat(inputElement.value).then(() => {
           handleClose();
-          this.setProps({isLoading: false})
-        })
+          this.setProps({ isLoading: false });
+        });
       },
-    })
+    });
   }
 
   protected render(): string {

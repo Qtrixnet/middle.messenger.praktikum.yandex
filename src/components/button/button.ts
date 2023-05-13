@@ -9,24 +9,27 @@ export interface ButtonProps {
   isDanger?: boolean;
   isDisabled?: boolean;
   className?: string;
-  actionType?: "button" | "submit";
+  actionType?: 'button' | 'submit';
   isLoading?: boolean;
 }
 
 export class Button extends Block {
   static componentName = 'Button';
+
   constructor({
-                text,
-                type = '',
-                onClick,
-                isSimple = false,
-                isDanger = false,
-                isDisabled = false,
-                isLoading = false,
-                className = '',
-                actionType = "button",
-              }: ButtonProps) {
-    super({text, type, isSimple, isDanger, isDisabled, isLoading, className, actionType, events: {click: onClick}});
+    text,
+    type = '',
+    onClick,
+    isSimple = false,
+    isDanger = false,
+    isDisabled = false,
+    isLoading = false,
+    className = '',
+    actionType = 'button',
+  }: ButtonProps) {
+    super({
+      text, type, isSimple, isDanger, isDisabled, isLoading, className, actionType, events: { click: onClick },
+    });
   }
 
   protected render(): string {
@@ -42,7 +45,7 @@ export class Button extends Block {
             ${this.props.isDisabled ? 'disabled' : ''}
             type=${this.props.actionType}
         >
-            ${Boolean(this.props.type) ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
+            ${this.props.type ? `<span class="${styles['button-icon']} ${styles['button-icon']}_${this.props.type}"></span>` : ''}
             ${this.props.isLoading ? `<span class="${styles['button-loader']}"></span>` : this.props.text}
         </button>
     `;

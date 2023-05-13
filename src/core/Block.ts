@@ -1,6 +1,6 @@
-import EventBus from './EventBus';
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
+import EventBus from './EventBus';
 
 type Events = typeof Block.EVENTS;
 
@@ -14,20 +14,22 @@ export default class Block<P = any> {
 
   public id = nanoid(6);
 
-  protected _element: Nullable<HTMLElement> = null;
+  protected _element: HTMLElement | null = null;
+
   protected readonly props: P;
+
   protected children: { [id: string]: Block } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
+
   protected refs: { [key: string]: Block } = {};
 
   public constructor(props?: P) {
     const eventBus = new EventBus<Events>();
 
-
-    this.getStateFromProps()
+    this.getStateFromProps();
 
     this.props = this._makePropsProxy(props || {} as P);
     this.state = this._makePropsProxy(this.state);
@@ -40,7 +42,7 @@ export default class Block<P = any> {
   }
 
   protected compile(template: (context: any) => string, context: any) {
-    const contextAndStubs = {...context};
+    const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
@@ -139,7 +141,7 @@ export default class Block<P = any> {
 
   protected render(): string {
     return '';
-  };
+  }
 
   getContent(): HTMLElement {
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
@@ -147,7 +149,7 @@ export default class Block<P = any> {
         if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
           this.eventBus().emit(Block.EVENTS.FLOW_CDM);
         }
-      }, 100)
+      }, 100);
     }
 
     return this.element!;
@@ -162,7 +164,7 @@ export default class Block<P = any> {
       set: (target: Record<string, unknown>, prop: string, value: unknown) => {
         target[prop] = value;
 
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty() {
@@ -176,27 +178,26 @@ export default class Block<P = any> {
   }
 
   private _removeEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const { events } = this.props as any;
 
     if (!events || !this._element) {
       return;
     }
 
-
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.removeEventListener(event, listener);
+      this._element!.removeEventListener(event as keyof HTMLElementEventMap, listener as EventListenerOrEventListenerObject);
     });
   }
 
   _addEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const { events } = this.props as any;
 
     if (!events) {
       return;
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.addEventListener(event, listener);
+      this._element!.addEventListener(event as keyof HTMLElementEventMap, listener as EventListenerOrEventListenerObject);
     });
   }
 
@@ -204,7 +205,9 @@ export default class Block<P = any> {
     const fragment = document.createElement('template');
 
     const template = Handlebars.compile(this.render());
-    fragment.innerHTML = template({...this.state, ...this.props, children: this.children, refs: this.refs});
+    fragment.innerHTML = template({
+      ...this.state, ...this.props, children: this.children, refs: this.refs,
+    });
 
     Object.entries(this.children).forEach(([id, component]) => {
       const stub = fragment.content.querySelector(`[data-id="${id}"]`);

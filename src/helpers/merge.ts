@@ -1,7 +1,7 @@
-import {Indexed} from "../types/types";
+import { Indexed } from '../types/types';
 
 const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
-  for (let p in rhs) {
+  for (const p in rhs) {
     if (!rhs.hasOwnProperty(p)) {
       continue;
     }
@@ -18,6 +18,6 @@ const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
   }
 
   return lhs;
-}
+};
 
 export default merge;

@@ -1,9 +1,9 @@
 import Block from '../../core/Block';
 import styles from './chats.module.pcss';
-import ChatsController from "../../controllers/ChatsController";
-import AuthController from "../../controllers/AuthController";
-import store from "../../core/Store";
-import getElement from "../../utils/getElement";
+import ChatsController from '../../controllers/ChatsController';
+import AuthController from '../../controllers/AuthController';
+import store from '../../core/Store';
+import getElement from '../../utils/getElement';
 
 export class Chats extends Block {
   static componentName = 'Chats';
@@ -19,32 +19,30 @@ export class Chats extends Block {
       isUserDeletePopupOpen: false,
       isLoading: false,
 
-      onChatCreatePopupOpen: () => this.setProps({isCreateChatPopupOpen: true}),
-      onChatCreatePopupClose: () => this.setProps({isCreateChatPopupOpen: false}),
+      onChatCreatePopupOpen: () => this.setProps({ isCreateChatPopupOpen: true }),
+      onChatCreatePopupClose: () => this.setProps({ isCreateChatPopupOpen: false }),
 
-      onUserAddPopupOpen: () => this.setProps({isUserAddPopupOpen: true}),
-      onUserAddPopupClose: () => this.setProps({isUserAddPopupOpen: false}),
+      onUserAddPopupOpen: () => this.setProps({ isUserAddPopupOpen: true }),
+      onUserAddPopupClose: () => this.setProps({ isUserAddPopupOpen: false }),
 
-      onUserDeletePopupOpen: () => this.setProps({isUserDeletePopupOpen: true}),
-      onUserDeletePopupClose: () => this.setProps({isUserDeletePopupOpen: false}),
+      onUserDeletePopupOpen: () => this.setProps({ isUserDeletePopupOpen: true }),
+      onUserDeletePopupClose: () => this.setProps({ isUserDeletePopupOpen: false }),
 
-      createChat: async (value: string) => {
-        return ChatsController.create(value).then(async () => {
-          await ChatsController.fetchChats().then(() => {
-            const chats = store.getState().chats;
-            this.setProps({
-              chats,
-            })
-            store.set('selectedChat', chats[0]?.id || {});
+      createChat: async (value: string) => ChatsController.create(value).then(async () => {
+        await ChatsController.fetchChats().then(() => {
+          const { chats } = store.getState();
+          this.setProps({
+            chats,
           });
-        })
-      },
+          store.set('selectedChat', chats[0]?.id || {});
+        });
+      }),
 
       onChatSelect: (id: number): void => {
         ChatsController.selectChat(id);
         this.setProps({
           selectedChat: store.getState().chats.find((chat: { id: number; }) => chat.id === id) || {},
-        })
+        });
       },
 
       onChatCreate: async (e: SubmitEvent) => {
@@ -52,38 +50,38 @@ export class Chats extends Block {
 
         const inputElement = getElement(this.element, 'chatName');
 
-        this.setProps({isLoading: true})
+        this.setProps({ isLoading: true });
 
         await this.props.createChat(inputElement.value).then(() => {
-          this.setProps({isLoading: false})
-        })
+          this.setProps({ isLoading: false });
+        });
       },
 
       onChatDelete: async (id: number) => {
         await ChatsController.delete(id).then(async () => {
           ChatsController.fetchChats().then(() => {
-            const chats = store.getState().chats;
+            const { chats } = store.getState();
             this.setProps({
               chats,
-            })
+            });
             store.set('selectedChat', chats[0]?.id || {});
-          })
-        })
-      }
-    })
+          });
+        });
+      },
+    });
   }
 
   componentDidMount() {
     AuthController.fetchUser();
     ChatsController.fetchChats().finally(() => {
-      const chats = store.getState().chats;
+      const { chats } = store.getState();
       this.setProps({
         chats,
         isCreateChatPopupOpen: store.getState().isCreateChatPopupOpen,
         selectedChat: chats[0],
-      })
+      });
       store.set('selectedChat', chats[0]?.id || {});
-    })
+    });
   }
 
   render() {
@@ -94,12 +92,12 @@ export class Chats extends Block {
             {{#if chats.length}}
                 <main class=${styles.container}>
                     <section class=${styles.list}>
-                        <div class=${styles.search_container}>
-                            <div class=${styles.search_line}>
+                        <div class=${styles['search-container']}>
+                            <div class=${styles['search-line']}>
                                 <input class=${styles.search} type="text" placeholder="Поиск по сообщениям..."/>
                             </div>
                         </div>
-                        <ul class=${styles.chats_list}>
+                        <ul class=${styles['chats-list']}>
                             {{#each chats}}
                                 {{{ChatCard
                                         id=id
@@ -116,7 +114,7 @@ export class Chats extends Block {
                         {{{Button
                                 text="Создать чат"
                                 onClick=onChatCreatePopupOpen
-                                className="${styles.create_button}"
+                                className="${styles['create-button']}"
                         }}}
                     </section>
                     {{{Chat

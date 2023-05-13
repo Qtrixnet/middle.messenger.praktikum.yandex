@@ -1,5 +1,3 @@
-const isEqual = (lhs: string, rhs: string): boolean => {
-  return lhs === rhs;
-}
+const isEqual = (lhs: string, rhs: string): boolean => lhs === rhs;
 
 export default isEqual;

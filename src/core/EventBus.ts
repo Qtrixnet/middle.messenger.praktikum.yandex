@@ -12,7 +12,6 @@ class EventBus<E extends Record<string, string> = Record<string, string>,
       this.listeners[event] = [];
     }
 
-
     this.listeners[event]?.push(callback);
   }
 
@@ -22,7 +21,7 @@ class EventBus<E extends Record<string, string> = Record<string, string>,
     }
 
     this.listeners[event] = this.listeners[event]!.filter(
-      listener => listener !== callback
+      (listener) => listener !== callback,
     );
   }
 
@@ -31,7 +30,7 @@ class EventBus<E extends Record<string, string> = Record<string, string>,
       return;
     }
 
-    this.listeners[event]!.forEach(listener => {
+    this.listeners[event]!.forEach((listener) => {
       listener(...args);
     });
   }
